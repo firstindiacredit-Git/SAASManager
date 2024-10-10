@@ -32,6 +32,9 @@ import Second from './Component/Second';
 import Paypal from './Component/Paypal';
 import Beautifier from './Component/Beautifier';
 import ResumeBuild from './Component/ResumeBuild';
+import Grocery from './Component/Grocery';
+import Bmi from './Component/Bmi';
+import LinkChecker from './Component/LinkChecker';
 
 function App() {
   return (
@@ -82,6 +85,22 @@ function App() {
               Resume
             </button>
           </Link>
+          <Link to="/grocery">
+            <button className="px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600">
+              Grocery List
+            </button>
+          </Link>
+          <Link to="/bmi">
+            <button className="px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600">
+              BMI Calculator
+            </button>
+          </Link>
+          <Link to="/linkchecker">
+            <button className="px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600">
+              Link Checker
+            </button>
+          </Link>
+          
         </div>
 
         {/* Routes for Components */}
@@ -93,6 +112,9 @@ function App() {
           <Route path="/paypal" element={<Paypal />} />
           <Route path="/beautifier" element={<Beautifier />} />
           <Route path="/resumebuild" element={<ResumeBuild />} />
+          <Route path="/grocery" element={<Grocery/>} />
+          <Route path="/bmi" element={<Bmi/>} />
+          <Route path="/linkchecker" element={<LinkChecker/>} />
         </Routes>
       </div>
     </Router>
