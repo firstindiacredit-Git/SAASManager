@@ -25,16 +25,16 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Calculator from './Component/Calculator';
-import FarenToCelciusAndCelciusToFaren from './Component/FarenToCelciusAndCelciusToFaren';
-import Convert from './Component/Convert';
-import Second from './Component/Second';
-import Paypal from './Component/Paypal';
-import Beautifier from './Component/Beautifier';
-import ResumeBuild from './Component/ResumeBuild';
-import Grocery from './Component/Grocery';
-import Bmi from './Component/Bmi';
-import LinkChecker from './Component/LinkChecker';
+import Calculator from './Component/Calculator.jsx';
+import FarenToCelciusAndCelciusToFaren from './Component/FarenToCelciusAndCelciusToFaren.jsx';
+import Convert from './Component/Convert.jsx';
+import Second from './Component/Second.jsx';
+import Paypal from './Component/Paypal.jsx';
+import Beautifier from './Component/Beautifier.jsx';
+import ResumeBuild from './Component/ResumeBuild.jsx';
+import Grocery from './Component/Grocery.jsx';
+import Bmi from './Component/Bmi.jsx';
+import LinkChecker from './Component/LinkChecker.jsx';
 
 function App() {
   return (
