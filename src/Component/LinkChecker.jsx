@@ -6,15 +6,16 @@ const LinkChecker = () => {
   const [links, setLinks] = useState([]);
   const [workingLinks, setWorkingLinks] = useState([]);
   const [nonWorkingLinks, setNonWorkingLinks] = useState([]);
+  const [loading, setLoading] = useState(false); // New loading state
 
-  // AllOrigins proxy to bypass the CORS issue
   const proxyUrl = 'https://api.allorigins.win/get?url=';
 
   const fetchLinksFromWebsite = async () => {
+    setLoading(true); // Start loading when fetching starts
     try {
       const response = await axios.get(proxyUrl + encodeURIComponent(url));
       const htmlString = response.data.contents;
-  
+
       const anchorTags = htmlString.match(/<a[^>]+href=["']([^"']+)["']/g);
       const extractedLinks = anchorTags
         ? anchorTags.map((tag) => {
@@ -30,18 +31,21 @@ const LinkChecker = () => {
             }
           })
         : [];
-  
-      const uniqueLinks = [...new Set(extractedLinks)]; // Remove duplicates
+
+      const uniqueLinks = [...new Set(extractedLinks)];
       setLinks(uniqueLinks);
-      checkLinks(uniqueLinks);
+      await checkLinks(uniqueLinks); // Await the checking process
     } catch (error) {
       console.error('Error fetching website:', error);
+    } finally {
+      setLoading(false); // Stop loading once fetching and checking are done
     }
   };
+
   const checkLinks = async (links) => {
     const working = [];
     const nonWorking = [];
-  
+
     const alwaysWorkingPatterns = [
       /^https?:\/\/(www\.)?(facebook|youtube|linkedin|instagram|twitter)\.com/,
       /^https?:\/\/api\.whatsapp\.com/,
@@ -49,39 +53,37 @@ const LinkChecker = () => {
       /^https?:\/\/mail\.google\.com/,
       /^#/  // Consider all fragment links as working
     ];
-  
+
     for (let link of links) {
       if (alwaysWorkingPatterns.some(pattern => pattern.test(link))) {
         working.push(link);
         continue;
       }
-  
-      // Remove fragments from URLs before checking
+
       const urlWithoutFragment = link.split('#')[0];
-  
+
       try {
         const response = await axios.get(proxyUrl + encodeURIComponent(urlWithoutFragment), {
           timeout: 10000,
           validateStatus: function (status) {
-            return status === 200; // Proxy should return 200
+            return status === 200;
           }
         });
-        
+
         if (response.data.status && response.data.status.http_code >= 200 && response.data.status.http_code < 500) {
           working.push(link);
         } else {
           nonWorking.push(link);
         }
       } catch (error) {
-        // If there's an error, we'll consider the link as working
-        // This is to avoid false negatives due to proxy issues
-        working.push(link);
+        working.push(link); // If there's an error, assume the link is working
       }
     }
-  
+
     setWorkingLinks(working);
     setNonWorkingLinks(nonWorking);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchLinksFromWebsite();
@@ -101,14 +103,14 @@ const LinkChecker = () => {
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          className={`bg-blue-500 text-white px-4 py-2 rounded-md ${loading ? 'cursor-not-allowed' : ''}`}
+          disabled={loading} // Disable button during loading
         >
-          Scan
+          {loading ? 'Scaning...' : 'Scan'} {/* Conditionally render loader text */}
         </button>
       </form>
 
       <div className="grid grid-cols-2 gap-8 mt-8">
-        {/* Working Links */}
         <div>
           <h2 className="text-xl font-bold mb-4">Working Links</h2>
           {workingLinks.length > 0 ? (
@@ -124,7 +126,6 @@ const LinkChecker = () => {
           )}
         </div>
 
-        {/* Non-Working Links */}
         <div>
           <h2 className="text-xl font-bold mb-4">Non-Working Links</h2>
           {nonWorkingLinks.length > 0 ? (
