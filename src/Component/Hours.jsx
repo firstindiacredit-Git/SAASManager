@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Convert = () => {
+const Hours = () => {
   const [time, setTime] = useState('');
   const [seconds, setSeconds] = useState(null);
   const [error, setError] = useState('');
@@ -62,4 +62,4 @@ const Convert = () => {
   );
 };
 
-export default Convert;
+export default Hours;
