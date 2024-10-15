@@ -14,9 +14,13 @@ import ImageToPdf from './Component/ImageToPdf.jsx';
 import SplitPdf from './Component/SplitPdf.jsx';
 import NewTab from './NewTab.jsx';
 import Hours from './Component/Hours.jsx';
+import Header from './Component/Header.jsx';
+import Compress from './Component/Compress.jsx';
+import MergePDF from './Component/MergePDF.jsx';
+import PdfConverter from './Component/PdfConverter.jsx';
 function App() {
   return (
-    <>
+    <div className='mt-14'>
 
         {/* Routes */}
       
@@ -36,8 +40,11 @@ function App() {
           <Route path="/percentage" element={<Percentage />} />
           <Route path="/imagetopdf" element={<ImageToPdf />} />
           <Route path="/splitpdf" element={<SplitPdf />} />
+          <Route path="/compress" element={<Compress />} />
+          <Route path="/mergepdf" element={<MergePDF />} />
+          <Route path="/pdfconverter" element={<PdfConverter />} />
         </Routes>
-      </>
+      </div>
     
   );
 }

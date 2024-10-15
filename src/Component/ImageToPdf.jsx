@@ -3,6 +3,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import Webcam from 'react-webcam';
 
+
 const ImageToPdf = () => {
   const [images, setImages] = useState([]);
   const [pageOrientation, setPageOrientation] = useState('portrait');
@@ -55,6 +56,8 @@ const ImageToPdf = () => {
   };
 
   return (
+    <>
+    
     <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
       <h1 className="text-2xl font-bold mb-6">Image to PDF Converter</h1>
 
@@ -168,6 +171,7 @@ const ImageToPdf = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
