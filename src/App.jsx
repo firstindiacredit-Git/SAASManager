@@ -18,6 +18,7 @@ import Header from './Component/Header.jsx';
 import Compress from './Component/Compress.jsx';
 import MergePDF from './Component/MergePDF.jsx';
 import PdfConverter from './Component/PdfConverter.jsx';
+import SearchPDF from './Component/SearchPDF.jsx';
 function App() {
   return (
     <div className='mt-14'>
@@ -43,6 +44,7 @@ function App() {
           <Route path="/compress" element={<Compress />} />
           <Route path="/mergepdf" element={<MergePDF />} />
           <Route path="/pdfconverter" element={<PdfConverter />} />
+          <Route path="/searchpdf" element={<SearchPDF />} />
         </Routes>
       </div>
     
