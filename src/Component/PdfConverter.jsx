@@ -289,110 +289,268 @@
 // export default PdfConverter;
 
 
-import React, { useState } from "react";
-import { PDFDocument, rgb, StandardFonts } from "pdf-lib"; 
-import mammoth from "mammoth"; // To extract text from Word files
+// import React, { useState } from "react";
+// import { PDFDocument, rgb, StandardFonts } from "pdf-lib"; 
+// import mammoth from "mammoth"; // To extract text from Word files
+
+// const PdfConverter = () => {
+//   const [wordFile, setWordFile] = useState(null); 
+//   const [loading, setLoading] = useState(false); 
+//   const [error, setError] = useState(null);
+
+//   // Handle Word file upload
+//   const handleWordFileChange = (e) => {
+//     setWordFile(e.target.files[0]);
+//     setError(null); // Clear any existing errors
+//   };
+
+//   // Generate PDF from the Word file
+//   const generatePDF = async () => {
+//     if (!wordFile) {
+//       setError("Please upload a Word file to convert.");
+//       return;
+//     }
+
+//     setLoading(true);
+
+//     try {
+//       const wordData = await wordFile.arrayBuffer(); // Read file as buffer
+//       const { value: extractedText } = await mammoth.extractRawText({ 
+//         arrayBuffer: wordData 
+//       });
+
+//       const pdfDoc = await PDFDocument.create();
+//       const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+//       const lines = extractedText.split("\n");
+//       let page = pdfDoc.addPage([595, 842]); // A4 size
+//       let yOffset = 800;
+
+//       // Draw text line-by-line, adding new pages as needed
+//       for (const line of lines) {
+//         if (yOffset < 50) {
+//           page = pdfDoc.addPage([595, 842]);
+//           yOffset = 800;
+//         }
+//         page.drawText(line, {
+//           x: 50,
+//           y: yOffset,
+//           size: 12,
+//           font,
+//           color: rgb(0, 0, 0),
+//         });
+//         yOffset -= 20;
+//       }
+
+//       // Save and download the generated PDF
+//       const pdfBytes = await pdfDoc.save();
+//       const blob = new Blob([pdfBytes], { type: "application/pdf" });
+//       const url = URL.createObjectURL(blob);
+
+//       const link = document.createElement("a");
+//       link.href = url;
+//       link.download = "converted.pdf";
+//       link.click();
+//     } catch (error) {
+//       console.error("Error generating PDF:", error);
+//       setError("Failed to generate PDF. Please try again.");
+//     }
+
+//     setLoading(false);
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+//       <div className="bg-white shadow-md rounded-lg p-6 max-w-lg w-full">
+//         <h1 className="text-2xl font-bold mb-6 text-center">Word to PDF Converter</h1>
+
+//         {/* File Upload */}
+//         <div className="mb-4">
+//           <label className="block text-gray-700 font-medium mb-2">Upload Word File:</label>
+//           <input
+//             type="file"
+//             accept=".docx"
+//             onChange={handleWordFileChange}
+//             className="block w-full text-sm text-gray-500
+//               file:mr-4 file:py-2 file:px-4
+//               file:rounded-full file:border-0
+//               file:text-sm file:font-semibold
+//               file:bg-blue-50 file:text-blue-700
+//               hover:file:bg-blue-100"
+//           />
+//         </div>
+
+//         {/* Error Message */}
+//         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
+//         {/* Convert Button */}
+//         <button
+//           onClick={generatePDF}
+//           className={`w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded ${
+//             loading ? "opacity-50 cursor-not-allowed" : ""
+//           }`}
+//           disabled={loading}
+//         >
+//           {loading ? "Generating PDF..." : "Convert to PDF"}
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PdfConverter;
+
+// import React, { useState } from 'react';
+// import mammoth from 'mammoth';
+// import htmlToPdfmake from 'html-to-pdfmake';
+// import pdfMake from 'pdfmake/build/pdfmake';
+// import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+// // Import the fonts for pdfMake
+// pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+// const WordToPdfConverter = () => {
+//   const [file, setFile] = useState(null);
+
+//   const handleFileChange = (e) => {
+//     setFile(e.target.files[0]);
+//   };
+
+//   const convertWordToPdf = async () => {
+//     if (!file) return alert('Please upload a Word file');
+
+//     try {
+//       const arrayBuffer = await file.arrayBuffer();
+
+//       // Convert Word to HTML using Mammoth
+//       const { value: html } = await mammoth.convertToHtml({ arrayBuffer });
+
+//       // Convert the HTML content to a format compatible with pdfMake
+//       const pdfMakeContent = htmlToPdfmake(html);
+
+//       // Generate PDF document using pdfMake
+//       const docDefinition = {
+//         content: pdfMakeContent,
+//       };
+
+//       pdfMake.createPdf(docDefinition).download('converted.pdf');
+//     } catch (error) {
+//       console.error('Error converting Word to PDF:', error);
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
+//       <div className="bg-white p-8 rounded shadow-lg w-full max-w-md">
+//         <h1 className="text-2xl font-bold mb-4">Convert Word to PDF</h1>
+//         <input
+//           type="file"
+//           accept=".docx"
+//           onChange={handleFileChange}
+//           className="mb-4 w-full px-4 py-2 border rounded"
+//         />
+//         <button
+//           onClick={convertWordToPdf}
+//           className="w-full bg-blue-500 text-white py-2 px-4 rounded"
+//         >
+//           Convert to PDF
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default WordToPdfConverter;
+
+import React, { useState } from 'react';
+import mammoth from 'mammoth';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
 const PdfConverter = () => {
-  const [wordFile, setWordFile] = useState(null); 
-  const [loading, setLoading] = useState(false); 
-  const [error, setError] = useState(null);
+  const [file, setFile] = useState(null);
+  const [pdfUrl, setPdfUrl] = useState('');
 
-  // Handle Word file upload
-  const handleWordFileChange = (e) => {
-    setWordFile(e.target.files[0]);
-    setError(null); // Clear any existing errors
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
   };
 
-  // Generate PDF from the Word file
-  const generatePDF = async () => {
-    if (!wordFile) {
-      setError("Please upload a Word file to convert.");
-      return;
-    }
-
-    setLoading(true);
+  const convertWordToPdf = async () => {
+    if (!file) return alert('Please upload a Word file');
 
     try {
-      const wordData = await wordFile.arrayBuffer(); // Read file as buffer
-      const { value: extractedText } = await mammoth.extractRawText({ 
-        arrayBuffer: wordData 
-      });
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const arrayBuffer = event.target.result;
 
-      const pdfDoc = await PDFDocument.create();
-      const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        // Extract text and style using mammoth
+        const { value: extractedText, messages } = await mammoth.extractRawText({ arrayBuffer });
+        console.log('Extracted text:', extractedText);  // Verify extracted content
 
-      const lines = extractedText.split("\n");
-      let page = pdfDoc.addPage([595, 842]); // A4 size
-      let yOffset = 800;
+        // Create a new PDF document
+        const pdfDoc = await PDFDocument.create();
+        let page = pdfDoc.addPage(); // Changed const to let
+        const { width, height } = page.getSize();
 
-      // Draw text line-by-line, adding new pages as needed
-      for (const line of lines) {
-        if (yOffset < 50) {
-          page = pdfDoc.addPage([595, 842]);
-          yOffset = 800;
-        }
-        page.drawText(line, {
-          x: 50,
-          y: yOffset,
-          size: 12,
-          font,
-          color: rgb(0, 0, 0),
+        // Load a standard font
+        const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+        const fontSize = 12;  // Adjust to keep same as Word font size
+        const textLines = extractedText.split('\n');
+        let yOffset = height - 50;  // Start from the top of the page
+
+        textLines.forEach((line) => {
+          if (yOffset < 50) {  // Create new page if space runs out
+            page = pdfDoc.addPage(); // Now this line will work
+            yOffset = height - 50;
+          }
+          page.drawText(line, {
+            x: 50,
+            y: yOffset,
+            size: fontSize,
+            font,
+            color: rgb(0, 0, 0),
+          });
+          yOffset -= fontSize + 5;  // Adjust line spacing
         });
-        yOffset -= 20;
-      }
 
-      // Save and download the generated PDF
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      const url = URL.createObjectURL(blob);
+        const pdfBytes = await pdfDoc.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const pdfUrl = URL.createObjectURL(blob);
+        setPdfUrl(pdfUrl);
+      };
 
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "converted.pdf";
-      link.click();
+      reader.readAsArrayBuffer(file);
     } catch (error) {
-      console.error("Error generating PDF:", error);
-      setError("Failed to generate PDF. Please try again.");
+      console.error('Error converting Word to PDF:', error);
     }
-
-    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white shadow-md rounded-lg p-6 max-w-lg w-full">
-        <h1 className="text-2xl font-bold mb-6 text-center">Word to PDF Converter</h1>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
+      <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg">
+        <h1 className="text-2xl font-bold mb-4 text-center">Word to PDF Converter</h1>
 
-        {/* File Upload */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2">Upload Word File:</label>
-          <input
-            type="file"
-            accept=".docx"
-            onChange={handleWordFileChange}
-            className="block w-full text-sm text-gray-500
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-full file:border-0
-              file:text-sm file:font-semibold
-              file:bg-blue-50 file:text-blue-700
-              hover:file:bg-blue-100"
-          />
-        </div>
+        <input
+          type="file"
+          accept=".docx"
+          onChange={handleFileChange}
+          className="mb-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+        />
 
-        {/* Error Message */}
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-
-        {/* Convert Button */}
         <button
-          onClick={generatePDF}
-          className={`w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded ${
-            loading ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          disabled={loading}
+          onClick={convertWordToPdf}
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded"
         >
-          {loading ? "Generating PDF..." : "Convert to PDF"}
+          Convert to PDF
         </button>
+
+        {pdfUrl && (
+          <div className="mt-6">
+            <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+              View PDF
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

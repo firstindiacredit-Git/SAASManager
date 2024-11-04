@@ -19,7 +19,10 @@ import Compress from './Component/Compress.jsx';
 import MergePDF from './Component/MergePDF.jsx';
 import PdfConverter from './Component/PdfConverter.jsx';
 import SearchPDF from './Component/SearchPDF.jsx';
-import SearchExcelPdf from './Component/SearchExcelPdf.jsx';
+//import SearchExcelPdf from './Component/SearchExcelPdf.jsx';
+import Upload from './Component/EditableImage/Upload.jsx'
+import EditPdf from './Component/EditPdf.jsx';
+import ExtractPages from './Component/ExtractPages.jsx';
 function App() {
   return (
     <div className='mt-14'>
@@ -46,7 +49,10 @@ function App() {
           <Route path="/mergepdf" element={<MergePDF />} />
           <Route path="/pdfconverter" element={<PdfConverter />} />
           <Route path="/searchpdf" element={<SearchPDF />} />
-          <Route path="/searchexcelpdf" element={<SearchExcelPdf />} />
+          {/* <Route path="/searchexcelpdf" element={<SearchExcelPdf />} /> */}
+          <Route path="/upload" element={<Upload />} />
+          <Route path="/editpdf" element={<EditPdf />} />
+          <Route path="/extractpages" element={<ExtractPages />} />
         </Routes>
       </div>
     

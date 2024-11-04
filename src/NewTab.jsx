@@ -245,6 +245,8 @@ const NewTab = () => {
         { name: 'Pdf Converter', path: '/pdfconverter', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Search Excel', path: '/searchpdf', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Search Pdf', path: '/searchexcelpdf', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Edit Pdf', path: '/editpdf', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Extract Page', path: '/extractpages', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
     ];
 
     useEffect(() => {
@@ -352,7 +354,11 @@ const NewTab = () => {
                             <ButtonComponent path="/mergepdf" name="Merge Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             <ButtonComponent path="/pdfconverter" name="Pdf Converter" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             <ButtonComponent path="/searchpdf" name="Search Excel" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                            <ButtonComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                            {/* <ButtonComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} /> */}
+                            <ButtonComponent path="/upload" name="Edit Image" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                            <ButtonComponent path="/editpdf" name="Edit Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                            <ButtonComponent path="/extractpages" name="Extract Page" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                            
                         </div>
                         <div>
                             <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4">TODO</h3>
@@ -396,7 +402,9 @@ const NewTab = () => {
                             <GridComponent path="/mergepdf" name="Merge Pdf" icon={<FaFilePdf className="text-red-500" />} />
                             <GridComponent path="/pdfconverter" name="Pdf Converter" icon={<FaFilePdf className="text-red-500" />} />
                             <GridComponent path="/searchpdf" name="Search Excel" icon={<FaFilePdf className="text-red-500" />} />
-                            <GridComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="text-red-500" />} />
+                            {/* <GridComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="text-red-500" />} /> */}
+                            <GridComponent path="/editpdf" name="Edit Pdf" icon={<FaFilePdf className="text-red-500" />} />
+                            <GridComponent path="/extractpages" name="Extract Page" icon={<FaFilePdf className="text-red-500" />} />
                         </div>
 
                         {/* TODO Section */}
