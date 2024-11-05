@@ -20,7 +20,7 @@ const Protect = () => {
     formData.append("password", password);
 
     try {
-      const response = await fetch("http://localhost:8080/protect", {
+      const response = await fetch("/protect", {
         method: "POST",
         body: formData,
       });

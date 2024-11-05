@@ -21,7 +21,7 @@ function UnlockPdf() {
     formData.append("password", password); // Add password
 
     try {
-      const response = await axios.post("http://localhost:8080/unlock-pdf", formData, {
+      const response = await axios.post("/unlock-pdf", formData, {
         responseType: "blob",
         headers: {
           "Content-Type": "multipart/form-data",
