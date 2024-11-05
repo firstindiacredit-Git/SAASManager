@@ -247,6 +247,10 @@ const NewTab = () => {
         { name: 'Search Pdf', path: '/searchexcelpdf', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Edit Pdf', path: '/editpdf', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Extract Page', path: '/extractpages', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Pdf Cropper', path: '/pdfcropper', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Add page number', path: '/addpagenum', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Protect Pdf', path: '/protect', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Unlock Pdf', path: '/unlockpdf', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
     ];
 
     useEffect(() => {
@@ -355,9 +359,13 @@ const NewTab = () => {
                             <ButtonComponent path="/pdfconverter" name="Pdf Converter" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             <ButtonComponent path="/searchpdf" name="Search Excel" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             {/* <ButtonComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} /> */}
-                            <ButtonComponent path="/upload" name="Edit Image" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                            {/* <ButtonComponent path="/upload" name="Edit Image" icon={<FaFilePdf className="mr-3 text-red-500" />} /> */}
                             <ButtonComponent path="/editpdf" name="Edit Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             <ButtonComponent path="/extractpages" name="Extract Page" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                            <ButtonComponent path="/pdfcropper" name="Pdf Cropper" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                            <ButtonComponent path="/addpagenum" name="Add page number" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                            <ButtonComponent path="/protect" name="Protect Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                            <ButtonComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             
                         </div>
                         <div>
@@ -404,7 +412,10 @@ const NewTab = () => {
                             <GridComponent path="/searchpdf" name="Search Excel" icon={<FaFilePdf className="text-red-500" />} />
                             {/* <GridComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="text-red-500" />} /> */}
                             <GridComponent path="/editpdf" name="Edit Pdf" icon={<FaFilePdf className="text-red-500" />} />
-                            <GridComponent path="/extractpages" name="Extract Page" icon={<FaFilePdf className="text-red-500" />} />
+                            <GridComponent path="/pdfcropper" name="Pdf Cropper" icon={<FaFilePdf className="text-red-500" />} />
+                            <GridComponent path="/addpagenum" name="Add page number" icon={<FaFilePdf className="text-red-500" />} />
+                            <GridComponent path="/protect" name="Protect Pdf" icon={<FaFilePdf className="text-red-500" />} />
+                            <GridComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaFilePdf className="text-red-500" />} />
                         </div>
 
                         {/* TODO Section */}

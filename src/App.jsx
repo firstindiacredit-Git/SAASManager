@@ -23,6 +23,10 @@ import SearchPDF from './Component/SearchPDF.jsx';
 import Upload from './Component/EditableImage/Upload.jsx'
 import EditPdf from './Component/EditPdf.jsx';
 import ExtractPages from './Component/ExtractPages.jsx';
+import PdfCropper from './Component/PdfCropper.jsx';
+import AddPageNum from './Component/AddPageNum.jsx';
+import Protect from './Component/Protect.jsx';
+import UnlockPdf from './Component/UnlockPdf.jsx';
 function App() {
   return (
     <div className='mt-14'>
@@ -53,6 +57,10 @@ function App() {
           <Route path="/upload" element={<Upload />} />
           <Route path="/editpdf" element={<EditPdf />} />
           <Route path="/extractpages" element={<ExtractPages />} />
+          <Route path="/pdfcropper" element={<PdfCropper />} />
+          <Route path="/addpagenum" element={<AddPageNum />} />
+          <Route path="/protect" element={<Protect />} />
+          <Route path="/unlockpdf" element={<UnlockPdf />} />
         </Routes>
       </div>
     
