@@ -102,6 +102,7 @@ const Protect = () => {
       const response = await fetch("https://saas-backend-xwzf.vercel.app/protect", {
         method: "POST",
         body: formData,
+        mode:'no-cors'
       });
 
       if (response.ok) {
