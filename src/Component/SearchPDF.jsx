@@ -1335,11 +1335,16 @@ const ExcelSearch = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6 -mt-16">
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-full lg:max-w-8xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">Excel Search Tool</h1>
+         <div>
+             
+            <button className='px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600'><a href='https://www.ilovepdf.com/pdf_to_excel'>Click And Convert Pdf To Excel</a></button>
+         </div>
+        <h1 className="text-2xl font-bold mb-6 text-center">Excel Search Tools</h1>
 
         {/* Upload Excel File */}
+        <h1 className='font-semibold px-2 py-2'>upload excel file</h1>
         <input
           type="file"
           accept=".xlsx, .xls"
@@ -1353,6 +1358,7 @@ const ExcelSearch = () => {
         />
 
         {/* Search Input */}
+        
         <input
           type="text"
           value={searchTerm}

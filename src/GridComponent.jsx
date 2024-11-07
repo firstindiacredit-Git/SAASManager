@@ -51,7 +51,7 @@ import { Link } from 'react-router-dom';
 
 const GridComponent = ({ path, name, icon }) => {
   return (
-    <div className="flex justify-center bg-white">
+    <div className="flex justify-center bg-white mb-6">
       <Link 
         to={path} 
         className="relative block w-64 h-40 bg-white-100 shadow-sm rounded-lg border border-blue-500/20 hover:border-blue-300 transition-shadow duration-300"

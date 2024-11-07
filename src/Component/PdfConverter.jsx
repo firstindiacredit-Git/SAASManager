@@ -462,6 +462,102 @@
 
 // export default WordToPdfConverter;
 
+// import React, { useState } from 'react';
+// import mammoth from 'mammoth';
+// import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+
+// const PdfConverter = () => {
+//   const [file, setFile] = useState(null);
+//   const [pdfUrl, setPdfUrl] = useState('');
+
+//   const handleFileChange = (e) => {
+//     setFile(e.target.files[0]);
+//   };
+
+//   const convertWordToPdf = async () => {
+//     if (!file) return alert('Please upload a Word file');
+
+//     try {
+//       const reader = new FileReader();
+//       reader.onload = async (event) => {
+//         const arrayBuffer = event.target.result;
+
+//         // Extract text and style using mammoth
+//         const { value: extractedText, messages } = await mammoth.extractRawText({ arrayBuffer });
+//         console.log('Extracted text:', extractedText);  // Verify extracted content
+
+//         // Create a new PDF document
+//         const pdfDoc = await PDFDocument.create();
+//         let page = pdfDoc.addPage(); // Changed const to let
+//         const { width, height } = page.getSize();
+
+//         // Load a standard font
+//         const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+//         const fontSize = 12;  // Adjust to keep same as Word font size
+//         const textLines = extractedText.split('\n');
+//         let yOffset = height - 50;  // Start from the top of the page
+
+//         textLines.forEach((line) => {
+//           if (yOffset < 50) {  // Create new page if space runs out
+//             page = pdfDoc.addPage(); // Now this line will work
+//             yOffset = height - 50;
+//           }
+//           page.drawText(line, {
+//             x: 50,
+//             y: yOffset,
+//             size: fontSize,
+//             font,
+//             color: rgb(0, 0, 0),
+//           });
+//           yOffset -= fontSize + 5;  // Adjust line spacing
+//         });
+
+//         const pdfBytes = await pdfDoc.save();
+//         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+//         const pdfUrl = URL.createObjectURL(blob);
+//         setPdfUrl(pdfUrl);
+//       };
+
+//       reader.readAsArrayBuffer(file);
+//     } catch (error) {
+//       console.error('Error converting Word to PDF:', error);
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
+//       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg">
+//         <h1 className="text-2xl font-bold mb-4 text-center">Word to PDF Converter</h1>
+
+//         <input
+//           type="file"
+//           accept=".docx"
+//           onChange={handleFileChange}
+//           className="mb-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+//         />
+
+//         <button
+//           onClick={convertWordToPdf}
+//           className="w-full bg-blue-500 text-white py-2 px-4 rounded"
+//         >
+//           Convert to PDF
+//         </button>
+
+//         {pdfUrl && (
+//           <div className="mt-6">
+//             <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+//               View PDF
+//             </a>
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PdfConverter;
+
 import React, { useState } from 'react';
 import mammoth from 'mammoth';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
@@ -482,35 +578,93 @@ const PdfConverter = () => {
       reader.onload = async (event) => {
         const arrayBuffer = event.target.result;
 
-        // Extract text and style using mammoth
-        const { value: extractedText, messages } = await mammoth.extractRawText({ arrayBuffer });
-        console.log('Extracted text:', extractedText);  // Verify extracted content
+        // Extract styled text using mammoth
+        const { value: extractedText, messages } = await mammoth.convertToHtml({ arrayBuffer });
 
         // Create a new PDF document
         const pdfDoc = await PDFDocument.create();
-        let page = pdfDoc.addPage(); // Changed const to let
+        let page = pdfDoc.addPage();
         const { width, height } = page.getSize();
 
-        // Load a standard font
-        const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        // Load fonts
+        const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-        const fontSize = 12;  // Adjust to keep same as Word font size
-        const textLines = extractedText.split('\n');
-        let yOffset = height - 50;  // Start from the top of the page
+        const fontSize = 12;
+        const margin = 50;
+        const maxLineWidth = width - 2 * margin;
+        const lineHeight = fontSize + 5;
+        let yOffset = height - margin;
 
-        textLines.forEach((line) => {
-          if (yOffset < 50) {  // Create new page if space runs out
-            page = pdfDoc.addPage(); // Now this line will work
-            yOffset = height - 50;
+        // Split extracted HTML into lines
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(extractedText, 'text/html');
+        const elements = Array.from(doc.body.children);
+
+        elements.forEach((element) => {
+          let text = element.innerText || '';
+          let isBold = element.tagName === 'B' || element.style.fontWeight === 'bold';
+          let isCentered = element.style.textAlign === 'center';
+          let font = isBold ? boldFont : regularFont;
+
+          // Check for bullet points (assuming bullets are lines starting with '*')
+          const isBullet = text.trim().startsWith('*');
+          if (isBullet) {
+            text = `• ${text.trim().substring(1).trim()}`;  // Replace '*' with a bullet symbol
           }
-          page.drawText(line, {
-            x: 50,
-            y: yOffset,
-            size: fontSize,
-            font,
-            color: rgb(0, 0, 0),
+
+          // Center text if needed
+          let xPosition = margin;
+          if (isCentered) {
+            const textWidth = font.widthOfTextAtSize(text, fontSize);
+            xPosition = (width - textWidth) / 2;
+          }
+
+          // Wrap text if it exceeds the max width
+          let words = text.split(' ');
+          let currentLine = '';
+
+          words.forEach((word) => {
+            const testLine = currentLine + word + ' ';
+            const textWidth = font.widthOfTextAtSize(testLine, fontSize);
+
+            if (textWidth > maxLineWidth) {
+              // Draw current line and start a new one
+              page.drawText(currentLine.trim(), {
+                x: xPosition,
+                y: yOffset,
+                size: fontSize,
+                font,
+                color: rgb(0, 0, 0),
+              });
+              yOffset -= lineHeight;
+
+              if (yOffset < margin) {  // Create new page if needed
+                page = pdfDoc.addPage();
+                yOffset = height - margin;
+              }
+              currentLine = word + ' ';
+            } else {
+              currentLine = testLine;
+            }
           });
-          yOffset -= fontSize + 5;  // Adjust line spacing
+
+          // Draw any remaining text in the current line
+          if (currentLine.trim() !== '') {
+            page.drawText(currentLine.trim(), {
+              x: xPosition,
+              y: yOffset,
+              size: fontSize,
+              font,
+              color: rgb(0, 0, 0),
+            });
+            yOffset -= lineHeight;
+
+            if (yOffset < margin) {
+              page = pdfDoc.addPage();
+              yOffset = height - margin;
+            }
+          }
         });
 
         const pdfBytes = await pdfDoc.save();

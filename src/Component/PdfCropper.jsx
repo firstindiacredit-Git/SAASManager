@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import { PDFDocument } from 'pdf-lib';
 import 'pdfjs-dist/web/pdf_viewer.css';
@@ -10,6 +10,9 @@ const PdfCropper = () => {
   const [cropData, setCropData] = useState({ startX: 0, startY: 0, endX: 0, endY: 0 });
   const [isCropping, setIsCropping] = useState(false);
   const canvasRef = useRef(null);
+  const offscreenCanvasRef = useRef(null);
+  const [pdfWidth, setPdfWidth] = useState(0);
+  const [pdfHeight, setPdfHeight] = useState(0);
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -19,7 +22,7 @@ const PdfCropper = () => {
         const pdfData = new Uint8Array(reader.result);
         const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
         setPdfFile(pdf);
-        renderPage(pdf, 1);
+        renderPageToOffscreenCanvas(pdf, 1);
       };
       reader.readAsArrayBuffer(file);
     } else {
@@ -27,19 +30,44 @@ const PdfCropper = () => {
     }
   };
 
-  const renderPage = async (pdf, pageNum) => {
+  const renderPageToOffscreenCanvas = async (pdf, pageNum) => {
     const page = await pdf.getPage(pageNum);
     const viewport = page.getViewport({ scale: 1.5 });
+
+    // Set the size of the main canvas
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
     canvas.width = viewport.width;
     canvas.height = viewport.height;
 
+    const offscreenCanvas = offscreenCanvasRef.current;
+    offscreenCanvas.width = viewport.width;
+    offscreenCanvas.height = viewport.height;
+
+    // Store the dimensions for the crop logic
+    setPdfWidth(viewport.width);
+    setPdfHeight(viewport.height);
+
+    const offscreenContext = offscreenCanvas.getContext('2d');
     const renderContext = {
-      canvasContext: context,
+      canvasContext: offscreenContext,
       viewport: viewport,
     };
+
     await page.render(renderContext).promise;
+    updateMainCanvas();
+  };
+
+  const updateMainCanvas = () => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    const offscreenCanvas = offscreenCanvasRef.current;
+
+    // Clear the canvas and redraw the offscreen content
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(offscreenCanvas, 0, 0);
+    
+    // Draw the crop rectangle if cropping is active
+    if (isCropping) drawCropRect(context);
   };
 
   const drawCropRect = (context) => {
@@ -64,18 +92,12 @@ const PdfCropper = () => {
   const handleMouseMove = (e) => {
     if (isCropping) {
       const rect = canvasRef.current.getBoundingClientRect();
-      const newEndX = e.clientX - rect.left;
-      const newEndY = e.clientY - rect.top;
       setCropData((prevData) => ({
         ...prevData,
-        endX: newEndX,
-        endY: newEndY,
+        endX: e.clientX - rect.left,
+        endY: e.clientY - rect.top,
       }));
-
-      const context = canvasRef.current.getContext('2d');
-      renderPage(pdfFile, 1).then(() => {
-        drawCropRect(context);
-      });
+      updateMainCanvas(); // Refresh with crop rectangle overlay
     }
   };
 
@@ -85,9 +107,6 @@ const PdfCropper = () => {
 
   const handleCrop = async () => {
     if (!pdfFile) return;
-    const page = await pdfFile.getPage(1);
-    const viewport = page.getViewport({ scale: 1.5 });
-
     const { startX, startY, endX, endY } = cropData;
     const width = Math.abs(endX - startX);
     const height = Math.abs(endY - startY);
@@ -95,11 +114,12 @@ const PdfCropper = () => {
     const pdfDoc = await PDFDocument.create();
     const copiedPage = pdfDoc.addPage([width, height]);
 
-    const originalCanvas = canvasRef.current;
-    const croppedCanvas = document.createElement("canvas");
+    // Get the cropped image from the offscreen canvas
+    const originalCanvas = offscreenCanvasRef.current;
+    const croppedCanvas = document.createElement('canvas');
     croppedCanvas.width = width;
     croppedCanvas.height = height;
-    const croppedContext = croppedCanvas.getContext("2d");
+    const croppedContext = croppedCanvas.getContext('2d');
 
     croppedContext.drawImage(
       originalCanvas,
@@ -108,10 +128,8 @@ const PdfCropper = () => {
     );
 
     try {
-      // Generate PNG data from the canvas
+      // Embed the cropped image into the PDF
       const croppedImage = croppedCanvas.toDataURL("image/png");
-
-      // Embed the image into the PDF
       const image = await pdfDoc.embedPng(croppedImage);
 
       copiedPage.drawImage(image, {
@@ -165,6 +183,9 @@ const PdfCropper = () => {
           Draw a rectangle on the canvas to crop the selected area.
         </p>
       </div>
+
+      {/* Offscreen canvas for storing PDF content */}
+      <canvas ref={offscreenCanvasRef} style={{ display: 'none' }} />
     </div>
   );
 };

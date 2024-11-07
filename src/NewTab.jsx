@@ -363,9 +363,10 @@ const NewTab = () => {
                             <ButtonComponent path="/editpdf" name="Edit Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             <ButtonComponent path="/extractpages" name="Extract Page" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             <ButtonComponent path="/pdfcropper" name="Pdf Cropper" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                            <ButtonComponent path="/addpagenum" name="Add page number" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                            <ButtonComponent path="/addpagenum" name="Add page No." icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             <ButtonComponent path="/protect" name="Protect Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             <ButtonComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                            {/* <ButtonComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFilePdf className="mr-3 text-red-500" />} /> */}
                             
                         </div>
                         <div>
