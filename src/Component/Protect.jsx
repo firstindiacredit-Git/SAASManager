@@ -99,7 +99,7 @@ const Protect = () => {
     formData.append("password", password);
 
     try {
-      const response = await fetch("https://saas-backend-xwzf.vercel.app/protect", {
+      const response = await fetch("http://16.16.246.83:8080/protect", {
         method: "POST",
         body: formData,
         mode:'no-cors'
@@ -154,3 +154,7 @@ const Protect = () => {
 };
 
 export default Protect;
+
+
+
+

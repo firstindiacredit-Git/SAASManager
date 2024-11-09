@@ -27,7 +27,7 @@ import PdfCropper from './Component/PdfCropper.jsx';
 import AddPageNum from './Component/AddPageNum.jsx';
 import Protect from './Component/Protect.jsx';
 import UnlockPdf from './Component/UnlockPdf.jsx';
-//import PdfToImage from './Component/PdfToImage.jsx';
+import PdfToImage from './Component/PdfToImage.jsx';
 function App() {
   return (
     <div className='mt-14'>
@@ -62,7 +62,7 @@ function App() {
           <Route path="/addpagenum" element={<AddPageNum />} />
           <Route path="/protect" element={<Protect />} />
           <Route path="/unlockpdf" element={<UnlockPdf />} />
-          {/* <Route path="/pdftoimage" element={<PdfToImage />} /> */}
+          <Route path="/pdftoimage" element={<PdfToImage />} />
         </Routes>
       </div>
     

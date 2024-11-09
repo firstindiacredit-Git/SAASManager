@@ -21,7 +21,7 @@ function UnlockPdf() {
     formData.append("password", password);
 
     try {
-      const response = await axios.post("https://saas-backend-xwzf.vercel.app/unlock-pdf", formData, {
+      const response = await axios.post("http://16.16.246.83:8080/unlock-pdf", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -225,6 +225,7 @@ const NewTab = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [viewType, setViewType] = useState('list');
     const searchInputRef = useRef(null);
+    const popupRef = useRef(null);
 
     const tools = [
         { name: 'Image To Pdf', path: '/imagetopdf', icon: <FaFilePdf className="mr-3 text-red-500" /> },
@@ -271,6 +272,17 @@ const NewTab = () => {
         }
     }, [isPopupOpen]);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (popupRef.current && !popupRef.current.contains(event.target)) {
+                setPopupOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
     const filteredTools = tools.filter((tool) =>
         tool.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -291,6 +303,7 @@ const NewTab = () => {
                         className="w-full border rounded-lg p-4 shadow-sm focus:outline-none"
                         placeholder="Search tools..."
                         value={searchQuery}
+                        onFocus={() => setPopupOpen(true)}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                     <div className="absolute right-4 top-4 text-gray-400">Ctrl + K</div>
@@ -313,8 +326,8 @@ const NewTab = () => {
             </div>
 
             {isPopupOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center mt-14 justify-center">
-                    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md h-full overflow-y-auto">
+                <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center mt-14 justify-center ${viewType === 'grid' ? 'z-50' : 'z-30'}`}>
+                    <div ref={popupRef} className={`bg-white fixed top-16 p-8 rounded-lg shadow-lg w-full max-w-md overflow-y-auto ${viewType === 'grid' ? 'z-50' : 'z-30'}`}>
                         <input
                             ref={searchInputRef}
                             type="text"
@@ -324,7 +337,7 @@ const NewTab = () => {
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
                         <div>
-                            {filteredTools.length > 0 ? (
+                            {searchQuery && filteredTools.length > 0 ? (
                                 filteredTools.map((tool) => (
                                     <Link to={tool.path} key={tool.name} className="block mb-2">
                                         <button className="flex items-center p-2 rounded-lg hover:bg-gray-100 w-full">
@@ -366,7 +379,7 @@ const NewTab = () => {
                             <ButtonComponent path="/addpagenum" name="Add page No." icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             <ButtonComponent path="/protect" name="Protect Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             <ButtonComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                            {/* <ButtonComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFilePdf className="mr-3 text-red-500" />} /> */}
+                            <ButtonComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                             
                         </div>
                         <div>
@@ -377,7 +390,7 @@ const NewTab = () => {
                         <div>
                             <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4">CALCULATOR</h3>
                             <ButtonComponent path="/calculator" name="Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
-                            <ButtonComponent path="/percentage" name="Percentage Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                            <ButtonComponent path="/percentage" name="% Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
                             <ButtonComponent path="/bmi" name="BMI Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
                         </div>
 
@@ -401,9 +414,9 @@ const NewTab = () => {
                         </div>
                     </div>
                 ) : (
-                    <div >
+                    <div className='relative Z-10'>
                         {/* Render Grid View */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                             <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">PDF</h3>
                             <GridComponent path="/imagetopdf" name="Image To Pdf" icon={<FaFilePdf className="text-red-500" />} />
                             <GridComponent path="/splitpdf" name="Split Pdf" icon={<FaFilePdf className="text-red-500" />} />
@@ -413,28 +426,29 @@ const NewTab = () => {
                             <GridComponent path="/searchpdf" name="Search Excel" icon={<FaFilePdf className="text-red-500" />} />
                             {/* <GridComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="text-red-500" />} /> */}
                             <GridComponent path="/editpdf" name="Edit Pdf" icon={<FaFilePdf className="text-red-500" />} />
+                            <GridComponent path="/extractpages" name="Extract page" icon={<FaFilePdf className="text-red-500" />} />
                             <GridComponent path="/pdfcropper" name="Pdf Cropper" icon={<FaFilePdf className="text-red-500" />} />
-                            <GridComponent path="/addpagenum" name="Add page number" icon={<FaFilePdf className="text-red-500" />} />
+                            <GridComponent path="/addpagenum" name="Add page No." icon={<FaFilePdf className="text-red-500" />} />
                             <GridComponent path="/protect" name="Protect Pdf" icon={<FaFilePdf className="text-red-500" />} />
                             <GridComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaFilePdf className="text-red-500" />} />
                         </div>
 
                         {/* TODO Section */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                             <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">TODO</h3>
                             <GridComponent path="/grocery" name="Grocery List" icon={<FaTasks className="text-purple-500" />} />
                         </div>
 
                         {/* Calculator Section */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                             <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">CALCULATOR</h3>
                             <GridComponent path="/calculator" name="Calculator" icon={<FaCalculator className="text-teal-500" />} />
-                            <GridComponent path="/percentage" name="Percentage Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                            <GridComponent path="/percentage" name="% Calculator" icon={<FaCalculator className="text-teal-500" />} />
                             <GridComponent path="/bmi" name="BMI Calculator" icon={<FaCalculator className="text-teal-500" />} />
                         </div>
 
                         {/* Converter Section */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                             <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">CONVERTER</h3>
                             <GridComponent path="/faren-to-celcius" name="Fahrenheit to Celsius" icon={<FaFilePdf className="text-blue-500" />} />
                             <GridComponent path="/second" name="Seconds to HH:MM:SS" icon={<FaFilePdf className="text-blue-500" />} />
@@ -442,7 +456,7 @@ const NewTab = () => {
                         </div>
 
                         {/* Misc Section */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                             <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">MISC</h3>
                             <GridComponent path="/paypal" name="Paypal Link Generator" icon={<FaFilePdf className="text-pink-500" />} />
                             <GridComponent path="/beautifier" name="HTML Beautifier" icon={<FaFilePdf className="text-pink-500" />} />

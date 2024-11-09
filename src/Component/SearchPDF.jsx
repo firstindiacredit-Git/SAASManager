@@ -1339,7 +1339,7 @@ const ExcelSearch = () => {
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-full lg:max-w-8xl">
          <div>
              
-            <button className='px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600'><a href='https://www.ilovepdf.com/pdf_to_excel'>Click And Convert Pdf To Excel</a></button>
+            <button className='px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600'><a href='https://www.ilovepdf.com/pdf_to_excel' target='_blank'>Click And Convert Pdf To Excel</a></button>
          </div>
         <h1 className="text-2xl font-bold mb-6 text-center">Excel Search Tools</h1>
 
