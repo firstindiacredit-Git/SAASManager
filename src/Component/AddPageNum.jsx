@@ -1,7 +1,7 @@
-// src/App.jsx
 import React, { useState } from "react";
 import { PDFDocument, rgb } from "pdf-lib";
 import { saveAs } from "file-saver";
+import { Back } from "./back";
 
 const AddPageNum = () => {
   const [pdfFile, setPdfFile] = useState(null);
@@ -15,8 +15,6 @@ const AddPageNum = () => {
 
     const fileData = await pdfFile.arrayBuffer();
     const pdfDoc = await PDFDocument.load(fileData);
-
-    // Embed the standard font (Helvetica)
     const font = await pdfDoc.embedStandardFont("Helvetica");
     const totalPages = pdfDoc.getPageCount();
 
@@ -24,7 +22,6 @@ const AddPageNum = () => {
       const page = pdfDoc.getPage(i);
       const { width, height } = page.getSize();
 
-      // Add page number text
       page.drawText(`Page ${i + 1}`, {
         x: width / 2 - 20,
         y: 20,
@@ -40,23 +37,26 @@ const AddPageNum = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-      <h1 className="text-2xl font-bold mb-6">Add Page Numbers to PDF</h1>
-
-      <input
-        type="file"
-        accept="application/pdf"
-        onChange={handleFileChange}
-        className="mb-4 p-2 border border-gray-300 rounded"
-      />
-
-      <button
-        onClick={addPageNumbers}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300"
-        disabled={!pdfFile}
-      >
-        Add Page Numbers and Download PDF
-      </button>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+      <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
+        <Back />
+        <h1 className="text-2xl font-bold text-center mb-6 text-gray-700">
+          Add Page Numbers to PDF
+        </h1>
+        <input
+          type="file"
+          accept="application/pdf"
+          onChange={handleFileChange}
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <button
+          onClick={addPageNumbers}
+          className="w-full px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300 disabled:bg-gray-300 disabled:cursor-not-allowed"
+          disabled={!pdfFile}
+        >
+          Add Page Numbers and Download PDF
+        </button>
+      </div>
     </div>
   );
 };

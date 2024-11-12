@@ -296,12 +296,12 @@ const NewTab = () => {
         <>
 
             <div className="min-h-screen bg-zinc-100 flex flex-col items-center mt-14 px-8 py-6">
-                <header className="text-center mb-12">
+                {/* <header className="text-center mb-12">
                     <h1 className="text-5xl font-bold mb-4">DAILY TOOLS</h1>
-                </header>
+                </header> */}
 
                 {/* Search Bar */}
-                <div className="w-full max-w-3xl mx-auto mb-8">
+                <div className="w-full max-w-3xl mx-auto mt-10 mb-8">
                     <div className="relative">
                         <input
                             type="text"
@@ -343,7 +343,7 @@ const NewTab = () => {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                                <div className='-translate-x-3 hover:cursor-pointer hover:rotate-45 transition-all' onClick={(e) => setSearchQuery(e.target.value = '')}>❌</div>
+                                <div className='-translate-x-3 hover:cursor-pointer transition-all' onClick={(e) => setSearchQuery(e.target.value = '')}>clear</div>
                             </div>
                             <div  className={`bg-white max-h-64 min-h-44 p-4 flex flex-col justify-between  items-start w-full max-w-md overflow-y-auto ${viewType === 'grid' ? 'z-50' : 'z-30'}`}>
 
@@ -415,15 +415,15 @@ const NewTab = () => {
                             <div>
                                 <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4">CONVERTER</h3>
                                 <ButtonComponent path="/faren-to-celcius" name="Fahrenheit to Celsius" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
-                                <ButtonComponent path="/second" name="Seconds to HH:MM:SS" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
-                                <ButtonComponent path="/hours" name="HH:MM:SS to Second" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                <ButtonComponent path="/second" name="Second to Hour" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                <ButtonComponent path="/hours" name="Hour to Second" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
 
                             </div>
 
                             {/* MISC Section */}
                             <div>
                                 <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4">MISC</h3>
-                                <ButtonComponent path="/paypal" name="Paypal Link Generator" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
+                                <ButtonComponent path="/paypal" name="Paypal Link Gen." icon={<FaFilePdf className="mr-3 text-pink-500" />} />
                                 <ButtonComponent path="/beautifier" name="HTML Beautifier" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
                                 <ButtonComponent path="/resumebuild" name="Resume Builder" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
                                 <ButtonComponent path="/linkchecker" name="Website Link Checker" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
@@ -468,15 +468,15 @@ const NewTab = () => {
                             {/* Converter Section */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                                 <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">CONVERTER</h3>
-                                <GridComponent path="/faren-to-celcius" name="Fahrenheit to Celsius" icon={<FaFilePdf className="text-blue-500" />} />
-                                <GridComponent path="/second" name="Seconds to HH:MM:SS" icon={<FaFilePdf className="text-blue-500" />} />
-                                <GridComponent path="/hours" name="HH:MM:SS to Second" icon={<FaFilePdf className="text-blue-500" />} />
+                                <GridComponent path="/faren-to-celcius" name="Fahren to Celsius" icon={<FaFilePdf className="text-blue-500" />} />
+                                <GridComponent path="/second" name="Seconds to Hour" icon={<FaFilePdf className="text-blue-500" />} />
+                                <GridComponent path="/hours" name="Hour to Second" icon={<FaFilePdf className="text-blue-500" />} />
                             </div>
 
                             {/* Misc Section */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                                 <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">MISC</h3>
-                                <GridComponent path="/paypal" name="Paypal Link Generator" icon={<FaFilePdf className="text-pink-500" />} />
+                                <GridComponent path="/paypal" name="Paypal Link Gen." icon={<FaFilePdf className="text-pink-500" />} />
                                 <GridComponent path="/beautifier" name="HTML Beautifier" icon={<FaFilePdf className="text-pink-500" />} />
                                 <GridComponent path="/resumebuild" name="Resume Builder" icon={<FaFilePdf className="text-pink-500" />} />
                                 <GridComponent path="/linkchecker" name="Link Checker" icon={<FaFilePdf className="text-pink-500" />} />

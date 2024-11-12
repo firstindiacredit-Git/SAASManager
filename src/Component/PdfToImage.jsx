@@ -267,6 +267,7 @@
 import React, { useState } from "react";
 import * as pdfjsLib from "pdfjs-dist";
 import { FaDownload } from "react-icons/fa"; // Download icon
+import { Back } from "./back";
 
 // Create a Blob URL for the PDF worker
 const pdfWorkerBlob = new Blob(
@@ -313,6 +314,7 @@ const PdfToImage = () => {
 
   return (
     <div className="flex flex-col items-center p-8 bg-gray-100 min-h-screen mt-18">
+      <Back/>
       <h1 className="text-3xl font-bold text-gray-800 mb-6">PDF to Image Converter</h1>
       <p className="text-gray-600 mb-4">Upload a PDF file to convert each page into an image.</p>
       <input

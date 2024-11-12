@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Back } from './back';
 
 const Bmi = () => {
   const [gender, setGender] = useState('Male');
@@ -69,6 +70,7 @@ const Bmi = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <form className="bg-white p-6 rounded-lg shadow-md" onSubmit={calculateBMI}>
+       <Back/>
         <h1 className="text-2xl font-bold mb-4">BMI Calculator</h1>
 
         {/* Gender */}

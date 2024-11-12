@@ -4,6 +4,7 @@ import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
 import { Document, Page } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
+import { Back } from './back';
 
 // Set the worker source for pdf.js
 //GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js`;
@@ -121,6 +122,7 @@ function App() {
 
   return (
     <div className="flex flex-col items-center p-4">
+      <Back/>
       <h1 className="text-2xl font-bold mb-4">PDF Text Editor</h1>
       <input
         type="file"

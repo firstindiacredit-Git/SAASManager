@@ -384,6 +384,7 @@
 import React, { useState, useEffect } from 'react';
 import { PDFDocument } from 'pdf-lib';
 import { FaTrash, FaSearchPlus, FaRedo, FaClone, FaDownload } from 'react-icons/fa';
+import { Back } from './back';
 
 const SplitPdf = () => {
   const [file, setFile] = useState(null);
@@ -521,6 +522,7 @@ const SplitPdf = () => {
   return (
     <>
       <div className="min-h-screen flex flex-col items-center bg-gray-50 p-6">
+        <Back/>
         <h1 className="text-3xl font-bold mb-8 text-gray-800">📄 Split and Merge PDF Tool</h1>
 
         <div className="w-full max-w-xl bg-white shadow-lg rounded-lg p-6">

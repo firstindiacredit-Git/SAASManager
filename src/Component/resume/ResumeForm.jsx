@@ -715,6 +715,7 @@
 // export default ResumeForm;
 
 import React, { useState } from 'react';
+import { Back } from '../back';
 
 const ResumeForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -781,6 +782,7 @@ const ResumeForm = ({ onSubmit }) => {
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
+    <Back/>
       <div className="max-w-2xl mx-auto h-screen">
         <form
           onSubmit={handleSubmit}

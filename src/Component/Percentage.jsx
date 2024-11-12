@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Back } from './back';
 
 function Percentage() {
   // States for "What is X% of Y"
@@ -62,6 +63,7 @@ function Percentage() {
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center">
       <div className="max-w-md w-full bg-white p-6 rounded-lg shadow-lg">
+       <Back/>
         <h1 className="text-xl font-bold text-center mb-6">Percentage Calculator</h1>
         
         {/* Form for "What is X% of Y" */}

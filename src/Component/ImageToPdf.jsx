@@ -179,6 +179,7 @@
 
 import React, { useState } from "react";
 import { jsPDF } from "jspdf";
+import { Back } from "./back";
 
 const ImageToPdf = () => {
   const [images, setImages] = useState([]);
@@ -204,6 +205,7 @@ const ImageToPdf = () => {
 
   return (
     <div className="p-4 max-w-xl mx-auto">
+      <Back/>
       <h1 className="text-2xl font-bold mb-4 text-center">Upload Images to Convert to PDF</h1>
       
       <input

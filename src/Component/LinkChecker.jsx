@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Back } from './back';
 
 const LinkChecker = () => {
   const [url, setUrl] = useState('');
@@ -90,7 +91,8 @@ const LinkChecker = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-100 p-8"> 
+     <Back/>
       <h1 className="text-2xl font-bold text-center mb-6">Website Link Checker</h1>
       
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto flex space-x-4">

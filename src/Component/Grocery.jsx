@@ -253,6 +253,7 @@
 
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';  // Import jsPDF for PDF generation
+import { Back } from './back';
 
 // Updated list of grocery images
 const groceryImages = [
@@ -368,6 +369,7 @@ const Grocery = () => {
 
     return (
         <div className="min-h-screen bg-gray-100 p-4">
+          <Back/>
             <h1 className="text-2xl font-bold text-center">Grocery To-Do List</h1>
 
             {/* Form to add or edit grocery */}

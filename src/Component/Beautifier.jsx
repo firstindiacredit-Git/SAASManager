@@ -81,6 +81,7 @@
 import React, { useState } from 'react';
 // Correctly import 'html' from 'js-beautify'
 import { html as beautifyHtmlFunc } from 'js-beautify';
+import { Back } from './back';
 
 function Beautifier() {
   const [htmlInput, setHtmlInput] = useState('');
@@ -108,6 +109,7 @@ function Beautifier() {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
+      <Back/>
         <h1 className="text-2xl font-bold mb-6 text-center">HTML Beautifier</h1>
 
         {/* HTML Input Area */}

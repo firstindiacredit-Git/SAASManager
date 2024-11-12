@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Back } from './back';
 
 const Hours = () => {
   const [time, setTime] = useState('');
@@ -34,6 +35,7 @@ const Hours = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+       <Back/>
         <h1 className="text-2xl font-bold mb-4 text-center">Convert HH:MM:SS to Seconds</h1>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">Time (HH:MM:SS)</label>

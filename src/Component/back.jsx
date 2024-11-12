@@ -6,7 +6,7 @@ export function Back() {
 
     return (
         <>
-        <button className='text-blue-500 text-3xl rounded-sm' onClick={() => navigate(-1)}>⬅</button>
+        <button className='text-black text-3xl rounded-sm' onClick={() => navigate(-1)}>⬅</button>
             
         </>
     )

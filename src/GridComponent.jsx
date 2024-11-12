@@ -54,11 +54,11 @@ const GridComponent = ({ path, name, icon }) => {
     <div className="flex justify-center w-64 sm:w-auto bg-white mb-6">
       <Link 
         to={path} 
-        className="relative block w-64 h-40 bg-white-100 shadow-sm rounded-lg border border-blue-500/20 hover:border-blue-300 transition-shadow duration-300"
+        className="relative block w-64 h-36 bg-white-100 shadow-sm rounded-lg border border-blue-500/20 hover:border-blue-300 transition-shadow duration-300"
       >
         {/* Icon with overlap */}
         <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-lg flex justify-center items-center ">
-          <span className="text-white text-5xl">{icon}</span>
+          <span className="text-white text-4xl">{icon}</span>
         </div>
 
         {/* Tool Name */}

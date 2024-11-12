@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { PDFDocument } from "pdf-lib"; // Import PDF-lib
+import { Back } from './back';
 
 const Compress = () => {
   const [file, setFile] = useState(null);
@@ -48,6 +49,7 @@ const Compress = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white shadow-md rounded-lg p-6 max-w-md w-full">
+      <Back/>
         <h1 className="text-2xl font-bold mb-6 text-center">PDF Compressor</h1>
 
         {/* File Upload */}

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import { PDFDocument } from 'pdf-lib';
 import 'pdfjs-dist/web/pdf_viewer.css';
+import { Back } from './back';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
@@ -156,6 +157,7 @@ const PdfCropper = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <Back/>
       <h1 className="text-2xl font-bold text-center text-black mb-4">PDF Cropper</h1>
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-full">
         

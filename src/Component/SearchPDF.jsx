@@ -1252,6 +1252,7 @@
 
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx'; // Import XLSX library
+import { Back } from './back';
 
 const ExcelSearch = () => {
   const [excelData, setExcelData] = useState([]); // Store parsed Excel data
@@ -1337,6 +1338,7 @@ const ExcelSearch = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6 -mt-16">
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-full lg:max-w-8xl">
+        <Back/>
          <div>
              
             <button className='px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600'><a href='https://www.ilovepdf.com/pdf_to_excel' target='_blank'>Click And Convert Pdf To Excel</a></button>

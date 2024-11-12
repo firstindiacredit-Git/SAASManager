@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Back } from './back';
 
 const TemperatureConverter = () => {
   const [temperature, setTemperature] = useState('');
@@ -36,6 +37,7 @@ const TemperatureConverter = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded p-6 max-w-sm w-full">
+       <Back/>
         <h1 className="text-2xl font-semibold mb-4 text-center">Temperature Converter</h1>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">

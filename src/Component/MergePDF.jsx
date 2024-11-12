@@ -1,6 +1,7 @@
 // Merge.js
 import React, { useState } from "react";
 import { PDFDocument } from "pdf-lib";
+import { Back } from "./back";
 
 const MergePDF = () => {
   const [files, setFiles] = useState([null]); // Initialize with one file input
@@ -68,6 +69,7 @@ const MergePDF = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white shadow-md rounded-lg p-6 max-w-md w-full">
+        <Back/>
         <h1 className="text-2xl font-bold mb-6 text-center">Merge PDFs</h1>
 
         {/* File Inputs */}

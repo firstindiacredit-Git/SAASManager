@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Back } from './back';
 
 function App() {
   const [file, setFile] = useState(null);
@@ -45,6 +46,7 @@ function App() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md">
+       <Back/>
         <h1 className="text-2xl font-bold mb-4">Unlock PDF</h1>
         <input 
           type="file" 

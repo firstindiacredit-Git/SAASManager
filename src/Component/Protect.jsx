@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Back } from './back';
 
 const Protect = () => {
   const [pdfFile, setPdfFile] = useState(null);
@@ -40,6 +41,7 @@ const Protect = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
+        <Back/>
         <h1 className="text-2xl font-bold mb-4 text-center">PDF Protector</h1>
         <input
           type="file"

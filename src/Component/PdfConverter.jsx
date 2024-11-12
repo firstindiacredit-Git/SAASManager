@@ -561,6 +561,7 @@
 import React, { useState } from 'react';
 import mammoth from 'mammoth';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import { Back } from './back';
 
 const PdfConverter = () => {
   const [file, setFile] = useState(null);
@@ -682,6 +683,7 @@ const PdfConverter = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg">
+        <Back/>
         <h1 className="text-2xl font-bold mb-4 text-center">Word to PDF Converter</h1>
 
         <input

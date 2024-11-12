@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Calculator.css';
+import { Back } from './back';
 
 const Calculator = () => {
     const [input, setInput] = useState("");
@@ -57,7 +58,9 @@ const Calculator = () => {
 
     return (
         <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-purple-100">
+           
             <div className="bg-white p-6 rounded-lg shadow-lg w-72 mb-4">
+                <Back/>
                 <h1 className="justify-center font-semibold text-2xl mb-4 text-center">Calculator</h1>
                 <div className="text-right mb-2">
                     <div className="text-3xl">{result || "0"}</div>
