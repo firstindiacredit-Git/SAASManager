@@ -22,7 +22,9 @@ export default defineConfig({
       }
     }
   },
-  
+  optimizeDeps: {
+    include: ['pdfjs-dist'],
+  },
 })
 
 // import { defineConfig } from 'vite';

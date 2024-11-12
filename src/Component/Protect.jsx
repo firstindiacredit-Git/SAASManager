@@ -20,7 +20,7 @@ const Protect = () => {
     formData.append("password", password);
 
     try {
-      const response = await fetch("http://16.16.246.83:8080/protect", {
+      const response = await fetch("https://saasbackend.pizeonfly.com/protect", {
         method: "POST",
         body: formData,
       });
