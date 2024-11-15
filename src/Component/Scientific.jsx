@@ -1,12 +1,12 @@
 import React from "react";
 import { Back } from "./back";
 
-const PdfToWord = () => {
+const Scientific = () => {
     return (
         <div style={{ width: "100%", height: "600px", border: "1px solid #ccc" }}>
-        <Back/>
+           <Back/>
             <iframe
-                src="https://pdftowordpizeonfly.vercel.app/" // Replace with the desired URL
+                src="https://scientific-calculator-weld-omega.vercel.app/" // Replace with the desired URL
                 width="100%"
                 height="100%"
                 style={{ border: "none" }}
@@ -16,4 +16,4 @@ const PdfToWord = () => {
     );
 };
 
-export default PdfToWord;
+export default Scientific;

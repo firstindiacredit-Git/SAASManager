@@ -57,7 +57,7 @@ const Calculator = () => {
     };
 
     return (
-        <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-purple-100">
+        <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-zink-100">
            
             <div className="bg-white p-6 rounded-lg shadow-lg w-72 mb-4">
                 <Back/>

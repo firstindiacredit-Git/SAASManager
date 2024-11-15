@@ -204,21 +204,23 @@ const ImageToPdf = () => {
   };
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
-      <Back/>
-      <h1 className="text-2xl font-bold mb-4 text-center">Upload Images to Convert to PDF</h1>
-      
+    <div className="p-6 max-w-2xl mx-auto bg-white rounded-lg shadow-lg mt-24">
+      <Back />
+      <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
+        Convert Images to PDF
+      </h1>
+
       <input
         type="file"
         accept="image/*"
         multiple
         onChange={handleImageUpload}
-        className="mb-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+        className="block w-full text-gray-600 border border-gray-300 rounded-md py-2 px-4 mb-4 text-sm file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700 focus:outline-none"
       />
-      
+
       <button
         onClick={generatePdf}
-        className="bg-blue-500 text-white py-2 px-4 rounded w-full mb-4 disabled:bg-blue-300"
+        className="w-full py-3 mb-6 text-lg font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-blue-300 transition-colors"
         disabled={images.length === 0}
       >
         Generate PDF
@@ -226,7 +228,7 @@ const ImageToPdf = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {images.map((image, index) => (
-          <div key={index} className="relative group border rounded-lg overflow-hidden shadow-md">
+          <div key={index} className="relative group border rounded-lg overflow-hidden shadow-lg">
             <img
               src={image}
               alt={`Uploaded ${index}`}
@@ -235,6 +237,7 @@ const ImageToPdf = () => {
             <button
               onClick={() => deleteImage(index)}
               className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              aria-label="Delete Image"
             >
               ✕
             </button>

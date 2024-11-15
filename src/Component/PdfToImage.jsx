@@ -264,6 +264,90 @@
 // export default PdfToImage;
 
 
+// import React, { useState } from "react";
+// import * as pdfjsLib from "pdfjs-dist";
+// import { FaDownload } from "react-icons/fa"; // Download icon
+// import { Back } from "./back";
+
+// // Create a Blob URL for the PDF worker
+// const pdfWorkerBlob = new Blob(
+//   [
+//     `
+//       importScripts('https://cdn.jsdelivr.net/npm/pdfjs-dist@2.16.105/build/pdf.worker.min.js');
+//     `
+//   ],
+//   { type: "application/javascript" }
+// );
+// pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(pdfWorkerBlob);
+
+// const PdfToImage = () => {
+//   const [images, setImages] = useState([]);
+
+//   const handleFileChange = async (e) => {
+//     const file = e.target.files[0];
+//     if (file && file.type === "application/pdf") {
+//       const fileReader = new FileReader();
+//       fileReader.onload = async () => {
+//         const typedArray = new Uint8Array(fileReader.result);
+//         const pdf = await pdfjsLib.getDocument(typedArray).promise;
+
+//         const pdfImages = [];
+//         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+//           const page = await pdf.getPage(pageNum);
+//           const scale = 2; // Adjust scale for image quality
+//           const viewport = page.getViewport({ scale });
+
+//           const canvas = document.createElement("canvas");
+//           const context = canvas.getContext("2d");
+//           canvas.width = viewport.width;
+//           canvas.height = viewport.height;
+
+//           await page.render({ canvasContext: context, viewport }).promise;
+//           pdfImages.push(canvas.toDataURL("image/jpeg"));
+//         }
+
+//         setImages(pdfImages);
+//       };
+//       fileReader.readAsArrayBuffer(file);
+//     }
+//   };
+
+//   return (
+//     <div className="flex flex-col items-center p-8 bg-gray-100 min-h-screen mt-18">
+//       <Back/>
+//       <h1 className="text-3xl font-bold text-gray-800 mb-6">PDF to Image Converter</h1>
+//       <p className="text-gray-600 mb-4">Upload a PDF file to convert each page into an image.</p>
+//       <input
+//         type="file"
+//         accept="application/pdf"
+//         onChange={handleFileChange}
+//         className="mb-5 p-2 border border-gray-300 rounded-md cursor-pointer text-gray-700 hover:bg-gray-200"
+//       />
+//       <div className="flex flex-wrap justify-center gap-8 mt-6">
+//         {images.map((imgSrc, index) => (
+//           <div key={index} className="relative border shadow-lg rounded-lg overflow-hidden">
+//             <img
+//               src={imgSrc}
+//               alt={`Page ${index + 1}`}
+//               className="w-64 h-auto"
+//             />
+//             <a
+//               href={imgSrc}
+//               download={`page-${index + 1}.jpg`}
+//               className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-md hover:bg-gray-100"
+//               title="Download Image"
+//             >
+//               <FaDownload className="text-gray-600" />
+//             </a>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PdfToImage;
+
 import React, { useState } from "react";
 import * as pdfjsLib from "pdfjs-dist";
 import { FaDownload } from "react-icons/fa"; // Download icon
@@ -313,23 +397,25 @@ const PdfToImage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-8 bg-gray-100 min-h-screen mt-18">
-      <Back/>
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">PDF to Image Converter</h1>
-      <p className="text-gray-600 mb-4">Upload a PDF file to convert each page into an image.</p>
+    <div className="flex flex-col items-center p-8 bg-gray-50 min-h-screen">
+      <Back />
+      <h1 className="text-3xl font-bold text-gray-800 mb-4">PDF to Image Converter</h1>
+      <p className="text-gray-600 mb-6 text-center">Upload a PDF file to convert each page into an image.</p>
+      
       <input
         type="file"
         accept="application/pdf"
         onChange={handleFileChange}
-        className="mb-5 p-2 border border-gray-300 rounded-md cursor-pointer text-gray-700 hover:bg-gray-200"
+        className="mb-5 py-2 px-4 border border-gray-300 rounded-md cursor-pointer text-gray-700 hover:bg-gray-200"
       />
-      <div className="flex flex-wrap justify-center gap-8 mt-6">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
         {images.map((imgSrc, index) => (
-          <div key={index} className="relative border shadow-lg rounded-lg overflow-hidden">
+          <div key={index} className="relative bg-white border rounded-lg shadow-lg overflow-hidden transition transform hover:scale-105 hover:shadow-xl">
             <img
               src={imgSrc}
               alt={`Page ${index + 1}`}
-              className="w-64 h-auto"
+              className="w-full h-64 object-cover"
             />
             <a
               href={imgSrc}
@@ -337,7 +423,7 @@ const PdfToImage = () => {
               className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-md hover:bg-gray-100"
               title="Download Image"
             >
-              <FaDownload className="text-gray-600" />
+              <FaDownload className="text-blue-600" />
             </a>
           </div>
         ))}

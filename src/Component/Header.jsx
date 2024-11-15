@@ -98,11 +98,11 @@ const Header = () => {
             <div className="container mx-auto px-4 flex items-center justify-between h-full">
                 {/* Logo Section */}
                 <Link to="/" className="flex items-center">
-                    <img src={logoimage} alt="Logo" className="h-10" />
+                    <img src={logoimage} alt="Logo" className="h-6 translate-y-1" />
                 </Link>
 
                 {/* Centered Title */}
-                <h1 className="hidden md:block text-xl font-bold absolute left-1/2 transform -translate-x-1/2 text-gray-800">
+                <h1 className="hidden md:block text-4xl font-bold absolute left-1/2 transform -translate-x-1/2 text-gray-800">
                     DAILY TOOLS
                 </h1>
 

@@ -257,6 +257,11 @@ const NewTab = () => {
         { name: 'Protect Pdf', path: '/protect', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Unlock Pdf', path: '/unlockpdf', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Pdf To image', path: '/pdftoimage', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Pdf To Word', path: '/pdftoword', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Scientific Calculator', path: '/scientific', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Email Checker', path: '/bulkemailchecker', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Email Sender', path: '/bulkemailsender', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Google Map Extractor', path: '/googlemap', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
     ];
 
     useEffect(() => {
@@ -397,11 +402,15 @@ const NewTab = () => {
                                 <ButtonComponent path="/protect" name="Protect Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                                 <ButtonComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                                 <ButtonComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                                <ButtonComponent path="/pdftoword" name="Pdf To Word" icon={<FaFilePdf className="mr-3 text-red-500" />} />
 
                             </div>
                             <div>
                                 <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4">TODO</h3>
                                 <ButtonComponent path="/grocery" name="Grocery List" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                <ButtonComponent path="/bulkemailchecker" name="Email Checker" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                <ButtonComponent path="/bulkemailsender" name="Email Sender" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                <ButtonComponent path="/googlemap" name="Google Map Extractor" icon={<FaTasks className="mr-3 text-purple-500" />} />
                             </div>
                             {/* Other Sections */}
                             <div>
@@ -409,6 +418,7 @@ const NewTab = () => {
                                 <ButtonComponent path="/calculator" name="Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
                                 <ButtonComponent path="/percentage" name="% Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
                                 <ButtonComponent path="/bmi" name="BMI Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                <ButtonComponent path="/scientific" name="Scientific Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
                             </div>
 
                             {/* CONVERTER Section */}
@@ -449,12 +459,16 @@ const NewTab = () => {
                                 <GridComponent path="/protect" name="Protect Pdf" icon={<FaFilePdf className="text-red-500" />} />
                                 <GridComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaFilePdf className="text-red-500" />} />
                                 <GridComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFilePdf className="text-red-500" />} />
+                                <GridComponent path="/pdftoword" name="Pdf To Word" icon={<FaFilePdf className="text-red-500" />} />
                             </div>
 
                             {/* TODO Section */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                                 <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">TODO</h3>
                                 <GridComponent path="/grocery" name="Grocery List" icon={<FaTasks className="text-purple-500" />} />
+                                <GridComponent path="/bulkemailchecker" name="Email Checker" icon={<FaTasks className="text-purple-500" />} />
+                                <GridComponent path="/bulkemailsender" name="Email Sender" icon={<FaTasks className="text-purple-500" />} />
+                                <GridComponent path="/googlemap" name="Google Map Extractor" icon={<FaTasks className="text-purple-500" />} />
                             </div>
 
                             {/* Calculator Section */}
@@ -463,6 +477,7 @@ const NewTab = () => {
                                 <GridComponent path="/calculator" name="Calculator" icon={<FaCalculator className="text-teal-500" />} />
                                 <GridComponent path="/percentage" name="% Calculator" icon={<FaCalculator className="text-teal-500" />} />
                                 <GridComponent path="/bmi" name="BMI Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                <GridComponent path="/scientific" name="Scientific Calculator" icon={<FaCalculator className="text-teal-500" />} />
                             </div>
 
                             {/* Converter Section */}

@@ -28,6 +28,11 @@ import AddPageNum from './Component/AddPageNum.jsx';
 import Protect from './Component/Protect.jsx';
 import UnlockPdf from './Component/UnlockPdf.jsx';
 import PdfToImage from './Component/PdfToImage.jsx';
+import PdfToWord from './Component/PdfToWord.jsx';
+import Scientific from './Component/Scientific.jsx';
+import BulkEmailChecker from './Component/BulkEmailChecker.jsx';
+import BulkEmailSender from './Component/BulkEmailSender.jsx';
+import GoogleMap from './Component/GoogleMap.jsx';
 function App() {
   return (
     <div className='mt-14'>
@@ -63,6 +68,11 @@ function App() {
           <Route path="/protect" element={<Protect />} />
           <Route path="/unlockpdf" element={<UnlockPdf />} />
           <Route path="/pdftoimage" element={<PdfToImage />} />
+          <Route path="/pdftoword" element={<PdfToWord />} />
+          <Route path="/scientific" element={<Scientific />} />
+          <Route path="/bulkemailchecker" element={<BulkEmailChecker />} />
+          <Route path="/bulkemailsender" element={<BulkEmailSender />} />
+          <Route path="/googlemap" element={<GoogleMap />} />
         </Routes>
       </div>
     
