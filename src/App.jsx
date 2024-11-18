@@ -33,6 +33,17 @@ import Scientific from './Component/Scientific.jsx';
 import BulkEmailChecker from './Component/BulkEmailChecker.jsx';
 import BulkEmailSender from './Component/BulkEmailSender.jsx';
 import GoogleMap from './Component/GoogleMap.jsx';
+import CardValidation from './Component/CardValidation.jsx';
+import CardGenerator from './Component/CardGenerator.jsx';
+import TemplateGenerator from './Component/TemplateGenerator.jsx';
+import CompareLoan from './Component/CompareLoan.jsx';
+import CurrencyConverter from './Component/CurrencyConverter.jsx';
+import TextToSpeech from './Component/TextToSpeech.jsx';
+import SpeechToText from './Component/SpeechToText.jsx';
+import OnlineVoiceRecorder from './Component/OnlineVoiceRecorder.jsx';
+import OnlineScreenrecoder from './Component/OnlineScreenrecoder.jsx';
+import OnlineScreenshot from './Component/OnlineScreenshot.jsx';
+import OnlineWebcamTest from './Component/OnlineWebcamTest.jsx';
 function App() {
   return (
     <div className='mt-14'>
@@ -73,6 +84,17 @@ function App() {
           <Route path="/bulkemailchecker" element={<BulkEmailChecker />} />
           <Route path="/bulkemailsender" element={<BulkEmailSender />} />
           <Route path="/googlemap" element={<GoogleMap />} />
+          <Route path="/cardvalidation" element={<CardValidation />} />
+          <Route path="/cardgenerator" element={<CardGenerator />} />
+          <Route path="/templategenerator" element={<TemplateGenerator />} />
+          <Route path="/compareloan" element={<CompareLoan />} />
+          <Route path="/currencyconverter" element={<CurrencyConverter />} />
+          <Route path="/texttospeech" element={<TextToSpeech />} />
+          <Route path="/speechtotext" element={<SpeechToText />} />
+          <Route path="/onlinevoiceRecorder" element={<OnlineVoiceRecorder />} />
+          <Route path="/onlinescreenRecorder" element={<OnlineScreenrecoder />} />
+          <Route path="/onlinescreenshot" element={<OnlineScreenshot />} />
+          <Route path="/onlinewebcamtest" element={<OnlineWebcamTest />} />
         </Routes>
       </div>
     

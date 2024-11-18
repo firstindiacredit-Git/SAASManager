@@ -213,10 +213,11 @@
 
 
 import React, { useState, useEffect, useRef } from 'react';
-import { FaFilePdf, FaTasks, FaCalculator, FaTh } from 'react-icons/fa';
+import { FaFilePdf, FaTasks, FaCalculator, FaTh, FaFileImage, FaEdit, FaUnlockAlt, FaLock, FaStream, FaCropAlt } from 'react-icons/fa';
+import { AiFillFileText, AiOutlineMergeCells, AiOutlineNumber } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import ButtonComponent from './ButtonComponent';
-import { FaList } from 'react-icons/fa6';
+import { FaCompress, FaList, FaScissors } from 'react-icons/fa6';
 import GridComponent from './GridComponent';
 import Header from './Component/Header';
 
@@ -262,6 +263,17 @@ const NewTab = () => {
         { name: 'Email Checker', path: '/bulkemailchecker', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Email Sender', path: '/bulkemailsender', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Google Map Extractor', path: '/googlemap', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Compare Loan', path: '/compareloan', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Card Validator', path: '/cardvalidation', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Card Generator', path: '/cardgenerator', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Html template Generator', path: '/templategenerator', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Currency Converter', path: '/currencyconverter', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Text To Speech', path: '/texttospeech', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Speech To Text', path: '/speechtotext', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Online Voice Recorder', path: '/onlinevoiceRecorder', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Online Screen Recorder', path: '/onlinescreenRecorder', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Online ScreenShot', path: '/onlinescreenshot', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Online WebCam Test', path: '/onlinewebcamtest', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
     ];
 
     useEffect(() => {
@@ -388,20 +400,20 @@ const NewTab = () => {
                             <div>
                                 <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4">PDF</h3>
                                 <ButtonComponent path="/imagetopdf" name="Image To Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                                <ButtonComponent path="/splitpdf" name="Split Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                                <ButtonComponent path="/compress" name="Compress Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                                <ButtonComponent path="/mergepdf" name="Merge Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                                <ButtonComponent path="/pdfconverter" name="Word To Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                                <ButtonComponent path="/splitpdf" name="Split Pdf" icon={<FaScissors className="mr-3 text-blue-500" />} />
+                                <ButtonComponent path="/compress" name="Compress Pdf" icon={<FaCompress className="mr-3 text-red-500" />} />
+                                <ButtonComponent path="/mergepdf" name="Merge Pdf" icon={<AiOutlineMergeCells className="mr-3 text-blue-500" />} />
+                                <ButtonComponent path="/pdfconverter" name="Word To Pdf" icon={<AiFillFileText className="mr-3 text-red-600" />} />
                                 <ButtonComponent path="/searchpdf" name="Search Excel" icon={<FaFilePdf className="mr-3 text-red-500" />} />
                                 {/* <ButtonComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} /> */}
                                 {/* <ButtonComponent path="/upload" name="Edit Image" icon={<FaFilePdf className="mr-3 text-red-500" />} /> */}
-                                <ButtonComponent path="/editpdf" name="Edit Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                                <ButtonComponent path="/extractpages" name="Extract Page" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                                <ButtonComponent path="/pdfcropper" name="Pdf Cropper" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                                <ButtonComponent path="/addpagenum" name="Add page No." icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                                <ButtonComponent path="/protect" name="Protect Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                                <ButtonComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                                <ButtonComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                                <ButtonComponent path="/editpdf" name="Edit Pdf" icon={<FaEdit className="mr-3 text-green-500" />} />
+                                <ButtonComponent path="/extractpages" name="Extract Page" icon={<FaStream className="mr-3 text-blue-800" />} />
+                                <ButtonComponent path="/pdfcropper" name="Pdf Cropper" icon={<FaCropAlt className="mr-3 text-green-300" />} />
+                                <ButtonComponent path="/addpagenum" name="Add page No." icon={<AiOutlineNumber className="mr-3 text-green-300" />} />
+                                <ButtonComponent path="/protect" name="Protect Pdf" icon={<FaLock className="mr-3 text-pink-700" />} />
+                                <ButtonComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaUnlockAlt className="mr-3 text-pink-500" />} />
+                                <ButtonComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFileImage className="mr-3 text-yellow-500" />} />
                                 <ButtonComponent path="/pdftoword" name="Pdf To Word" icon={<FaFilePdf className="mr-3 text-red-500" />} />
 
                             </div>
@@ -411,6 +423,9 @@ const NewTab = () => {
                                 <ButtonComponent path="/bulkemailchecker" name="Email Checker" icon={<FaTasks className="mr-3 text-purple-500" />} />
                                 <ButtonComponent path="/bulkemailsender" name="Email Sender" icon={<FaTasks className="mr-3 text-purple-500" />} />
                                 <ButtonComponent path="/googlemap" name="Google Map Extractor" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                <ButtonComponent path="/cardvalidation" name="Card Validator" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                <ButtonComponent path="/cardgenerator" name="Card Generator" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                <ButtonComponent path="/templategenerator" name="Html Template Generator" icon={<FaTasks className="mr-3 text-purple-500" />} />
                             </div>
                             {/* Other Sections */}
                             <div>
@@ -419,6 +434,8 @@ const NewTab = () => {
                                 <ButtonComponent path="/percentage" name="% Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
                                 <ButtonComponent path="/bmi" name="BMI Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
                                 <ButtonComponent path="/scientific" name="Scientific Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                <ButtonComponent path="/compareloan" name="Compare Loan" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                <ButtonComponent path="/currencyconverter" name="Currency Converter" icon={<FaCalculator className="mr-3 text-teal-500" />} />
                             </div>
 
                             {/* CONVERTER Section */}
@@ -427,6 +444,12 @@ const NewTab = () => {
                                 <ButtonComponent path="/faren-to-celcius" name="Fahrenheit to Celsius" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
                                 <ButtonComponent path="/second" name="Second to Hour" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
                                 <ButtonComponent path="/hours" name="Hour to Second" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                <ButtonComponent path="/texttospeech" name="Text To Speech" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                <ButtonComponent path="/speechtotext" name="Speech To Text" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                <ButtonComponent path="/onlinevoiceRecorder" name="Online Voice Recorder" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                <ButtonComponent path="/onlinescreenRecorder" name="Online Screen Recorder" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                <ButtonComponent path="/onlinescreenshot" name="Online ScreenShot" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                <ButtonComponent path="/onlinewebcamtest" name="Online Webcam Test" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
 
                             </div>
 
@@ -446,19 +469,19 @@ const NewTab = () => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                                 <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">PDF</h3>
                                 <GridComponent path="/imagetopdf" name="Image To Pdf" icon={<FaFilePdf className="text-red-500" />} />
-                                <GridComponent path="/splitpdf" name="Split Pdf" icon={<FaFilePdf className="text-red-500" />} />
-                                <GridComponent path="/compress" name="Compress Pdf" icon={<FaFilePdf className="text-red-500" />} />
-                                <GridComponent path="/mergepdf" name="Merge Pdf" icon={<FaFilePdf className="text-red-500" />} />
-                                <GridComponent path="/pdfconverter" name="Word To Pdf" icon={<FaFilePdf className="text-red-500" />} />
+                                <GridComponent path="/splitpdf" name="Split Pdf" icon={<FaScissors className="text-blue-500" />} />
+                                <GridComponent path="/compress" name="Compress Pdf" icon={<FaCompress className="text-red-500" />} />
+                                <GridComponent path="/mergepdf" name="Merge Pdf" icon={<AiOutlineMergeCells className="text-blue-500" />} />
+                                <GridComponent path="/pdfconverter" name="Word To Pdf" icon={<AiFillFileText className="text-red-600" />} />
                                 <GridComponent path="/searchpdf" name="Search Excel" icon={<FaFilePdf className="text-red-500" />} />
                                 {/* <GridComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="text-red-500" />} /> */}
-                                <GridComponent path="/editpdf" name="Edit Pdf" icon={<FaFilePdf className="text-red-500" />} />
-                                <GridComponent path="/extractpages" name="Extract page" icon={<FaFilePdf className="text-red-500" />} />
-                                <GridComponent path="/pdfcropper" name="Pdf Cropper" icon={<FaFilePdf className="text-red-500" />} />
-                                <GridComponent path="/addpagenum" name="Add page No." icon={<FaFilePdf className="text-red-500" />} />
-                                <GridComponent path="/protect" name="Protect Pdf" icon={<FaFilePdf className="text-red-500" />} />
-                                <GridComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaFilePdf className="text-red-500" />} />
-                                <GridComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFilePdf className="text-red-500" />} />
+                                <GridComponent path="/editpdf" name="Edit Pdf" icon={<FaEdit className="text-green-500" />} />
+                                <GridComponent path="/extractpages" name="Extract page" icon={<FaStream className="text-blue-800" />} />
+                                <GridComponent path="/pdfcropper" name="Pdf Cropper" icon={<FaCropAlt className="text-green-300" />} />
+                                <GridComponent path="/addpagenum" name="Add page No." icon={<AiOutlineNumber className="text-green-300" />} />
+                                <GridComponent path="/protect" name="Protect Pdf" icon={<FaLock className="text-pink-700" />} />
+                                <GridComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaUnlockAlt className="text-pink-500" />} />
+                                <GridComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFileImage className="text-yellow-500" />} />
                                 <GridComponent path="/pdftoword" name="Pdf To Word" icon={<FaFilePdf className="text-red-500" />} />
                             </div>
 
@@ -469,6 +492,9 @@ const NewTab = () => {
                                 <GridComponent path="/bulkemailchecker" name="Email Checker" icon={<FaTasks className="text-purple-500" />} />
                                 <GridComponent path="/bulkemailsender" name="Email Sender" icon={<FaTasks className="text-purple-500" />} />
                                 <GridComponent path="/googlemap" name="Google Map Extractor" icon={<FaTasks className="text-purple-500" />} />
+                                <GridComponent path="/cardvalidation" name="Card Validator" icon={<FaTasks className="text-purple-500" />} />
+                                <GridComponent path="/cardgenerator" name="Card Generator" icon={<FaTasks className="text-purple-500" />} />
+                                <GridComponent path="/templategenerator" name="Html Template Generator" icon={<FaTasks className="text-purple-500" />} />
                             </div>
 
                             {/* Calculator Section */}
@@ -478,6 +504,8 @@ const NewTab = () => {
                                 <GridComponent path="/percentage" name="% Calculator" icon={<FaCalculator className="text-teal-500" />} />
                                 <GridComponent path="/bmi" name="BMI Calculator" icon={<FaCalculator className="text-teal-500" />} />
                                 <GridComponent path="/scientific" name="Scientific Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                <GridComponent path="/compareloan" name="Compare Loan" icon={<FaCalculator className="text-teal-500" />} />
+                                <GridComponent path="/currencyconverter" name="Currency Converter" icon={<FaCalculator className="text-teal-500" />} />
                             </div>
 
                             {/* Converter Section */}
@@ -486,6 +514,12 @@ const NewTab = () => {
                                 <GridComponent path="/faren-to-celcius" name="Fahren to Celsius" icon={<FaFilePdf className="text-blue-500" />} />
                                 <GridComponent path="/second" name="Seconds to Hour" icon={<FaFilePdf className="text-blue-500" />} />
                                 <GridComponent path="/hours" name="Hour to Second" icon={<FaFilePdf className="text-blue-500" />} />
+                                <GridComponent path="/texttospeech" name="Text To Speech" icon={<FaFilePdf className="text-blue-500" />} />
+                                <GridComponent path="/speechtotext" name="Speech To Text" icon={<FaFilePdf className="text-blue-500" />} />
+                                <GridComponent path="/onlinevoiceRecorder" name="Online Voice Recorder" icon={<FaFilePdf className="text-blue-500" />} />
+                                <GridComponent path="/onlinescreenRecorder" name="Online Screen Recorder" icon={<FaFilePdf className="text-blue-500" />} />
+                                <GridComponent path="/onlinescreenshot" name="Online ScreenShot" icon={<FaFilePdf className="text-blue-500" />} />
+                                <GridComponent path="/onlinewebcamtest" name="Online Webcam Test" icon={<FaFilePdf className="text-blue-500" />} />
                             </div>
 
                             {/* Misc Section */}
