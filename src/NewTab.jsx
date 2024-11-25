@@ -318,7 +318,7 @@ const NewTab = () => {
                 </header> */}
 
                 {/* Search Bar */}
-                <div className="w-full max-w-3xl mx-auto mt-10 mb-8">
+                <div className="w-full max-w-3xl mx-auto mt-10 mb-8 sticky top-20 bg-white z-50 shadow">
                     <div className="relative">
                         <input
                             type="text"
