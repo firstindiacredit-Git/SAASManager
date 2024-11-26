@@ -227,7 +227,7 @@ const NewTab = () => {
     const [viewType, setViewType] = useState('list');
     const searchInputRef = useRef(null);
     const popupRef = useRef(null);
-    const removeinput = ()=>{
+    const removeinput = () => {
         setSearchQuery('');
         setPopupOpen(true)
     }
@@ -274,6 +274,14 @@ const NewTab = () => {
         { name: 'Online Screen Recorder', path: '/onlinescreenRecorder', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Online ScreenShot', path: '/onlinescreenshot', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Online WebCam Test', path: '/onlinewebcamtest', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Phone Number Formatter', path: '/phonenumberformat', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Random Password Generator', path: '/randompassword', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Fraction Calculator', path: '/fractioncalculator', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Average Calculator', path: '/averagecalculator', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'LCM Calculator', path: '/lcm', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Age Calculator', path: '/agecalculator', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Date Difference Calculator', path: '/datediffcalculator', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Linkedin Scraper', path: '/linkedinscraper', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
     ];
 
     useEffect(() => {
@@ -318,7 +326,7 @@ const NewTab = () => {
                 </header> */}
 
                 {/* Search Bar */}
-                <div className="w-full max-w-3xl mx-auto mt-10 mb-8 sticky top-20 bg-white z-50 shadow">
+                <div className="w-full max-w-3xl mx-auto mt-10 mb-8 sticky rounded-lg top-16 bg-white z-50 shadow">
                     <div className="relative">
                         <input
                             type="text"
@@ -332,7 +340,7 @@ const NewTab = () => {
                     </div>
                 </div>
 
-                <div className="flex gap-4 mb-8">
+                <div className="flex gap-4 mb-8 sticky top-32 z-10 bg-white rounded-lg p-2 shadow-md">
                     <button
                         onClick={() => setViewType('grid')}
                         className={`p-2 rounded-lg ${viewType === 'grid' ? 'bg-gray-200' : ''}`}
@@ -347,22 +355,23 @@ const NewTab = () => {
                     </button>
                 </div>
 
+
                 {isPopupOpen && (
                     <div className={`fixed inset-0  bg-black bg-opacity-50 flex items-center mt-14 justify-center ${viewType === 'grid' ? 'z-50' : 'z-30'}`}>
                         <div ref={popupRef} className={`bg-white  max-h-96 p-2 rounded-lg shadow-lg w-full max-w-md overflow-y-auto ${viewType === 'grid' ? 'z-50' : 'z-30'}`}>
 
                             <div className="flex  items-baseline ">
-                            <input
-                                ref={searchInputRef}
-                                type="text"
-                                className="w-full border-b-2 translate-x-3 bg-white p-2 focus:outline-none mb-4"
-                                placeholder="Search for a tool..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
+                                <input
+                                    ref={searchInputRef}
+                                    type="text"
+                                    className="w-full border-b-2 translate-x-3 bg-white p-2 focus:outline-none mb-4"
+                                    placeholder="Search for a tool..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
                                 <div className='-translate-x-3 hover:cursor-pointer transition-all' onClick={(e) => setSearchQuery(e.target.value = '')}>clear</div>
                             </div>
-                            <div  className={`bg-white max-h-64 min-h-44 p-4 flex flex-col justify-between  items-start w-full max-w-md overflow-y-auto ${viewType === 'grid' ? 'z-50' : 'z-30'}`}>
+                            <div className={`bg-white max-h-64 min-h-44 p-4 flex flex-col justify-between  items-start w-full max-w-md overflow-y-auto ${viewType === 'grid' ? 'z-50' : 'z-30'}`}>
 
                                 <div className='min-h-32   w-full '>
                                     {searchQuery && filteredTools.length > 0 ? (
@@ -379,159 +388,176 @@ const NewTab = () => {
 
                                             <p className="  text-gray-500">No tools found.</p>
                                         </div>
-                                        
+
                                     )}
                                 </div>
-                                
+
                             </div>
                             <button
-                                    className=" border-t w-full p-2 text-sm text-blue-500"
-                                    onClick={() => setPopupOpen(false)}
-                                >
-                                    Close
-                                </button>
+                                className=" border-t w-full p-2 text-sm text-blue-500"
+                                onClick={() => setPopupOpen(false)}
+                            >
+                                Close
+                            </button>
                         </div>
                     </div>
                 )}
+                <div>
+                    <div className="w-full max-w-5xl mx-auto">
+                        {viewType === 'list' ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 text-center">
+                                <div>
+                                    <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4">PDF</h3>
+                                    <ButtonComponent path="/imagetopdf" name="Image To Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                                    <ButtonComponent path="/splitpdf" name="Split Pdf" icon={<FaScissors className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/compress" name="Compress Pdf" icon={<FaCompress className="mr-3 text-red-500" />} />
+                                    <ButtonComponent path="/mergepdf" name="Merge Pdf" icon={<AiOutlineMergeCells className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/pdfconverter" name="Word To Pdf" icon={<AiFillFileText className="mr-3 text-red-600" />} />
+                                    <ButtonComponent path="/searchpdf" name="Search Excel" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                                    {/* <ButtonComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} /> */}
+                                    {/* <ButtonComponent path="/upload" name="Edit Image" icon={<FaFilePdf className="mr-3 text-red-500" />} /> */}
+                                    <ButtonComponent path="/editpdf" name="Edit Pdf" icon={<FaEdit className="mr-3 text-green-500" />} />
+                                    <ButtonComponent path="/extractpages" name="Extract Page" icon={<FaStream className="mr-3 text-blue-800" />} />
+                                    <ButtonComponent path="/pdfcropper" name="Pdf Cropper" icon={<FaCropAlt className="mr-3 text-green-300" />} />
+                                    <ButtonComponent path="/addpagenum" name="Add page No." icon={<AiOutlineNumber className="mr-3 text-green-300" />} />
+                                    <ButtonComponent path="/protect" name="Protect Pdf" icon={<FaLock className="mr-3 text-pink-700" />} />
+                                    <ButtonComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaUnlockAlt className="mr-3 text-pink-500" />} />
+                                    <ButtonComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFileImage className="mr-3 text-yellow-500" />} />
+                                    <ButtonComponent path="/pdftoword" name="Pdf To Word" icon={<FaFilePdf className="mr-3 text-red-500" />} />
 
-                <div className="w-full max-w-5xl mx-auto">
-                    {viewType === 'list' ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 text-center">
-                            <div>
-                                <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4">PDF</h3>
-                                <ButtonComponent path="/imagetopdf" name="Image To Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                                <ButtonComponent path="/splitpdf" name="Split Pdf" icon={<FaScissors className="mr-3 text-blue-500" />} />
-                                <ButtonComponent path="/compress" name="Compress Pdf" icon={<FaCompress className="mr-3 text-red-500" />} />
-                                <ButtonComponent path="/mergepdf" name="Merge Pdf" icon={<AiOutlineMergeCells className="mr-3 text-blue-500" />} />
-                                <ButtonComponent path="/pdfconverter" name="Word To Pdf" icon={<AiFillFileText className="mr-3 text-red-600" />} />
-                                <ButtonComponent path="/searchpdf" name="Search Excel" icon={<FaFilePdf className="mr-3 text-red-500" />} />
-                                {/* <ButtonComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="mr-3 text-red-500" />} /> */}
-                                {/* <ButtonComponent path="/upload" name="Edit Image" icon={<FaFilePdf className="mr-3 text-red-500" />} /> */}
-                                <ButtonComponent path="/editpdf" name="Edit Pdf" icon={<FaEdit className="mr-3 text-green-500" />} />
-                                <ButtonComponent path="/extractpages" name="Extract Page" icon={<FaStream className="mr-3 text-blue-800" />} />
-                                <ButtonComponent path="/pdfcropper" name="Pdf Cropper" icon={<FaCropAlt className="mr-3 text-green-300" />} />
-                                <ButtonComponent path="/addpagenum" name="Add page No." icon={<AiOutlineNumber className="mr-3 text-green-300" />} />
-                                <ButtonComponent path="/protect" name="Protect Pdf" icon={<FaLock className="mr-3 text-pink-700" />} />
-                                <ButtonComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaUnlockAlt className="mr-3 text-pink-500" />} />
-                                <ButtonComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFileImage className="mr-3 text-yellow-500" />} />
-                                <ButtonComponent path="/pdftoword" name="Pdf To Word" icon={<FaFilePdf className="mr-3 text-red-500" />} />
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4">TODO</h3>
+                                    <ButtonComponent path="/grocery" name="Grocery List" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                    <ButtonComponent path="/bulkemailchecker" name="Email Checker" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                    <ButtonComponent path="/bulkemailsender" name="Email Sender" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                    <ButtonComponent path="/googlemap" name="Google Map Extractor" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                    <ButtonComponent path="/cardvalidation" name="Card Validator" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                    <ButtonComponent path="/cardgenerator" name="Card Generator" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                    <ButtonComponent path="/templategenerator" name="Html Template Generator" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                    <ButtonComponent path="/phonenumberformat" name="phone Number Formatter" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                    <ButtonComponent path="/randompassword" name="Randoem Password Generator" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                    <ButtonComponent path="/Linkedinscraper" name="Linkedin Scrapper" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                </div>
+                                {/* Other Sections */}
+                                <div>
+                                    <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4">CALCULATOR</h3>
+                                    <ButtonComponent path="/calculator" name="Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/percentage" name="% Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/bmi" name="BMI Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/scientific" name="Scientific Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/compareloan" name="Compare Loan" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/currencyconverter" name="Currency Converter" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/fractioncalculator" name="Fraction Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/averagecalculator" name="Average Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/lcm" name="LCM Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/agecalculator" name="Age Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/datediffcalculator" name="Date Difference Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                </div>
 
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4">TODO</h3>
-                                <ButtonComponent path="/grocery" name="Grocery List" icon={<FaTasks className="mr-3 text-purple-500" />} />
-                                <ButtonComponent path="/bulkemailchecker" name="Email Checker" icon={<FaTasks className="mr-3 text-purple-500" />} />
-                                <ButtonComponent path="/bulkemailsender" name="Email Sender" icon={<FaTasks className="mr-3 text-purple-500" />} />
-                                <ButtonComponent path="/googlemap" name="Google Map Extractor" icon={<FaTasks className="mr-3 text-purple-500" />} />
-                                <ButtonComponent path="/cardvalidation" name="Card Validator" icon={<FaTasks className="mr-3 text-purple-500" />} />
-                                <ButtonComponent path="/cardgenerator" name="Card Generator" icon={<FaTasks className="mr-3 text-purple-500" />} />
-                                <ButtonComponent path="/templategenerator" name="Html Template Generator" icon={<FaTasks className="mr-3 text-purple-500" />} />
-                            </div>
-                            {/* Other Sections */}
-                            <div>
-                                <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4">CALCULATOR</h3>
-                                <ButtonComponent path="/calculator" name="Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
-                                <ButtonComponent path="/percentage" name="% Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
-                                <ButtonComponent path="/bmi" name="BMI Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
-                                <ButtonComponent path="/scientific" name="Scientific Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
-                                <ButtonComponent path="/compareloan" name="Compare Loan" icon={<FaCalculator className="mr-3 text-teal-500" />} />
-                                <ButtonComponent path="/currencyconverter" name="Currency Converter" icon={<FaCalculator className="mr-3 text-teal-500" />} />
-                            </div>
+                                {/* CONVERTER Section */}
+                                <div>
+                                    <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4">CONVERTER</h3>
+                                    <ButtonComponent path="/faren-to-celcius" name="Fahrenheit to Celsius" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/second" name="Second to Hour" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/hours" name="Hour to Second" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/texttospeech" name="Text To Speech" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/speechtotext" name="Speech To Text" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/onlinevoiceRecorder" name="Online Voice Recorder" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/onlinescreenRecorder" name="Online Screen Recorder" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/onlinescreenshot" name="Online ScreenShot" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/onlinewebcamtest" name="Online Webcam Test" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
 
-                            {/* CONVERTER Section */}
-                            <div>
-                                <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4">CONVERTER</h3>
-                                <ButtonComponent path="/faren-to-celcius" name="Fahrenheit to Celsius" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
-                                <ButtonComponent path="/second" name="Second to Hour" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
-                                <ButtonComponent path="/hours" name="Hour to Second" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
-                                <ButtonComponent path="/texttospeech" name="Text To Speech" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
-                                <ButtonComponent path="/speechtotext" name="Speech To Text" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
-                                <ButtonComponent path="/onlinevoiceRecorder" name="Online Voice Recorder" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
-                                <ButtonComponent path="/onlinescreenRecorder" name="Online Screen Recorder" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
-                                <ButtonComponent path="/onlinescreenshot" name="Online ScreenShot" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
-                                <ButtonComponent path="/onlinewebcamtest" name="Online Webcam Test" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                </div>
 
-                            </div>
+                                {/* MISC Section */}
+                                <div>
+                                    <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4">MISC</h3>
+                                    <ButtonComponent path="/paypal" name="Paypal Link Gen." icon={<FaFilePdf className="mr-3 text-pink-500" />} />
+                                    <ButtonComponent path="/beautifier" name="HTML Beautifier" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
+                                    <ButtonComponent path="/resumebuild" name="Resume Builder" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
+                                    <ButtonComponent path="/linkchecker" name="Website Link Checker" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
 
-                            {/* MISC Section */}
-                            <div>
-                                <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4">MISC</h3>
-                                <ButtonComponent path="/paypal" name="Paypal Link Gen." icon={<FaFilePdf className="mr-3 text-pink-500" />} />
-                                <ButtonComponent path="/beautifier" name="HTML Beautifier" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
-                                <ButtonComponent path="/resumebuild" name="Resume Builder" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
-                                <ButtonComponent path="/linkchecker" name="Website Link Checker" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className='relative Z-10'>
+                                {/* Render Grid View */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                                    <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">PDF</h3>
+                                    <GridComponent path="/imagetopdf" name="Image To Pdf" icon={<FaFilePdf className="text-red-500" />} />
+                                    <GridComponent path="/splitpdf" name="Split Pdf" icon={<FaScissors className="text-blue-500" />} />
+                                    <GridComponent path="/compress" name="Compress Pdf" icon={<FaCompress className="text-red-500" />} />
+                                    <GridComponent path="/mergepdf" name="Merge Pdf" icon={<AiOutlineMergeCells className="text-blue-500" />} />
+                                    <GridComponent path="/pdfconverter" name="Word To Pdf" icon={<AiFillFileText className="text-red-600" />} />
+                                    <GridComponent path="/searchpdf" name="Search Excel" icon={<FaFilePdf className="text-red-500" />} />
+                                    {/* <GridComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="text-red-500" />} /> */}
+                                    <GridComponent path="/editpdf" name="Edit Pdf" icon={<FaEdit className="text-green-500" />} />
+                                    <GridComponent path="/extractpages" name="Extract page" icon={<FaStream className="text-blue-800" />} />
+                                    <GridComponent path="/pdfcropper" name="Pdf Cropper" icon={<FaCropAlt className="text-green-300" />} />
+                                    <GridComponent path="/addpagenum" name="Add page No." icon={<AiOutlineNumber className="text-green-300" />} />
+                                    <GridComponent path="/protect" name="Protect Pdf" icon={<FaLock className="text-pink-700" />} />
+                                    <GridComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaUnlockAlt className="text-pink-500" />} />
+                                    <GridComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFileImage className="text-yellow-500" />} />
+                                    <GridComponent path="/pdftoword" name="Pdf To Word" icon={<FaFilePdf className="text-red-500" />} />
+                                </div>
 
-                            </div>
-                        </div>
-                    ) : (
-                        <div className='relative Z-10'>
-                            {/* Render Grid View */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-                                <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">PDF</h3>
-                                <GridComponent path="/imagetopdf" name="Image To Pdf" icon={<FaFilePdf className="text-red-500" />} />
-                                <GridComponent path="/splitpdf" name="Split Pdf" icon={<FaScissors className="text-blue-500" />} />
-                                <GridComponent path="/compress" name="Compress Pdf" icon={<FaCompress className="text-red-500" />} />
-                                <GridComponent path="/mergepdf" name="Merge Pdf" icon={<AiOutlineMergeCells className="text-blue-500" />} />
-                                <GridComponent path="/pdfconverter" name="Word To Pdf" icon={<AiFillFileText className="text-red-600" />} />
-                                <GridComponent path="/searchpdf" name="Search Excel" icon={<FaFilePdf className="text-red-500" />} />
-                                {/* <GridComponent path="/searchexcelpdf" name="Search Pdf" icon={<FaFilePdf className="text-red-500" />} /> */}
-                                <GridComponent path="/editpdf" name="Edit Pdf" icon={<FaEdit className="text-green-500" />} />
-                                <GridComponent path="/extractpages" name="Extract page" icon={<FaStream className="text-blue-800" />} />
-                                <GridComponent path="/pdfcropper" name="Pdf Cropper" icon={<FaCropAlt className="text-green-300" />} />
-                                <GridComponent path="/addpagenum" name="Add page No." icon={<AiOutlineNumber className="text-green-300" />} />
-                                <GridComponent path="/protect" name="Protect Pdf" icon={<FaLock className="text-pink-700" />} />
-                                <GridComponent path="/unlockpdf" name="Unlock Pdf" icon={<FaUnlockAlt className="text-pink-500" />} />
-                                <GridComponent path="/pdftoimage" name="Pdf To Image" icon={<FaFileImage className="text-yellow-500" />} />
-                                <GridComponent path="/pdftoword" name="Pdf To Word" icon={<FaFilePdf className="text-red-500" />} />
-                            </div>
+                                {/* TODO Section */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                                    <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">TODO</h3>
+                                    <GridComponent path="/grocery" name="Grocery List" icon={<FaTasks className="text-purple-500" />} />
+                                    <GridComponent path="/bulkemailchecker" name="Email Checker" icon={<FaTasks className="text-purple-500" />} />
+                                    <GridComponent path="/bulkemailsender" name="Email Sender" icon={<FaTasks className="text-purple-500" />} />
+                                    <GridComponent path="/googlemap" name="Google Map Extractor" icon={<FaTasks className="text-purple-500" />} />
+                                    <GridComponent path="/cardvalidation" name="Card Validator" icon={<FaTasks className="text-purple-500" />} />
+                                    <GridComponent path="/cardgenerator" name="Card Generator" icon={<FaTasks className="text-purple-500" />} />
+                                    <GridComponent path="/templategenerator" name="Html Template Generator" icon={<FaTasks className="text-purple-500" />} />
+                                    <GridComponent path="/phoneNumberFormat" name="Phone number Formatter" icon={<FaTasks className="text-purple-500" />} />
+                                    <GridComponent path="/randompassword" name="Random Password Generator" icon={<FaTasks className="text-purple-500" />} />
+                                    <GridComponent path="/linkedinscraper" name="Linkedin Scraper" icon={<FaTasks className="text-purple-500" />} />
+                                </div>
 
-                            {/* TODO Section */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-                                <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">TODO</h3>
-                                <GridComponent path="/grocery" name="Grocery List" icon={<FaTasks className="text-purple-500" />} />
-                                <GridComponent path="/bulkemailchecker" name="Email Checker" icon={<FaTasks className="text-purple-500" />} />
-                                <GridComponent path="/bulkemailsender" name="Email Sender" icon={<FaTasks className="text-purple-500" />} />
-                                <GridComponent path="/googlemap" name="Google Map Extractor" icon={<FaTasks className="text-purple-500" />} />
-                                <GridComponent path="/cardvalidation" name="Card Validator" icon={<FaTasks className="text-purple-500" />} />
-                                <GridComponent path="/cardgenerator" name="Card Generator" icon={<FaTasks className="text-purple-500" />} />
-                                <GridComponent path="/templategenerator" name="Html Template Generator" icon={<FaTasks className="text-purple-500" />} />
-                            </div>
+                                {/* Calculator Section */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                                    <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">CALCULATOR</h3>
+                                    <GridComponent path="/calculator" name="Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/percentage" name="% Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/bmi" name="BMI Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/scientific" name="Scientific Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/compareloan" name="Compare Loan" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/currencyconverter" name="Currency Converter" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/fraction calculator" name="Fraction calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/averagecalculator" name="Average calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/lcm" name="LCM calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/agecalculator" name="Age calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/datediffcalculator" name="Date Difference calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                </div>
 
-                            {/* Calculator Section */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-                                <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">CALCULATOR</h3>
-                                <GridComponent path="/calculator" name="Calculator" icon={<FaCalculator className="text-teal-500" />} />
-                                <GridComponent path="/percentage" name="% Calculator" icon={<FaCalculator className="text-teal-500" />} />
-                                <GridComponent path="/bmi" name="BMI Calculator" icon={<FaCalculator className="text-teal-500" />} />
-                                <GridComponent path="/scientific" name="Scientific Calculator" icon={<FaCalculator className="text-teal-500" />} />
-                                <GridComponent path="/compareloan" name="Compare Loan" icon={<FaCalculator className="text-teal-500" />} />
-                                <GridComponent path="/currencyconverter" name="Currency Converter" icon={<FaCalculator className="text-teal-500" />} />
-                            </div>
+                                {/* Converter Section */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                                    <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">CONVERTER</h3>
+                                    <GridComponent path="/faren-to-celcius" name="Fahren to Celsius" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/second" name="Seconds to Hour" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/hours" name="Hour to Second" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/texttospeech" name="Text To Speech" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/speechtotext" name="Speech To Text" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/onlinevoiceRecorder" name="Online Voice Recorder" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/onlinescreenRecorder" name="Online Screen Recorder" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/onlinescreenshot" name="Online ScreenShot" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/onlinewebcamtest" name="Online Webcam Test" icon={<FaFilePdf className="text-blue-500" />} />
+                                </div>
 
-                            {/* Converter Section */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-                                <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">CONVERTER</h3>
-                                <GridComponent path="/faren-to-celcius" name="Fahren to Celsius" icon={<FaFilePdf className="text-blue-500" />} />
-                                <GridComponent path="/second" name="Seconds to Hour" icon={<FaFilePdf className="text-blue-500" />} />
-                                <GridComponent path="/hours" name="Hour to Second" icon={<FaFilePdf className="text-blue-500" />} />
-                                <GridComponent path="/texttospeech" name="Text To Speech" icon={<FaFilePdf className="text-blue-500" />} />
-                                <GridComponent path="/speechtotext" name="Speech To Text" icon={<FaFilePdf className="text-blue-500" />} />
-                                <GridComponent path="/onlinevoiceRecorder" name="Online Voice Recorder" icon={<FaFilePdf className="text-blue-500" />} />
-                                <GridComponent path="/onlinescreenRecorder" name="Online Screen Recorder" icon={<FaFilePdf className="text-blue-500" />} />
-                                <GridComponent path="/onlinescreenshot" name="Online ScreenShot" icon={<FaFilePdf className="text-blue-500" />} />
-                                <GridComponent path="/onlinewebcamtest" name="Online Webcam Test" icon={<FaFilePdf className="text-blue-500" />} />
+                                {/* Misc Section */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                                    <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">MISC</h3>
+                                    <GridComponent path="/paypal" name="Paypal Link Gen." icon={<FaFilePdf className="text-pink-500" />} />
+                                    <GridComponent path="/beautifier" name="HTML Beautifier" icon={<FaFilePdf className="text-pink-500" />} />
+                                    <GridComponent path="/resumebuild" name="Resume Builder" icon={<FaFilePdf className="text-pink-500" />} />
+                                    <GridComponent path="/linkchecker" name="Link Checker" icon={<FaFilePdf className="text-pink-500" />} />
+                                </div>
                             </div>
-
-                            {/* Misc Section */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-                                <h3 className="font-semibold text-lg text-neutral-600 text-left mb-4 pl-4 col-span-full">MISC</h3>
-                                <GridComponent path="/paypal" name="Paypal Link Gen." icon={<FaFilePdf className="text-pink-500" />} />
-                                <GridComponent path="/beautifier" name="HTML Beautifier" icon={<FaFilePdf className="text-pink-500" />} />
-                                <GridComponent path="/resumebuild" name="Resume Builder" icon={<FaFilePdf className="text-pink-500" />} />
-                                <GridComponent path="/linkchecker" name="Link Checker" icon={<FaFilePdf className="text-pink-500" />} />
-                            </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
         </>

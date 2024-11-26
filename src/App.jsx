@@ -44,6 +44,14 @@ import OnlineVoiceRecorder from './Component/OnlineVoiceRecorder.jsx';
 import OnlineScreenrecoder from './Component/OnlineScreenrecoder.jsx';
 import OnlineScreenshot from './Component/OnlineScreenshot.jsx';
 import OnlineWebcamTest from './Component/OnlineWebcamTest.jsx';
+import PhoneNumberFormat from './Component/PhoneNumberFormat.jsx';
+import RandomPassword from './Component/RandomPassword.jsx';
+import FractionCalculator from './Component/FractionCalculator.jsx';
+import AverageCalculator from './Component/AverageCalculator.jsx';
+import Lcm from './Component/Lcm.jsx';
+import AgeCalculator from './Component/AgeCalculator.jsx';
+import DateDiffCalculator from './Component/DateDiffCalculator.jsx';
+import LinkedinScraper from './Component/LinkedinScraper.jsx';
 function App() {
   return (
     <div className='mt-14'>
@@ -95,6 +103,14 @@ function App() {
           <Route path="/onlinescreenRecorder" element={<OnlineScreenrecoder />} />
           <Route path="/onlinescreenshot" element={<OnlineScreenshot />} />
           <Route path="/onlinewebcamtest" element={<OnlineWebcamTest />} />
+          <Route path="/phonenumberformat" element={<PhoneNumberFormat />} />
+          <Route path="/randompassword" element={<RandomPassword />} />
+          <Route path="/fractioncalculator" element={<FractionCalculator />} />
+          <Route path="/averagecalculator" element={<AverageCalculator />} />
+          <Route path="/lcm" element={<Lcm />} />
+          <Route path="/agecalculator" element={<AgeCalculator />} />
+          <Route path="/datediffcalculator" element={<DateDiffCalculator />} />
+          <Route path="/linkedinscraper" element={<LinkedinScraper />} />
         </Routes>
       </div>
     
