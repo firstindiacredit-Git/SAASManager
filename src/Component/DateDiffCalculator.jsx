@@ -42,7 +42,7 @@ const DateDiffCalculator = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-100 to-green-300 text-gray-800">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-zink-100 to-zink-300 text-gray-800">
         <Back/>
       <header className="text-3xl font-extrabold mb-6 text-green-800">Date Difference Calculator</header>
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">

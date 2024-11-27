@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Back } from './back';
 
 const AgeCalculator = () => {
   const [birthDate, setBirthDate] = useState('');
@@ -25,7 +26,8 @@ const AgeCalculator = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 text-gray-800">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-zink-100 to-zink-300 text-gray-800">
+      <Back/>
       <header className="text-3xl font-extrabold mb-6 text-blue-800">
         Age Calculator
       </header>

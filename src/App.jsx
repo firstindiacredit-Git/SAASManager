@@ -52,6 +52,11 @@ import Lcm from './Component/Lcm.jsx';
 import AgeCalculator from './Component/AgeCalculator.jsx';
 import DateDiffCalculator from './Component/DateDiffCalculator.jsx';
 import LinkedinScraper from './Component/LinkedinScraper.jsx';
+import Calendar from './Component/Calendar.jsx';
+import Clock from './Component/Clock.jsx';
+import Stopwatch from './Component/StopWatch.jsx';
+import Timer from './Component/Timer.jsx';
+import Alarm from './Component/Alarm.jsx';
 function App() {
   return (
     <div className='mt-14'>
@@ -111,6 +116,11 @@ function App() {
           <Route path="/agecalculator" element={<AgeCalculator />} />
           <Route path="/datediffcalculator" element={<DateDiffCalculator />} />
           <Route path="/linkedinscraper" element={<LinkedinScraper />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/clock" element={<Clock />} />
+          <Route path="/stopwatch" element={<Stopwatch />} />
+          <Route path="/timer" element={<Timer />} />
+          <Route path="/alarm" element={<Alarm />} />
         </Routes>
       </div>
     

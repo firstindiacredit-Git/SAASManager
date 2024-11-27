@@ -282,6 +282,9 @@ const NewTab = () => {
         { name: 'Age Calculator', path: '/agecalculator', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Date Difference Calculator', path: '/datediffcalculator', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Linkedin Scraper', path: '/linkedinscraper', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Calendar', path: '/calendar', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Clock', path: '/clock', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Stop Watch', path: '/stopwatch', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
     ];
 
     useEffect(() => {
@@ -326,7 +329,7 @@ const NewTab = () => {
                 </header> */}
 
                 {/* Search Bar */}
-                <div className="w-full max-w-3xl mx-auto mt-10 mb-8 sticky rounded-lg top-16 bg-white z-50 shadow">
+                <div className="w-full max-w-3xl mx-auto mt-10 mb-8 sticky rounded-lg top-16 bg-white z-10 shadow">
                     <div className="relative">
                         <input
                             type="text"
@@ -436,7 +439,7 @@ const NewTab = () => {
                                     <ButtonComponent path="/cardgenerator" name="Card Generator" icon={<FaTasks className="mr-3 text-purple-500" />} />
                                     <ButtonComponent path="/templategenerator" name="Html Template Generator" icon={<FaTasks className="mr-3 text-purple-500" />} />
                                     <ButtonComponent path="/phonenumberformat" name="phone Number Formatter" icon={<FaTasks className="mr-3 text-purple-500" />} />
-                                    <ButtonComponent path="/randompassword" name="Randoem Password Generator" icon={<FaTasks className="mr-3 text-purple-500" />} />
+                                    <ButtonComponent path="/randompassword" name="Random Password Generator" icon={<FaTasks className="mr-3 text-purple-500" />} />
                                     <ButtonComponent path="/Linkedinscraper" name="Linkedin Scrapper" icon={<FaTasks className="mr-3 text-purple-500" />} />
                                 </div>
                                 {/* Other Sections */}
@@ -467,6 +470,11 @@ const NewTab = () => {
                                     <ButtonComponent path="/onlinescreenRecorder" name="Online Screen Recorder" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
                                     <ButtonComponent path="/onlinescreenshot" name="Online ScreenShot" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
                                     <ButtonComponent path="/onlinewebcamtest" name="Online Webcam Test" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/calendar" name="Calendar" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/clock" name="Clock" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/stopwatch" name="Stop Watch" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/timer" name="Countdown Timer" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/alarm" name="Alarm Clock" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
 
                                 </div>
 
@@ -545,6 +553,9 @@ const NewTab = () => {
                                     <GridComponent path="/onlinescreenRecorder" name="Online Screen Recorder" icon={<FaFilePdf className="text-blue-500" />} />
                                     <GridComponent path="/onlinescreenshot" name="Online ScreenShot" icon={<FaFilePdf className="text-blue-500" />} />
                                     <GridComponent path="/onlinewebcamtest" name="Online Webcam Test" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/calendar" name="Calendar" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/clock" name="Clock" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/stopwatch" name="StopWatch" icon={<FaFilePdf className="text-blue-500" />} />
                                 </div>
 
                                 {/* Misc Section */}
