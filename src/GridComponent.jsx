@@ -91,7 +91,7 @@ const GridComponent = ({ path, name, icon }) => {
 
         {/* Tool Name */}
         <div className="flex items-center justify-center h-full pt-12">
-          <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-medium transition duration-300">
+          <button className="bg-gray-100 text-gray-800 px-4 py-2 rounded-lg font-medium transition duration-300">
             {name}
           </button>
         </div>

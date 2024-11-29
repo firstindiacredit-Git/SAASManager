@@ -224,7 +224,7 @@ import Header from './Component/Header';
 const NewTab = () => {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const [viewType, setViewType] = useState('list');
+    const [viewType, setViewType] = useState('grid');
     const searchInputRef = useRef(null);
     const popupRef = useRef(null);
     const removeinput = () => {
@@ -285,6 +285,17 @@ const NewTab = () => {
         { name: 'Calendar', path: '/calendar', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Clock', path: '/clock', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
         { name: 'Stop Watch', path: '/stopwatch', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Countdown', path: '/timer', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Alarm Clock', path: '/alarm', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Binary To Decimal', path: '/binarytodecimal', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Word Counter', path: '/wordcounter', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Compound Interest Calculator', path: '/compoundintrest', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Simple Interest Calculator', path: '/simpleinterest', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Discount Calculator', path: '/discountcalculator', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'GST Calculator', path: '/gstcalculator', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'VAT Calculator', path: '/vatcalculator', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Electricity bill Calculator', path: '/electricitybill', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
+        { name: 'Test Score Calculator', path: '/testscorecalculator', icon: <FaFilePdf className="mr-3 text-pink-500" /> },
     ];
 
     useEffect(() => {
@@ -456,6 +467,13 @@ const NewTab = () => {
                                     <ButtonComponent path="/lcm" name="LCM Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
                                     <ButtonComponent path="/agecalculator" name="Age Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
                                     <ButtonComponent path="/datediffcalculator" name="Date Difference Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/compoundintrest" name="Compound Interest Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/simpleinterest" name="Simple Interest Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/discountcalculator" name="Discount Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/gstcalculator" name="GST Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/vatcalculator" name="VAT Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/electricitybill" name="Electricity bill Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
+                                    <ButtonComponent path="/testscorecalculator" name="Test Score Calculator" icon={<FaCalculator className="mr-3 text-teal-500" />} />
                                 </div>
 
                                 {/* CONVERTER Section */}
@@ -475,6 +493,7 @@ const NewTab = () => {
                                     <ButtonComponent path="/stopwatch" name="Stop Watch" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
                                     <ButtonComponent path="/timer" name="Countdown Timer" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
                                     <ButtonComponent path="/alarm" name="Alarm Clock" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
+                                    <ButtonComponent path="/binarytodecimal" name="Binary To Decimal" icon={<FaFilePdf className="mr-3 text-blue-500" />} />
 
                                 </div>
 
@@ -485,6 +504,8 @@ const NewTab = () => {
                                     <ButtonComponent path="/beautifier" name="HTML Beautifier" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
                                     <ButtonComponent path="/resumebuild" name="Resume Builder" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
                                     <ButtonComponent path="/linkchecker" name="Website Link Checker" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
+                                    <ButtonComponent path="/wordcounter" name="Word Counter" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
+                                    <ButtonComponent path="/trafficchecker" name="Traffic Checker" icon={<FaFilePdf className="mr-3 text-pink-500" />} />
 
                                 </div>
                             </div>
@@ -539,6 +560,13 @@ const NewTab = () => {
                                     <GridComponent path="/lcm" name="LCM calculator" icon={<FaCalculator className="text-teal-500" />} />
                                     <GridComponent path="/agecalculator" name="Age calculator" icon={<FaCalculator className="text-teal-500" />} />
                                     <GridComponent path="/datediffcalculator" name="Date Difference calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/compoundintrest" name="Compound Interest Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/simpleinterest" name="Simple Interest Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/discountcalculator" name="Discount Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/gstcalculator" name="GST Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/vatcalculator" name="VAT Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/electricitybill" name="Electricity bill Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/testscorecalculator" name="Test Score Calculator" icon={<FaCalculator className="text-teal-500" />} />
                                 </div>
 
                                 {/* Converter Section */}
@@ -556,6 +584,9 @@ const NewTab = () => {
                                     <GridComponent path="/calendar" name="Calendar" icon={<FaFilePdf className="text-blue-500" />} />
                                     <GridComponent path="/clock" name="Clock" icon={<FaFilePdf className="text-blue-500" />} />
                                     <GridComponent path="/stopwatch" name="StopWatch" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/timer" name="Countdown Timer" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/alarm" name="Alarm Clock" icon={<FaFilePdf className="text-blue-500" />} />
+                                    <GridComponent path="/binarytodecimal" name="Binary To Decimal" icon={<FaFilePdf className="text-blue-500" />} />
                                 </div>
 
                                 {/* Misc Section */}
@@ -565,6 +596,9 @@ const NewTab = () => {
                                     <GridComponent path="/beautifier" name="HTML Beautifier" icon={<FaFilePdf className="text-pink-500" />} />
                                     <GridComponent path="/resumebuild" name="Resume Builder" icon={<FaFilePdf className="text-pink-500" />} />
                                     <GridComponent path="/linkchecker" name="Link Checker" icon={<FaFilePdf className="text-pink-500" />} />
+                                    <GridComponent path="/wordcounter" name="Word Counter" icon={<FaFilePdf className="text-pink-500" />} />
+                                    <GridComponent path="/trafficchecker" name="Traffic Checker" icon={<FaFilePdf className="text-pink-500" />} />
+                                    
                                 </div>
                             </div>
                         )}

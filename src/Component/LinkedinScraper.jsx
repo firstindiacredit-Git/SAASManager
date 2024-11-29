@@ -1,9 +1,9 @@
 import React from "react";
 import { Back } from "./back";
 
-const Scientific = () => {
+const LinkedinScraper = () => {
     return (
-        <div style={{ width: "100%", height: "600px", border: "1px solid #ccc" }}>
+        <div style={{ width: "100%", height: "700px", border: "1px solid #ccc" }}>
            <Back/>
             <iframe
                 src="https://linked-in-extractor.vercel.app/" // Replace with the desired URL
@@ -16,5 +16,5 @@ const Scientific = () => {
     );
 };
 
-export default Scientific;
+export default LinkedinScraper;
 

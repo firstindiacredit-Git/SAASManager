@@ -57,6 +57,16 @@ import Clock from './Component/Clock.jsx';
 import Stopwatch from './Component/StopWatch.jsx';
 import Timer from './Component/Timer.jsx';
 import Alarm from './Component/Alarm.jsx';
+import BinaryToDecimal from './Component/BinaryToDecimal.jsx';
+import WordCounter from './Component/WordCounter.jsx';
+import CompoundIntrest from './Component/CompoundIntrest.jsx';
+import SimpleInterest from './Component/SimpleInterest.jsx';
+import DiscountCalculator from './Component/DiscountCalculator.jsx';
+import GSTCalculator from './Component/GSTCalculator.jsx';
+import VATCalculator from './Component/VATCalculator.jsx';
+import ElectricityBill from './Component/ElectricityBill.jsx';
+import TestScoreCalculator from './Component/TestScoreCalculator.jsx';
+import TrafficChecker from './Component/TrafficChecker.jsx';
 function App() {
   return (
     <div className='mt-14'>
@@ -121,6 +131,17 @@ function App() {
           <Route path="/stopwatch" element={<Stopwatch />} />
           <Route path="/timer" element={<Timer />} />
           <Route path="/alarm" element={<Alarm />} />
+          <Route path="/binarytodecimal" element={<BinaryToDecimal />} />
+          <Route path="/wordcounter" element={<WordCounter />} />
+          <Route path="/compoundintrest" element={<CompoundIntrest />} />
+          <Route path="/simpleinterest" element={<SimpleInterest />} />
+          <Route path="/discountcalculator" element={<DiscountCalculator />} />
+          <Route path="/gstcalculator" element={<GSTCalculator />} />
+          <Route path="/vatcalculator" element={<VATCalculator />} />
+          <Route path="/electricitybill" element={<ElectricityBill />} />
+          <Route path="/testscorecalculator" element={<TestScoreCalculator />} />
+          <Route path="/trafficchecker" element={<TrafficChecker />} />
+          
         </Routes>
       </div>
     
