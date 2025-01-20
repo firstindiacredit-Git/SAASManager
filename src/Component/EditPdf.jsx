@@ -5,9 +5,9 @@ import { Document, Page } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { Back } from './back';
+import { FaFilePdf, FaEdit, FaDownload } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
-// Set the worker source for pdf.js
-//GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js`;
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 function App() {
@@ -121,34 +121,105 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col items-center p-4">
-      <Back/>
-      <h1 className="text-2xl font-bold mb-4">PDF Text Editor</h1>
-      <input
-        type="file"
-        accept="application/pdf"
-        onChange={handleFileUpload}
-        className="mb-4"
-      />
-      {pdfFile && (
-        <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
-          {Array.from(new Array(numPages), (el, index) => (
-            <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-          ))}
-        </Document>
-      )}
-      <textarea
-        value={modifiedText}
-        onChange={(e) => setModifiedText(e.target.value)}
-        rows={15}
-        className="w-full max-w-4xl mb-4 p-2 border border-gray-300 rounded"
-      />
-      <button
-        onClick={handleSavePdf}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Download Modified PDF
-      </button>
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
+          rounded-xl transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)]">
+          <div className="p-4 border-b border-gray-100">
+            <Back />
+          </div>
+
+          <div className="p-6">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-gray-900">PDF Text Editor</h1>
+              <p className="mt-2 text-sm text-gray-600">Edit text content in your PDF files</p>
+            </div>
+
+            {!pdfFile ? (
+              <div className="relative border-2 border-dashed rounded-lg p-12 text-center border-gray-300 hover:border-gray-400">
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  id="file-upload"
+                />
+                <label
+                  htmlFor="file-upload"
+                  className="cursor-pointer"
+                >
+                  <FaFilePdf className="mx-auto h-12 w-12 text-gray-400" />
+                  <div className="mt-4">
+                    <span className="mt-2 block text-sm font-medium text-gray-900">
+                      Drop your PDF here or
+                      <span className="text-blue-500 hover:text-blue-600 ml-1">browse</span>
+                    </span>
+                    <p className="mt-1 text-xs text-gray-500">PDF files only</p>
+                  </div>
+                </label>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <div className="border rounded-lg overflow-hidden bg-gray-50 p-4">
+                  <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
+                    {Array.from(new Array(numPages), (el, index) => (
+                      <Page 
+                        key={`page_${index + 1}`} 
+                        pageNumber={index + 1}
+                        className="mb-4 shadow-lg"
+                      />
+                    ))}
+                  </Document>
+                </div>
+
+                <div className="space-y-4">
+                  <textarea
+                    value={modifiedText}
+                    onChange={(e) => setModifiedText(e.target.value)}
+                    rows={10}
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Edit the extracted text here..."
+                  />
+
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={handleSavePdf}
+                      className="flex-1 flex items-center justify-center gap-2 py-2 bg-blue-500 text-white rounded-lg 
+                        hover:bg-blue-600 transition-colors"
+                    >
+                      <FaDownload className="text-white" />
+                      <span>Download Modified PDF</span>
+                    </button>
+                    
+                    <input
+                      type="file"
+                      accept="application/pdf"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                      id="upload-new"
+                    />
+                    <label
+                      htmlFor="upload-new"
+                      className="flex items-center justify-center gap-2 py-2 px-4 border-2 border-dashed 
+                        border-gray-300 rounded-lg hover:border-blue-400 cursor-pointer"
+                    >
+                      <FaFilePdf className="text-gray-400" />
+                      <span className="text-sm text-gray-600">New PDF</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="mt-4 text-xs text-gray-500">
+                  <p>• Edit the extracted text in the text area above</p>
+                  <p>• Click download to save your changes to a new PDF</p>
+                  <p>• Original PDF formatting will be preserved</p>
+                  <p>• You can upload a new PDF at any time</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -354,7 +354,7 @@ const NewTab = () => {
                     </div>
                 </div>
 
-                <div className="flex gap-4 mb-8 sticky top-32 z-10 bg-white rounded-lg p-2 shadow-md">
+                <div className="flex gap-4 mb-8 sticky top-32 z-10 bg-white rounded-lg p-2 shadow">
                     <button
                         onClick={() => setViewType('grid')}
                         className={`p-2 rounded-lg ${viewType === 'grid' ? 'bg-gray-200' : ''}`}
@@ -542,7 +542,7 @@ const NewTab = () => {
                                     <GridComponent path="/cardgenerator" name="Card Generator" icon={<FaTasks className="text-purple-500" />} />
                                     <GridComponent path="/templategenerator" name="Html Template Generator" icon={<FaTasks className="text-purple-500" />} />
                                     <GridComponent path="/phoneNumberFormat" name="Phone number Formatter" icon={<FaTasks className="text-purple-500" />} />
-                                    <GridComponent path="/randompassword" name="Random Password Generator" icon={<FaTasks className="text-purple-500" />} />
+                                    <GridComponent path="/randompassword" name="Random Password Gen." icon={<FaTasks className="text-purple-500" />} />
                                     <GridComponent path="/linkedinscraper" name="Linkedin Scraper" icon={<FaTasks className="text-purple-500" />} />
                                 </div>
 
@@ -555,12 +555,12 @@ const NewTab = () => {
                                     <GridComponent path="/scientific" name="Scientific Calculator" icon={<FaCalculator className="text-teal-500" />} />
                                     <GridComponent path="/compareloan" name="Compare Loan" icon={<FaCalculator className="text-teal-500" />} />
                                     <GridComponent path="/currencyconverter" name="Currency Converter" icon={<FaCalculator className="text-teal-500" />} />
-                                    <GridComponent path="/fraction calculator" name="Fraction calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/fractioncalculator" name="Fraction calculator" icon={<FaCalculator className="text-teal-500" />} />
                                     <GridComponent path="/averagecalculator" name="Average calculator" icon={<FaCalculator className="text-teal-500" />} />
                                     <GridComponent path="/lcm" name="LCM calculator" icon={<FaCalculator className="text-teal-500" />} />
                                     <GridComponent path="/agecalculator" name="Age calculator" icon={<FaCalculator className="text-teal-500" />} />
                                     <GridComponent path="/datediffcalculator" name="Date Difference calculator" icon={<FaCalculator className="text-teal-500" />} />
-                                    <GridComponent path="/compoundintrest" name="Compound Interest Calculator" icon={<FaCalculator className="text-teal-500" />} />
+                                    <GridComponent path="/compoundintrest" name="Compound Interest Calcu." icon={<FaCalculator className="text-teal-500" />} />
                                     <GridComponent path="/simpleinterest" name="Simple Interest Calculator" icon={<FaCalculator className="text-teal-500" />} />
                                     <GridComponent path="/discountcalculator" name="Discount Calculator" icon={<FaCalculator className="text-teal-500" />} />
                                     <GridComponent path="/gstcalculator" name="GST Calculator" icon={<FaCalculator className="text-teal-500" />} />

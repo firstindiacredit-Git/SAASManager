@@ -3,6 +3,8 @@ import * as pdfjsLib from 'pdfjs-dist';
 import { PDFDocument } from 'pdf-lib';
 import 'pdfjs-dist/web/pdf_viewer.css';
 import { Back } from './back';
+import { FaFilePdf, FaCrop, FaDownload } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
@@ -156,34 +158,93 @@ const PdfCropper = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <Back/>
-      <h1 className="text-2xl font-bold text-center text-black mb-4">PDF Cropper</h1>
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-full">
-        
-        <input
-          type="file"
-          accept="application/pdf"
-          onChange={handleFileChange}
-          className="mb-4 p-2 border border-gray-300 rounded-md w-full"
-        />
-        <canvas
-          ref={canvasRef}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          className="border border-black mb-4 cursor-crosshair"
-        />
-        <button
-          onClick={handleCrop}
-          disabled={!cropData.endX || !cropData.endY}
-          className="w-full bg-blue-500 text-white font-semibold py-2 rounded-md hover:bg-blue-600 transition"
-        >
-          Crop Selected Area
-        </button>
-        <p className="text-center text-gray-600 mt-2">
-          Draw a rectangle on the canvas to crop the selected area.
-        </p>
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
+          rounded-xl transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)]">
+          <div className="p-4 border-b border-gray-100">
+            <Back />
+          </div>
+
+          <div className="p-6">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-gray-900">PDF Cropper</h1>
+              <p className="mt-2 text-sm text-gray-600">Crop specific areas from your PDF</p>
+            </div>
+
+            {!pdfFile ? (
+              <div className="relative border-2 border-dashed rounded-lg p-12 text-center border-gray-300 hover:border-gray-400">
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={handleFileChange}
+                  className="hidden"
+                  id="file-upload"
+                />
+                <label
+                  htmlFor="file-upload"
+                  className="cursor-pointer"
+                >
+                  <FaFilePdf className="mx-auto h-12 w-12 text-gray-400" />
+                  <div className="mt-4">
+                    <span className="mt-2 block text-sm font-medium text-gray-900">
+                      Drop your PDF here or
+                      <span className="text-blue-500 hover:text-blue-600 ml-1">browse</span>
+                    </span>
+                    <p className="mt-1 text-xs text-gray-500">PDF files only</p>
+                  </div>
+                </label>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <div className="relative border rounded-lg overflow-hidden bg-gray-50">
+                  <canvas
+                    ref={canvasRef}
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
+                    className="w-full cursor-crosshair"
+                  />
+                </div>
+
+                <div className="flex items-center gap-4 pt-4">
+                  <button
+                    onClick={handleCrop}
+                    disabled={!cropData.endX || !cropData.endY}
+                    className="flex-1 flex items-center justify-center gap-2 py-2 bg-blue-500 text-white rounded-lg 
+                      hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <FaCrop className="text-white" />
+                    <span>Crop Selected Area</span>
+                  </button>
+                  
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    onChange={handleFileChange}
+                    className="hidden"
+                    id="upload-new"
+                  />
+                  <label
+                    htmlFor="upload-new"
+                    className="flex items-center justify-center gap-2 py-2 px-4 border-2 border-dashed 
+                      border-gray-300 rounded-lg hover:border-blue-400 cursor-pointer"
+                  >
+                    <FaFilePdf className="text-gray-400" />
+                    <span className="text-sm text-gray-600">New PDF</span>
+                  </label>
+                </div>
+
+                <div className="mt-4 text-xs text-gray-500">
+                  <p>• Draw a rectangle on the PDF to select the area to crop</p>
+                  <p>• Click the crop button to save the selected area as a new PDF</p>
+                  <p>• Original PDF quality will be preserved</p>
+                  <p>• You can upload a new PDF at any time</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Offscreen canvas for storing PDF content */}
