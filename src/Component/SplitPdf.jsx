@@ -335,7 +335,7 @@ const SplitPdf = () => {
                       )}
                     </div>
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 mt-5">
                     <label className="block text-sm font-medium text-gray-700 mb-2">Output Filename</label>
                     <input
                       type="text"
@@ -345,6 +345,17 @@ const SplitPdf = () => {
                       className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
+                  <div className="flex-1 mt-12">
+                  <button
+                    onClick={mergeAndDownload}
+                    className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <FaDownload size={16} />
+                      Download PDF
+                    </span>
+                  </button>
+                </div>
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
@@ -417,24 +428,75 @@ const SplitPdf = () => {
                   )}
                 </div>
 
-                <div className="flex justify-center mt-6">
-                  <button
-                    onClick={mergeAndDownload}
-                    className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-                  >
-                    <span className="flex items-center gap-2">
-                      <FaDownload size={16} />
-                      Download PDF
-                    </span>
-                  </button>
-                </div>
+                
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {/* Zoom Popup */}
+      {showPopup && currentPage && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-900">Page Preview</h3>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={zoomOut}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    title="Zoom Out"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                  <span className="text-sm text-gray-600">{Math.round(zoomLevel * 100)}%</span>
+                  <button
+                    onClick={zoomIn}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    title="Zoom In"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+                <button
+                  onClick={closePopup}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  title="Close"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 p-4">
+              <div className="w-full h-full flex items-center justify-center">
+                <div 
+                  className="relative transition-transform duration-200 ease-in-out"
+                  style={{ transform: `scale(${zoomLevel})` }}
+                >
+                  <iframe
+                    src={currentPage}
+                    className="w-full h-full border-0 rounded-lg shadow-lg"
+                    style={{ 
+                      width: '600px',
+                      height: '800px',
+                    }}
+                    title="PDF Preview"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default SplitPdf;
+export default SplitPdf; 
