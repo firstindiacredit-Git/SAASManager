@@ -5,7 +5,7 @@ const CompareLoan = () => {
     const [loan1, setLoan1] = useState({ principal: '', interest: '', tenure: '' });
     const [loan2, setLoan2] = useState({ principal: '', interest: '', tenure: '' });
     const [results, setResults] = useState({ emi1: 0, emi2: 0, totalInterest1: 0, totalInterest2: 0, totalPayment1: 0, totalPayment2: 0 });
-    const [showComparePopup, setShowComparePopup] = useState(true); // Add a state to control popup visibility
+    const [showComparePopup, setShowComparePopup] = useState(true);
 
     const calculateEMI = (P, R, N) => {
         const monthlyRate = R / 12 / 100;
@@ -34,120 +34,179 @@ const CompareLoan = () => {
     };
 
     return (
-        <>
-            {showComparePopup && (
-                <div className="h-[50vh] bg-white rounded-md  mb-7 md:p-6">
-                    <div className="max-w-md mx-auto bg-white -mt-[15px] text-black md:p-4  rounded-lg">
-                     <Back/>
-                        <h2 className="text-center text-xl md:text-2xl font-bold mb-[11px] md:mb-4">Compare Loan</h2>
+        <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-start justify-center pt-4">
+            <div className="max-w-4xl w-full px-2">
+                <div className="bg-white rounded-[30px] shadow-md overflow-hidden border-2 border-gray-100">
+                    {/* Back Button */}
+                    <div className="p-1">
+                        <Back />
+                    </div>
 
-                        <div className="grid grid-cols-2 gap-2 mb-1 md:mb-6">
-                            <div>
-                                <label className="block md:text-lg text-[12px]">Loan 1 Principal</label>
-                                <input
-                                    type="number"
-                                    value={loan1.principal}
-                                    onChange={(e) => setLoan1({ ...loan1, principal: e.target.value })}
-                                    className="w-full p-1 md:p-2  border border-gray-300 text-gray-800 rounded-md"
-                                />
+                    {/* Header */}
+                    <div className="bg-gradient-to-r from-gray-50 to-white p-2 border-b border-gray-100">
+                        <h1 className="text-2xl font-bold text-gray-800 text-center">
+                            Compare Loans
+                        </h1>
+                    </div>
+
+                    <div className="p-4">
+                        {/* Input Fields */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            {/* Loan 1 Section */}
+                            <div className="bg-gray-50 rounded-2xl p-4 space-y-4">
+                                <h2 className="text-lg font-semibold text-gray-800 mb-2">Loan 1 Details</h2>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600 mb-1">Principal Amount</label>
+                                    <input
+                                        type="number"
+                                        value={loan1.principal}
+                                        onChange={(e) => setLoan1({ ...loan1, principal: e.target.value })}
+                                        className="w-full px-3 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                                        placeholder="Enter principal amount"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600 mb-1">Interest Rate (%)</label>
+                                    <input
+                                        type="number"
+                                        value={loan1.interest}
+                                        onChange={(e) => setLoan1({ ...loan1, interest: e.target.value })}
+                                        className="w-full px-3 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                                        placeholder="Enter interest rate"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600 mb-1">Tenure (Months)</label>
+                                    <input
+                                        type="number"
+                                        value={loan1.tenure}
+                                        onChange={(e) => setLoan1({ ...loan1, tenure: e.target.value })}
+                                        className="w-full px-3 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                                        placeholder="Enter loan tenure"
+                                    />
+                                </div>
                             </div>
-                            <div>
-                                <label className="block md:text-lg text-[12px]">Loan 2 Principal</label>
-                                <input
-                                    type="number"
-                                    value={loan2.principal}
-                                    onChange={(e) => setLoan2({ ...loan2, principal: e.target.value })}
-                                    className="w-full p-1 md:p-2  border border-gray-300 text-gray-800 rounded-md"
-                                />
-                            </div>
-                            <div>
-                                <label className="block md:text-lg text-[12px]">Loan 1 Interest (%)</label>
-                                <input
-                                    type="number"
-                                    value={loan1.interest}
-                                    onChange={(e) => setLoan1({ ...loan1, interest: e.target.value })}
-                                    className="w-full p-1 md:p-2  border border-gray-300 text-gray-800 rounded-md"
-                                />
-                            </div>
-                            <div>
-                                <label className="block md:text-lg text-[12px]">Loan 2 Interest (%)</label>
-                                <input
-                                    type="number"
-                                    value={loan2.interest}
-                                    onChange={(e) => setLoan2({ ...loan2, interest: e.target.value })}
-                                    className="w-full p-1 md:p-2  border border-gray-300 text-gray-800 rounded-md"
-                                />
-                            </div>
-                            <div>
-                                <label className="block md:text-lg text-[12px]">Loan 1 Tenure (Months)</label>
-                                <input
-                                    type="number"
-                                    value={loan1.tenure}
-                                    onChange={(e) => setLoan1({ ...loan1, tenure: e.target.value })}
-                                    className="w-full p-1 md:p-2  border border-gray-300 text-gray-800 rounded-md"
-                                />
-                            </div>
-                            <div>
-                                <label className="block md:text-lg text-[12px]">Loan 2 Tenure (Months)</label>
-                                <input
-                                    type="number"
-                                    value={loan2.tenure}
-                                    onChange={(e) => setLoan2({ ...loan2, tenure: e.target.value })}
-                                    className="w-full p-1 md:p-2  border border-gray-300 text-gray-800 rounded-md"
-                                />
+
+                            {/* Loan 2 Section */}
+                            <div className="bg-gray-50 rounded-2xl p-4 space-y-4">
+                                <h2 className="text-lg font-semibold text-gray-800 mb-2">Loan 2 Details</h2>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600 mb-1">Principal Amount</label>
+                                    <input
+                                        type="number"
+                                        value={loan2.principal}
+                                        onChange={(e) => setLoan2({ ...loan2, principal: e.target.value })}
+                                        className="w-full px-3 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                                        placeholder="Enter principal amount"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600 mb-1">Interest Rate (%)</label>
+                                    <input
+                                        type="number"
+                                        value={loan2.interest}
+                                        onChange={(e) => setLoan2({ ...loan2, interest: e.target.value })}
+                                        className="w-full px-3 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                                        placeholder="Enter interest rate"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600 mb-1">Tenure (Months)</label>
+                                    <input
+                                        type="number"
+                                        value={loan2.tenure}
+                                        onChange={(e) => setLoan2({ ...loan2, tenure: e.target.value })}
+                                        className="w-full px-3 py-2 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                                        placeholder="Enter loan tenure"
+                                    />
+                                </div>
                             </div>
                         </div>
 
-                        <div className="flex justify-center space-x-4">
+                        {/* Buttons */}
+                        <div className="flex justify-center space-x-4 mb-6">
                             <button
                                 onClick={handleCompare}
-                                className="bg-green-500 hover:bg-green-600 text-white px-3 md:px-4  md:py-2 rounded-md"
+                                className="px-6 py-2 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-medium rounded-xl hover:from-indigo-600 hover:to-indigo-700 transition-all duration-200 transform hover:-translate-y-0.5"
                             >
-                                Compare
+                                Compare Loans
                             </button>
                             <button
                                 onClick={handleClear}
-                                className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md"
+                                className="px-6 py-2 bg-gray-500 text-white font-medium rounded-xl hover:bg-gray-600 transition-all duration-200"
                             >
                                 Clear
                             </button>
-                            {/* <button
-                                className="bg-red-500 text-white px-4 rounded-lg hover:bg-red-600"
-                                onClick={closeComparePopup}
-                            >
-                                Close
-                            </button> */}
-
                         </div>
 
-                        <div className="mt-1 mb-7 md:mt-6 bg-white text-gray-800 md:p-4 p-2 rounded-lg">
-                            <h3 className="text-center text-lg font-bold">Results</h3>
-                            <div className="grid grid-cols-2 gap-2 md:gap-4 text-center mt-4 md:mt-0">
-                                <div>
-                                    <h4 className="font-bold">Loan 1</h4>
-                                    <p className="text-[12px] md:text-lg">EMI: {results.emi1.toFixed(2)}</p>
-                                    <p className="text-[12px] md:text-lg">Total Interest: {results.totalInterest1.toFixed(2)}</p>
-                                    <p className="text-[12px] md:text-lg">Total Payment: {results.totalPayment1.toFixed(2)}</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-bold">Loan 2</h4>
-                                    <p className="text-[12px] md:text-lg">EMI: {results.emi2.toFixed(2)}</p>
-                                    <p className="text-[12px] md:text-lg">Total Interest: {results.totalInterest2.toFixed(2)}</p>
-                                    <p className="text-[12px] md:text-lg">Total Payment: {results.totalPayment2.toFixed(2)}</p>
+                        {/* Results Section */}
+                        {(results.emi1 !== 0 || results.emi2 !== 0) && (
+                            <div className="bg-gray-50 rounded-2xl p-4">
+                                <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">Comparison Results</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {/* Loan 1 Results */}
+                                    <div className="bg-white p-4 rounded-xl border border-gray-200">
+                                        <h3 className="text-lg font-semibold text-indigo-600 mb-3">Loan 1</h3>
+                                        <div className="space-y-2">
+                                            <div>
+                                                <p className="text-sm text-gray-600">Monthly EMI</p>
+                                                <p className="text-lg font-bold text-gray-800">₹ {results.emi1.toFixed(2)}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-600">Total Interest</p>
+                                                <p className="text-lg font-bold text-gray-800">₹ {results.totalInterest1.toFixed(2)}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-600">Total Payment</p>
+                                                <p className="text-lg font-bold text-gray-800">₹ {results.totalPayment1.toFixed(2)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Loan 2 Results */}
+                                    <div className="bg-white p-4 rounded-xl border border-gray-200">
+                                        <h3 className="text-lg font-semibold text-indigo-600 mb-3">Loan 2</h3>
+                                        <div className="space-y-2">
+                                            <div>
+                                                <p className="text-sm text-gray-600">Monthly EMI</p>
+                                                <p className="text-lg font-bold text-gray-800">₹ {results.emi2.toFixed(2)}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-600">Total Interest</p>
+                                                <p className="text-lg font-bold text-gray-800">₹ {results.totalInterest2.toFixed(2)}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-600">Total Payment</p>
+                                                <p className="text-lg font-bold text-gray-800">₹ {results.totalPayment2.toFixed(2)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Difference Section */}
+                                    <div className="md:col-span-2 bg-white p-4 rounded-xl border border-gray-200">
+                                        <h3 className="text-lg font-semibold text-red-600 mb-3">Difference (Loan 1 - Loan 2)</h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                            <div>
+                                                <p className="text-sm text-gray-600">EMI Difference</p>
+                                                <p className="text-lg font-bold text-gray-800">₹ {(results.emi1 - results.emi2).toFixed(2)}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-600">Interest Difference</p>
+                                                <p className="text-lg font-bold text-gray-800">₹ {(results.totalInterest1 - results.totalInterest2).toFixed(2)}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-600">Total Payment Difference</p>
+                                                <p className="text-lg font-bold text-gray-800">₹ {(results.totalPayment1 - results.totalPayment2).toFixed(2)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="mt-1 md:mt-4 text-center mb-20">
-                                <p className="font-bold text-red-500">Difference</p>
-                                <p className="text-[12px] md:text-lg">EMI Difference: {(results.emi1 - results.emi2).toFixed(2)}</p>
-                                <p className="text-[12px] md:text-lg">Total Interest Difference: {(results.totalInterest1 - results.totalInterest2).toFixed(2)}</p>
-                                <p className="text-[12px] md:text-lg">Total Payment Difference: {(results.totalPayment1 - results.totalPayment2).toFixed(2)}</p>
-                            </div>
-                        </div>
+                        )}
                     </div>
                 </div>
-            )}
-
-        </>
+            </div>
+        </div>
     );
 };
 

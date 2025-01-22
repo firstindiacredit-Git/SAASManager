@@ -1,104 +1,207 @@
 import React, { useState } from 'react';
 import { Back } from './back';
 
-const AgeCalculator = () => {
-  const [birthDate, setBirthDate] = useState('');
-  const [ageDetails, setAgeDetails] = useState(null);
+const LcmCalculator = () => {
+  const [numbers, setNumbers] = useState('');
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState('');
+  const [steps, setSteps] = useState([]);
 
-  const calculateAge = () => {
-    if (!birthDate) return;
-
-    const today = new Date();
-    const birthDateObj = new Date(birthDate);
-    const diffInMilliseconds = today.getTime() - birthDateObj.getTime();
-    const totalDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
-
-    const years = Math.floor(totalDays / 365);
-    const months = Math.floor((totalDays % 365) / 30);
-    const days = Math.floor((totalDays % 365) % 30);
-
-    setAgeDetails({ years, months, days });
+  // Calculate GCD of two numbers
+  const calculateGCD = (a, b) => {
+    a = Math.abs(a);
+    b = Math.abs(b);
+    while (b) {
+      const temp = b;
+      b = a % b;
+      a = temp;
+    }
+    return a;
   };
 
-  const handleReset = () => {
-    setBirthDate('');
-    setAgeDetails(null);
+  // Calculate LCM of two numbers
+  const calculateLCMOfTwo = (a, b) => {
+    return Math.abs(a * b) / calculateGCD(a, b);
+  };
+
+  // Calculate LCM of multiple numbers
+  const calculateLCM = () => {
+    if (!numbers.trim()) {
+      setError('Please enter numbers');
+      setResult(null);
+      setSteps([]);
+      return;
+    }
+
+    const numArray = numbers
+      .trim()
+      .split(/\s+/)
+      .map(num => parseInt(num))
+      .filter(num => !isNaN(num));
+
+    if (numArray.length === 0) {
+      setError('Please enter valid numbers');
+      setResult(null);
+      setSteps([]);
+      return;
+    }
+
+    if (numArray.some(num => num <= 0)) {
+      setError('Please enter positive numbers only');
+      setResult(null);
+      setSteps([]);
+      return;
+    }
+
+    const calculationSteps = [];
+    let currentLCM = numArray[0];
+    
+    calculationSteps.push({
+      type: 'start',
+      numbers: numArray.join(', ')
+    });
+
+    for (let i = 1; i < numArray.length; i++) {
+      const prevLCM = currentLCM;
+      const currentNum = numArray[i];
+      const gcd = calculateGCD(currentLCM, currentNum);
+      currentLCM = calculateLCMOfTwo(currentLCM, currentNum);
+      
+      calculationSteps.push({
+        type: 'step',
+        numbers: [prevLCM, currentNum],
+        gcd: gcd,
+        lcm: currentLCM
+      });
+    }
+
+    calculationSteps.push({
+      type: 'result',
+      lcm: currentLCM
+    });
+
+    setError('');
+    setResult(currentLCM);
+    setSteps(calculationSteps);
+  };
+
+  const reset = () => {
+    setNumbers('');
+    setResult(null);
+    setError('');
+    setSteps([]);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-zink-100 to-zink-300 text-gray-800">
-      <Back/>
-      <header className="text-3xl font-extrabold mb-6 text-blue-800">
-        Age Calculator
-      </header>
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <div className="flex flex-col space-y-4">
-          <div>
-            <label
-              htmlFor="birthDate"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Enter Your Birth Date:
-            </label>
-            <input
-              id="birthDate"
-              type="date"
-              value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
-              className="mt-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm w-full focus:ring-blue-500 focus:border-blue-500"
-            />
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-4">
+      <div className="max-w-2xl mx-auto px-4">
+        <div className="bg-white rounded-[30px] shadow-md border-2 border-gray-100">
+          <div className="p-1">
+            <Back />
           </div>
-          <div className="flex justify-between space-x-4">
-            <button
-              onClick={calculateAge}
-              className="btn bg-blue-500 hover:bg-blue-600"
-            >
-              Calculate
-            </button>
-            <button
-              onClick={handleReset}
-              className="btn bg-red-500 hover:bg-red-600"
-            >
-              Reset
-            </button>
+
+          <div className="bg-gradient-to-r from-gray-50 to-white p-2 border-b border-gray-100">
+            <h1 className="text-2xl font-bold text-gray-800 text-center">
+              LCM Calculator
+            </h1>
           </div>
-        </div>
-        {ageDetails && (
-          <div className="mt-6 text-center text-lg font-semibold space-y-2">
-            <div className="space-y-1">
-              <div className="flex justify-between">
-                <label className="font-bold text-blue-700">Years</label>
-                <input
-                  type="text"
-                  value={ageDetails.years}
-                  readOnly
-                  className="text-center border px-4 py-2 w-full"
-                />
+
+          <div className="p-6">
+            {error && (
+              <div className="mb-6 p-3 bg-red-50 text-red-600 rounded-xl border border-red-200 text-sm">
+                {error}
               </div>
-              <div className="flex justify-between">
-                <label className="font-bold text-blue-700">Months</label>
-                <input
-                  type="text"
-                  value={ageDetails.months}
-                  readOnly
-                  className="text-center border px-4 py-2 w-full"
-                />
+            )}
+
+            <div className="bg-gray-50 rounded-2xl p-6 space-y-6">
+              {/* Input Section */}
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  Enter Numbers (space-separated)
+                </label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    value={numbers}
+                    onChange={(e) => {
+                      setNumbers(e.target.value);
+                      setError('');
+                    }}
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                    placeholder="e.g., 12 18 24"
+                  />
+                </div>
+                <p className="mt-1 text-sm text-gray-500">
+                  Enter positive integers separated by spaces
+                </p>
               </div>
-              <div className="flex justify-between">
-                <label className="font-bold text-blue-700">Days</label>
-                <input
-                  type="text"
-                  value={ageDetails.days}
-                  readOnly
-                  className="text-center border px-4 py-2 w-full"
-                />
+
+              {/* Buttons */}
+              <div className="flex space-x-3">
+                <button
+                  onClick={calculateLCM}
+                  className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition-colors duration-200"
+                >
+                  Calculate LCM
+                </button>
+                <button
+                  onClick={reset}
+                  className="px-4 py-2 bg-white text-gray-700 border border-gray-200 rounded-xl font-medium hover:bg-gray-50 transition-colors duration-200"
+                >
+                  Reset
+                </button>
               </div>
+
+              {/* Results and Steps */}
+              {steps.length > 0 && (
+                <div className="space-y-4">
+                  {/* Main Result */}
+                  <div className="bg-white p-4 rounded-xl border border-gray-200">
+                    <div className="text-center">
+                      <p className="text-sm text-gray-600 mb-1">LCM</p>
+                      <p className="text-3xl font-bold text-indigo-600">
+                        {result}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Calculation Steps */}
+                  <div className="bg-white p-4 rounded-xl border border-gray-200">
+                    <h3 className="text-sm font-medium text-gray-600 mb-3">Calculation Steps</h3>
+                    <div className="space-y-2">
+                      {steps.map((step, index) => (
+                        <div key={index} className="text-sm">
+                          {step.type === 'start' && (
+                            <p className="text-gray-600">
+                              Numbers: {step.numbers}
+                            </p>
+                          )}
+                          {step.type === 'step' && (
+                            <p className="text-gray-600">
+                              LCM({step.numbers[0]}, {step.numbers[1]}) = {step.lcm}
+                              <br />
+                              <span className="text-gray-500 text-xs">
+                                GCD: {step.gcd}
+                              </span>
+                            </p>
+                          )}
+                          {step.type === 'result' && (
+                            <p className="text-gray-800 font-medium">
+                              Final LCM: {step.lcm}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default AgeCalculator;
+export default LcmCalculator;

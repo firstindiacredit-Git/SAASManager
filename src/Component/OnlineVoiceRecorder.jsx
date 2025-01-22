@@ -1,408 +1,316 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { Back } from './back';
 
 const OnlineVoiceRecorder = () => {
-    const [isRecording, setIsRecording] = useState(false);
-    const [isPaused, setIsPaused] = useState(false);
-    const [audioURL, setAudioURL] = useState('');
-    const [micPermission, setMicPermission] = useState(null);
-    const [isTesting, setIsTesting] = useState(false);
-    const [testMessage, setTestMessage] = useState('');
-    const [audioBlob, setAudioBlob] = useState(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [audioURL, setAudioURL] = useState('');
+  const [micPermission, setMicPermission] = useState(null);
+  const [isTesting, setIsTesting] = useState(false);
+  const [testMessage, setTestMessage] = useState('');
+  const [audioBlob, setAudioBlob] = useState(null);
+  const [recordingTime, setRecordingTime] = useState(0);
+  
+  const mediaRecorderRef = useRef(null);
+  const canvasRef = useRef(null);
+  const streamRef = useRef(null);
+  const audioContextRef = useRef(null);
+  const analyserRef = useRef(null);
+  const timerRef = useRef(null);
+  
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, []);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+  
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
+      
+      audioContextRef.current = new AudioContext();
+      analyserRef.current = audioContextRef.current.createAnalyser();
+      const source = audioContextRef.current.createMediaStreamSource(stream);
+      source.connect(analyserRef.current);
+      
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      const chunks = [];
+      
+      mediaRecorderRef.current.ondataavailable = (e) => chunks.push(e.data);
+      mediaRecorderRef.current.onstop = () => {
+        const blob = new Blob(chunks, { type: 'audio/webm' });
+        setAudioBlob(blob);
+        setAudioURL(URL.createObjectURL(blob));
+      };
+      
+      mediaRecorderRef.current.start();
+      setIsRecording(true);
+      setRecordingTime(0);
+      timerRef.current = setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000);
+      drawVisualizer();
+    } catch (err) {
+      console.error('Error accessing microphone:', err);
+    }
+  };
+  
+  const pauseRecording = () => {
+    if (isPaused) {
+      mediaRecorderRef.current.resume();
+      timerRef.current = setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000);
+    } else {
+      mediaRecorderRef.current.pause();
+      clearInterval(timerRef.current);
+    }
+    setIsPaused(!isPaused);
+  };
+  
+  const stopRecording = () => {
+    mediaRecorderRef.current.stop();
+    streamRef.current.getTracks().forEach(track => track.stop());
+    setIsRecording(false);
+    setIsPaused(false);
+    clearInterval(timerRef.current);
+  };
+  
+  const drawVisualizer = () => {
+    if (!analyserRef.current || !canvasRef.current) return;
     
-    const mediaRecorderRef = useRef(null);
-    const canvasRef = useRef(null);
-    const streamRef = useRef(null);
-    const audioContextRef = useRef(null);
-    const analyserRef = useRef(null);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
     
-    const startRecording = async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            streamRef.current = stream;
-            
-            // Set up audio context and analyser
-            audioContextRef.current = new AudioContext();
-            analyserRef.current = audioContextRef.current.createAnalyser();
-            const source = audioContextRef.current.createMediaStreamSource(stream);
-            source.connect(analyserRef.current);
-            
-            mediaRecorderRef.current = new MediaRecorder(stream);
-            const chunks = [];
-            
-            mediaRecorderRef.current.ondataavailable = (e) => chunks.push(e.data);
-            mediaRecorderRef.current.onstop = () => {
-                const blob = new Blob(chunks, { type: 'audio/webm' });
-                setAudioBlob(blob);
-                setAudioURL(URL.createObjectURL(blob));
-            };
-            
-            mediaRecorderRef.current.start();
-            setIsRecording(true);
-            drawVisualizer();
-        } catch (err) {
-            console.error('Error accessing microphone:', err);
-        }
+    analyserRef.current.fftSize = 2048;
+    const bufferLength = analyserRef.current.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    
+    const draw = () => {
+      if (!isRecording) return;
+      
+      requestAnimationFrame(draw);
+      analyserRef.current.getByteFrequencyData(dataArray);
+      
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#0ea5e9';
+      ctx.beginPath();
+      
+      const barWidth = (canvas.width / bufferLength) * 2.5;
+      let barHeight;
+      let x = 0;
+      
+      for (let i = 0; i < bufferLength; i++) {
+        barHeight = (dataArray[i] / 255) * canvas.height;
+        
+        ctx.moveTo(x, canvas.height);
+        ctx.lineTo(x, canvas.height - barHeight);
+        
+        x += barWidth + 1;
+      }
+      
+      ctx.stroke();
     };
     
-    const pauseRecording = () => {
-        if (isPaused) {
-            mediaRecorderRef.current.resume();
+    draw();
+  };
+  
+  const testMicrophone = async () => {
+    setIsTesting(true);
+    setTestMessage('');
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      setMicPermission(true);
+      
+      const audioContext = new AudioContext();
+      const analyser = audioContext.createAnalyser();
+      const microphone = audioContext.createMediaStreamSource(stream);
+      microphone.connect(analyser);
+      
+      analyser.fftSize = 256;
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      
+      let startTime = Date.now();
+      let hasSound = false;
+      
+      const checkSound = () => {
+        analyser.getByteFrequencyData(dataArray);
+        const average = dataArray.reduce((a, b) => a + b) / bufferLength;
+        
+        if (average > 10) {
+          hasSound = true;
+        }
+        
+        if (Date.now() - startTime < 2000 && !hasSound) {
+          requestAnimationFrame(checkSound);
         } else {
-            mediaRecorderRef.current.pause();
+          stream.getTracks().forEach(track => track.stop());
+          audioContext.close();
+          setIsTesting(false);
+          setTestMessage(hasSound ? "Microphone is working properly!" : "No sound detected. Please check your microphone.");
+          setTimeout(() => {
+            setTestMessage('');
+          }, 2000);
         }
-        setIsPaused(!isPaused);
-    };
-    
-    const stopRecording = () => {
-        mediaRecorderRef.current.stop();
-        streamRef.current.getTracks().forEach(track => track.stop());
-        setIsRecording(false);
-        setIsPaused(false);
-    };
-    
-    const drawVisualizer = () => {
-        if (!analyserRef.current) return;
-        
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        
-        // Set analyzer properties
-        analyserRef.current.fftSize = 2048;
-        const bufferLength = analyserRef.current.frequencyBinCount;
-        const dataArray = new Uint8Array(bufferLength);
-        
-        const draw = () => {
-            if (!isRecording) return;
-            
-            requestAnimationFrame(draw);
-            analyserRef.current.getByteFrequencyData(dataArray);
-            
-            // Clear canvas
-            ctx.fillStyle = '#f5f5f5';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Draw wave
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#2196f3';
-            ctx.beginPath();
-            
-            const barWidth = (canvas.width / bufferLength) * 2.5;
-            let barHeight;
-            let x = 0;
-            
-            for (let i = 0; i < bufferLength; i++) {
-                barHeight = (dataArray[i] / 255) * canvas.height;
-                
-                ctx.moveTo(x, canvas.height);
-                ctx.lineTo(x, canvas.height - barHeight);
-                
-                x += barWidth + 1;
-            }
-            
-            ctx.stroke();
-        };
-        
-        draw();
-    };
-    
-    const drawTestVisualizer = (analyser, stream) => {
-        if (!canvasRef.current) return;
-        
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        
-        analyser.fftSize = 2048;
-        const bufferLength = analyser.frequencyBinCount;
-        const dataArray = new Uint8Array(bufferLength);
-        
-        const draw = () => {
-            if (!isTesting) {
-                stream.getTracks().forEach(track => track.stop());
-                // Clear canvas
-                ctx.fillStyle = '#f5f5f5';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                return;
-            }
-            
-            requestAnimationFrame(draw);
-            analyser.getByteFrequencyData(dataArray);
-            
-            // Clear canvas
-            ctx.fillStyle = '#f5f5f5';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Draw wave
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#2196f3';
-            ctx.beginPath();
-            
-            const barWidth = (canvas.width / bufferLength) * 2.5;
-            let barHeight;
-            let x = 0;
-            
-            for (let i = 0; i < bufferLength; i++) {
-                barHeight = (dataArray[i] / 255) * canvas.height;
-                
-                ctx.moveTo(x, canvas.height);
-                ctx.lineTo(x, canvas.height - barHeight);
-                
-                x += barWidth + 1;
-            }
-            
-            ctx.stroke();
-        };
-        
-        draw();
-    };
-    
-    const testMicrophone = async () => {
-        setIsTesting(true);
+      };
+      
+      checkSound();
+    } catch (err) {
+      console.error('Error testing microphone:', err);
+      setMicPermission(false);
+      setIsTesting(false);
+      setTestMessage('Error accessing microphone. Please check permissions.');
+      setTimeout(() => {
         setTestMessage('');
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            setMicPermission(true);
-            
-            const audioContext = new AudioContext();
-            const analyser = audioContext.createAnalyser();
-            const microphone = audioContext.createMediaStreamSource(stream);
-            microphone.connect(analyser);
-            
-            analyser.fftSize = 256;
-            const bufferLength = analyser.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-            
-            let startTime = Date.now();
-            let hasSound = false;
-            
-            const checkSound = () => {
-                analyser.getByteFrequencyData(dataArray);
-                const average = dataArray.reduce((a, b) => a + b) / bufferLength;
-                
-                if (average > 10) {
-                    hasSound = true;
-                }
-                
-                if (Date.now() - startTime < 2000 && !hasSound) {
-                    requestAnimationFrame(checkSound);
-                } else {
-                    stream.getTracks().forEach(track => track.stop());
-                    audioContext.close();
-                    setIsTesting(false);
-                    setTestMessage(hasSound ? "Microphone is working properly!" : "No sound detected. Please check your microphone.");
-                    // Clear message after 2 seconds
-                    setTimeout(() => {
-                        setTestMessage('');
-                    }, 2000);
-                }
-            };
-            
-            checkSound();
-            
-        } catch (err) {
-            console.error('Error accessing microphone:', err);
-            setMicPermission(false);
-            setIsTesting(false);
-            setTestMessage("Could not access microphone. Please check permissions.");
-        }
-    };
+      }, 2000);
+    }
+  };
 
-    const convertToWav = async (blob) => {
-        const audioContext = new AudioContext();
-        const audioData = await blob.arrayBuffer();
-        const audioBuffer = await audioContext.decodeAudioData(audioData);
-        
-        const wavBuffer = audioBufferToWav(audioBuffer);
-        return new Blob([wavBuffer], { type: 'audio/wav' });
-    };
+  const downloadRecording = () => {
+    if (audioBlob) {
+      const url = window.URL.createObjectURL(audioBlob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'recording.webm';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+  };
+  
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-[30px] shadow-lg border-2 border-gray-100">
+          <Back />
+          <div className="p-6">
+            <h1 className="text-3xl font-bold text-gray-900 text-center mb-8">
+              Voice Recorder
+            </h1>
 
-    const downloadAudio = async (format) => {
-        if (!audioBlob) return;
+            <div className="space-y-8">
+              {/* Test Microphone Button */}
+              <div className="flex justify-center">
+                <button
+                  onClick={testMicrophone}
+                  disabled={isTesting || isRecording}
+                  className="inline-flex items-center px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors relative group"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                  </svg>
+                  Test Microphone
+                </button>
+              </div>
 
-        let downloadBlob = audioBlob;
-        let fileExtension = 'webm';
-
-        if (format === 'wav') {
-            downloadBlob = await convertToWav(audioBlob);
-            fileExtension = 'wav';
-        }
-
-        const url = URL.createObjectURL(downloadBlob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = `recording.${fileExtension}`;
-        document.body.appendChild(a);
-        a.click();
-        URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-    };
-
-    const shareAudio = async () => {
-        if (!audioBlob) return;
-
-        try {
-            if (navigator.share) {
-                const file = new File([audioBlob], 'recording.webm', {
-                    type: 'audio/webm',
-                });
-                await navigator.share({
-                    files: [file],
-                    title: 'Recorded Audio',
-                });
-            } else {
-                alert('Web Share API is not supported in your browser');
-            }
-        } catch (err) {
-            console.error('Error sharing:', err);
-        }
-    };
-
-    return (
-        <>
-            <div id="mytask-layout">
-                
-                <div className="main px-lg-4 px-md-4">
-                    
-                    <div className="body d-flex py-lg-3 py-md-2 flex-column">
-                        <div className="d-flex align-items-center gap-3">
-                           <Back/>
-                            <h4 className="mb-0 fw-bold">Online Voice Recorder</h4>
-                        </div>
-                        
-                        <div className="recorder-container mt-4">
-                            <div className="mb-3 d-flex align-items-center gap-3">
-                                <button 
-                                    className="btn btn-info" 
-                                    onClick={testMicrophone}
-                                    disabled={isTesting || isRecording}
-                                >
-                                    {isTesting ? 'Testing...' : 'Test Microphone'}
-                                </button>
-                                {testMessage && (
-                                    <span className={`text-${testMessage.includes('working') ? 'success' : 'danger'}`}>
-                                        {testMessage}
-                                    </span>
-                                )}
-                            </div>
-                            {micPermission === false && (
-                                <div className="text-danger mt-2">
-                                    Microphone access denied. Please check your browser permissions.
-                                </div>
-                            )}
-                            
-                            <canvas ref={canvasRef} width="600" height="100" style={{ border: '1px solid #000' }} />
-                            
-                            <div className="controls mt-3 d-flex gap-3">
-                                {!isRecording ? (
-                                    <button 
-                                        className="btn btn-primary" 
-                                        onClick={startRecording}
-                                        disabled={micPermission === false}
-                                    >
-                                        Record
-                                    </button>
-                                ) : (
-                                    <>
-                                        <button className="btn btn-warning" onClick={pauseRecording}>
-                                            {isPaused ? 'Resume' : 'Pause'}
-                                        </button>
-                                        <button className="btn btn-danger" onClick={stopRecording}>
-                                            Stop
-                                        </button>
-                                    </>
-                                )}
-                            </div>
-                            
-                            {audioURL && (
-                                <div className="mt-3">
-                                    <audio src={audioURL} controls className="mb-3 w-100" />
-                                    <div className="d-flex gap-2">
-                                        <button 
-                                            className="btn btn-success" 
-                                            onClick={() => downloadAudio('webm')}
-                                        >
-                                            <i className="bi bi-download me-2"></i>
-                                            Save as WebM
-                                        </button>
-                                        <button 
-                                            className="btn btn-success" 
-                                            onClick={() => downloadAudio('wav')}
-                                        >
-                                            <i className="bi bi-download me-2"></i>
-                                            Save as WAV
-                                        </button>
-                                        <button 
-                                            className="btn btn-primary" 
-                                            onClick={shareAudio}
-                                        >
-                                            <i className="bi bi-share me-2"></i>
-                                            Share
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
+              {testMessage && (
+                <div className={`text-center text-sm ${testMessage.includes('working') ? 'text-green-600' : 'text-red-600'}`}>
+                  {testMessage}
                 </div>
+              )}
+
+              {/* Visualizer */}
+              <div className="relative">
+                <canvas
+                  ref={canvasRef}
+                  width={800}
+                  height={100}
+                  className="w-full h-32 rounded-xl bg-slate-50"
+                />
+                {isRecording && (
+                  <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                    {formatTime(recordingTime)}
+                  </div>
+                )}
+              </div>
+
+              {/* Control Buttons */}
+              <div className="flex justify-center items-center gap-4">
+                {!isRecording ? (
+                  <button
+                    onClick={startRecording}
+                    className="p-4 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors shadow-lg group relative"
+                  >
+                    <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                      Start Recording
+                    </span>
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                      <circle cx="10" cy="10" r="6" />
+                    </svg>
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      onClick={pauseRecording}
+                      className="p-4 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 transition-colors shadow-lg group relative"
+                    >
+                      <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        {isPaused ? 'Resume' : 'Pause'}
+                      </span>
+                      {isPaused ? (
+                        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                        </svg>
+                      ) : (
+                        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </button>
+                    <button
+                      onClick={stopRecording}
+                      className="p-4 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors shadow-lg group relative"
+                    >
+                      <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        Stop Recording
+                      </span>
+                      <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                        <rect x="6" y="6" width="8" height="8" />
+                      </svg>
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {/* Audio Player */}
+              {audioURL && (
+                <div className="space-y-4">
+                  <audio controls className="w-full" src={audioURL}>
+                    Your browser does not support the audio element.
+                  </audio>
+                  <div className="flex justify-center">
+                    <button
+                      onClick={downloadRecording}
+                      className="inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                    >
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      Download Recording
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-        </>
-    );
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
-
-function audioBufferToWav(buffer) {
-    const numChannels = buffer.numberOfChannels;
-    const sampleRate = buffer.sampleRate;
-    const format = 1; // PCM
-    const bitDepth = 16;
-    
-    const bytesPerSample = bitDepth / 8;
-    const blockAlign = numChannels * bytesPerSample;
-    
-    const dataLength = buffer.length * blockAlign;
-    const bufferLength = 44 + dataLength;
-    
-    const arrayBuffer = new ArrayBuffer(bufferLength);
-    const view = new DataView(arrayBuffer);
-    
-    // WAV header
-    writeString(view, 0, 'RIFF');
-    view.setUint32(4, 36 + dataLength, true);
-    writeString(view, 8, 'WAVE');
-    writeString(view, 12, 'fmt ');
-    view.setUint32(16, 16, true);
-    view.setUint16(20, format, true);
-    view.setUint16(22, numChannels, true);
-    view.setUint32(24, sampleRate, true);
-    view.setUint32(28, sampleRate * blockAlign, true);
-    view.setUint16(32, blockAlign, true);
-    view.setUint16(34, bitDepth, true);
-    writeString(view, 36, 'data');
-    view.setUint32(40, dataLength, true);
-    
-    // Write audio data
-    const offset = 44;
-    const channels = [];
-    for (let i = 0; i < numChannels; i++) {
-        channels.push(buffer.getChannelData(i));
-    }
-    
-    for (let i = 0; i < buffer.length; i++) {
-        for (let channel = 0; channel < numChannels; channel++) {
-            const sample = Math.max(-1, Math.min(1, channels[channel][i]));
-            const int16 = sample < 0 ? sample * 0x8000 : sample * 0x7FFF;
-            view.setInt16(offset + (i * blockAlign) + (channel * bytesPerSample), int16, true);
-        }
-    }
-    
-    return arrayBuffer;
-}
-
-function writeString(view, offset, string) {
-    for (let i = 0; i < string.length; i++) {
-        view.setUint8(offset + i, string.charCodeAt(i));
-    }
-}
 
 export default OnlineVoiceRecorder;

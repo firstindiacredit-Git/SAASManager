@@ -1,395 +1,297 @@
-// import React, { useState, useRef } from 'react';
-// import { Link } from 'react-router-dom';
-// import { Back } from './back';
-
-// const SpeechToText = () => {
-//     const [isListening, setIsListening] = useState(false);
-//     const [text, setText] = useState('');
-//     const [selectedLanguage, setSelectedLanguage] = useState('en-IN');
-//     const recognitionRef = useRef(null);
-//     const [copySuccess, setCopySuccess] = useState(false);
-
-//     // Define supported languages
-//     const languages = [
-        // { code: 'en-IN', name: 'English' },
-        // { code: 'as-IN', name: 'Assamese' },
-        // { code: 'bn-IN', name: 'Bengali' },
-        // { code: 'gu-IN', name: 'Gujarati' },
-        // { code: 'hi-IN', name: 'Hindi' },
-        // { code: 'kn-IN', name: 'Kannada' },
-        // { code: 'ks-IN', name: 'Kashmiri' },
-        // { code: 'gom-IN', name: 'Konkani' },
-        // { code: 'ml-IN', name: 'Malayalam' },
-        // { code: 'mni-IN', name: 'Manipuri' },
-        // { code: 'mr-IN', name: 'Marathi' },
-        // { code: 'ne-IN', name: 'Nepali' },
-        // { code: 'or-IN', name: 'Oriya' },
-        // { code: 'pa-IN', name: 'Punjabi' },
-        // { code: 'sa-IN', name: 'Sanskrit' },
-        // { code: 'sd-IN', name: 'Sindhi' },
-        // { code: 'ta-IN', name: 'Tamil' },
-        // { code: 'te-IN', name: 'Telugu' },
-        // { code: 'ur-IN', name: 'Urdu' },
-        // { code: 'brx-IN', name: 'Bodo' },
-        // { code: 'sat-IN', name: 'Santhali' },
-        // { code: 'mai-IN', name: 'Maithili' },
-        // { code: 'doi-IN', name: 'Dogri' }
-//     ];
-
-//     const startListening = () => {
-//         if ('webkitSpeechRecognition' in window) {
-//             recognitionRef.current = new window.webkitSpeechRecognition();
-//             recognitionRef.current.continuous = true;
-//             recognitionRef.current.interimResults = true;
-//             recognitionRef.current.lang = selectedLanguage; // Set selected language
-
-//             recognitionRef.current.onstart = () => {
-//                 setIsListening(true);
-//             };
-
-//             recognitionRef.current.onresult = (event) => {
-//                 const transcript = Array.from(event.results)
-//                     .map(result => result[0])
-//                     .map(result => result.transcript)
-//                     .join('');
-//                 setText(transcript);
-//             };
-
-//             recognitionRef.current.onerror = (event) => {
-//                 console.error(event.error);
-//                 setIsListening(false);
-//             };
-
-//             recognitionRef.current.onend = () => {
-//                 setIsListening(false);
-//             };
-
-//             recognitionRef.current.start();
-//         } else {
-//             alert('Speech Recognition is not supported in your browser');
-//         }
-//     };
-
-//     const stopListening = () => {
-//         if (recognitionRef.current) {
-//             recognitionRef.current.stop();
-//         }
-//     };
-
-//     const copyToClipboard = () => {
-//         navigator.clipboard.writeText(text)
-//             .then(() => {
-//                 setCopySuccess(true);
-//                 setTimeout(() => setCopySuccess(false), 2000);
-//             })
-//             .catch(err => console.error('Failed to copy text:', err));
-//     };
-
-//     const downloadText = () => {
-//         const element = document.createElement('a');
-//         const file = new Blob([text], {type: 'text/plain'});
-//         element.href = URL.createObjectURL(file);
-//         element.download = 'speech-to-text.txt';
-//         document.body.appendChild(element);
-//         element.click();
-//         document.body.removeChild(element);
-//     };
-
-//     const shareText = async () => {
-//         if (navigator.share) {
-//             try {
-//                 await navigator.share({
-//                     title: 'Speech to Text Content',
-//                     text: text
-//                 });
-//             } catch (err) {
-//                 console.error('Share failed:', err);
-//             }
-//         } else {
-//             alert('Web Share API is not supported in your browser');
-//         }
-//     };
-
-//     return (
-//         <>
-//             <div id="mytask-layout">
-                
-//                 <div className="main px-lg-4 px-md-4">
-                    
-//                     <div className="body d-flex py-lg-3 py-md-2 flex-column">
-//                         <div className="d-flex align-items-center gap-3">
-//                             <Back/>
-//                             <h4 className="mb-0 fw-bold">Speech To Text</h4>
-//                         </div>
-                        
-//                         <div className="mt-4">
-//                             <div className="row">
-//                                 <div className="col-md-12">
-//                                     <div className="card">
-//                                         <div className="card-body">
-//                                             <div className="form-group mb-4">
-//                                                 <label className="mb-2">Select Language:</label>
-//                                                 <select 
-//                                                     className="form-select"
-//                                                     value={selectedLanguage}
-//                                                     onChange={(e) => setSelectedLanguage(e.target.value)}
-//                                                     disabled={isListening}
-//                                                 >
-//                                                     {languages.map((lang) => (
-//                                                         <option key={lang.code} value={lang.code}>
-//                                                             {lang.name}
-//                                                         </option>
-//                                                     ))}
-//                                                 </select>
-//                                             </div>
-                                            
-//                                             <div className="d-flex justify-content-center mb-4">
-//                                                 <button 
-//                                                     className={`btn bi bi-mic ${isListening ? 'btn-danger text-white' : 'btn-primary'} btn-lg`}
-//                                                     onClick={isListening ? stopListening : startListening}
-//                                                 >
-//                                                     {isListening ? 'Stop Recording' : 'Start Recording'}
-//                                                 </button>
-//                                             </div>
-                                            
-//                                             <div className="form-group">
-//                                                 <label className="mb-2">Converted Text:</label>
-//                                                 <textarea 
-//                                                     className="form-control" 
-//                                                     rows="5" 
-//                                                     value={text}
-//                                                     readOnly
-//                                                     placeholder="Your speech will appear here..."
-//                                                 />
-//                                                 <div className="d-flex gap-2 mt-3">
-//                                                     <div className="position-relative">
-//                                                         <button 
-//                                                             className="btn btn-outline-primary me-2"
-//                                                             onClick={copyToClipboard}
-//                                                             disabled={!text}
-//                                                         >
-//                                                             <i className="bi bi-clipboard"></i> Copy
-//                                                         </button>
-//                                                         {copySuccess && (
-//                                                             <small className="text-success">
-//                                                                 Text copied!
-//                                                             </small>
-//                                                         )}
-//                                                     </div>
-//                                                     <button 
-//                                                         className="btn btn-outline-success"
-//                                                         onClick={downloadText}
-//                                                         disabled={!text}
-//                                                     >
-//                                                         <i className="bi bi-download"></i> Download
-//                                                     </button>
-//                                                     <button 
-//                                                         className="btn btn-outline-info"
-//                                                         onClick={shareText}
-//                                                         disabled={!text}
-//                                                     >
-//                                                         <i className="bi bi-share"></i> Share
-//                                                     </button>
-//                                                 </div>
-//                                             </div>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </>
-//     );
-// };
-// export default SpeechToText;
-
-
-import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
 import { Back } from './back';
 
 const SpeechToText = () => {
-    const [isListening, setIsListening] = useState(false);
-    const [text, setText] = useState('');
-    const [selectedLanguage, setSelectedLanguage] = useState('en-IN');
-    const recognitionRef = useRef(null);
-    const [copySuccess, setCopySuccess] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [text, setText] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState('en-IN');
+  const recognitionRef = useRef(null);
+  const [copySuccess, setCopySuccess] = useState(false);
+  const [audioLevel, setAudioLevel] = useState(0);
+  const animationFrameRef = useRef();
 
-    const languages = [
-        { code: 'en-IN', name: 'English' },
-        { code: 'as-IN', name: 'Assamese' },
-        { code: 'bn-IN', name: 'Bengali' },
-        { code: 'gu-IN', name: 'Gujarati' },
-        { code: 'hi-IN', name: 'Hindi' },
-        { code: 'kn-IN', name: 'Kannada' },
-        { code: 'ks-IN', name: 'Kashmiri' },
-        { code: 'gom-IN', name: 'Konkani' },
-        { code: 'ml-IN', name: 'Malayalam' },
-        { code: 'mni-IN', name: 'Manipuri' },
-        { code: 'mr-IN', name: 'Marathi' },
-        { code: 'ne-IN', name: 'Nepali' },
-        { code: 'or-IN', name: 'Oriya' },
-        { code: 'pa-IN', name: 'Punjabi' },
-        { code: 'sa-IN', name: 'Sanskrit' },
-        { code: 'sd-IN', name: 'Sindhi' },
-        { code: 'ta-IN', name: 'Tamil' },
-        { code: 'te-IN', name: 'Telugu' },
-        { code: 'ur-IN', name: 'Urdu' },
-        { code: 'brx-IN', name: 'Bodo' },
-        { code: 'sat-IN', name: 'Santhali' },
-        { code: 'mai-IN', name: 'Maithili' },
-        { code: 'doi-IN', name: 'Dogri' }
-    ];
+  // Define supported languages with categories
+  const languageCategories = {
+    'Popular': ['en-IN', 'hi-IN', 'bn-IN', 'ta-IN'],
+    'North Indian': ['hi-IN', 'pa-IN', 'ur-IN', 'ks-IN'],
+    'South Indian': ['ta-IN', 'te-IN', 'ml-IN', 'kn-IN'],
+    'East Indian': ['bn-IN', 'as-IN', 'or-IN', 'mni-IN'],
+    'West Indian': ['gu-IN', 'mr-IN', 'sd-IN', 'gom-IN'],
+    'Classical': ['sa-IN'],
+    'Other': ['brx-IN', 'sat-IN', 'mai-IN', 'doi-IN', 'ne-IN']
+  };
 
-    const startListening = () => {
-        if ('webkitSpeechRecognition' in window) {
-            recognitionRef.current = new window.webkitSpeechRecognition();
-            recognitionRef.current.continuous = true;
-            recognitionRef.current.interimResults = true;
-            recognitionRef.current.lang = selectedLanguage;
+  const languages = {
+    'en-IN': 'English',
+    'as-IN': 'Assamese',
+    'bn-IN': 'Bengali',
+    'gu-IN': 'Gujarati',
+    'hi-IN': 'Hindi',
+    'kn-IN': 'Kannada',
+    'ks-IN': 'Kashmiri',
+    'gom-IN': 'Konkani',
+    'ml-IN': 'Malayalam',
+    'mni-IN': 'Manipuri',
+    'mr-IN': 'Marathi',
+    'ne-IN': 'Nepali',
+    'or-IN': 'Oriya',
+    'pa-IN': 'Punjabi',
+    'sa-IN': 'Sanskrit',
+    'sd-IN': 'Sindhi',
+    'ta-IN': 'Tamil',
+    'te-IN': 'Telugu',
+    'ur-IN': 'Urdu',
+    'brx-IN': 'Bodo',
+    'sat-IN': 'Santhali',
+    'mai-IN': 'Maithili',
+    'doi-IN': 'Dogri'
+  };
 
-            recognitionRef.current.onstart = () => {
-                setIsListening(true);
-            };
-
-            recognitionRef.current.onresult = (event) => {
-                const transcript = Array.from(event.results)
-                    .map((result) => result[0])
-                    .map((result) => result.transcript)
-                    .join('');
-                setText(transcript);
-            };
-
-            recognitionRef.current.onerror = (event) => {
-                console.error(event.error);
-                setIsListening(false);
-            };
-
-            recognitionRef.current.onend = () => {
-                setIsListening(false);
-            };
-
-            recognitionRef.current.start();
-        } else {
-            alert('Speech Recognition is not supported in your browser');
-        }
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
+  }, []);
 
-    const stopListening = () => {
-        if (recognitionRef.current) {
-            recognitionRef.current.stop();
-        }
+  const startListening = () => {
+    if ('webkitSpeechRecognition' in window) {
+      recognitionRef.current = new window.webkitSpeechRecognition();
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
+      recognitionRef.current.lang = selectedLanguage;
+
+      recognitionRef.current.onstart = () => {
+        setIsListening(true);
+        simulateAudioLevel();
+      };
+
+      recognitionRef.current.onresult = (event) => {
+        const transcript = Array.from(event.results)
+          .map(result => result[0])
+          .map(result => result.transcript)
+          .join('');
+        setText(transcript);
+      };
+
+      recognitionRef.current.onerror = (event) => {
+        console.error(event.error);
+        setIsListening(false);
+        cancelAnimationFrame(animationFrameRef.current);
+      };
+
+      recognitionRef.current.onend = () => {
+        setIsListening(false);
+        cancelAnimationFrame(animationFrameRef.current);
+      };
+
+      recognitionRef.current.start();
+    } else {
+      alert('Speech Recognition is not supported in your browser');
+    }
+  };
+
+  const simulateAudioLevel = () => {
+    const updateLevel = () => {
+      setAudioLevel(Math.random());
+      if (isListening) {
+        animationFrameRef.current = requestAnimationFrame(updateLevel);
+      }
     };
+    updateLevel();
+  };
 
-    const copyToClipboard = () => {
-        navigator.clipboard.writeText(text)
-            .then(() => {
-                setCopySuccess(true);
-                setTimeout(() => setCopySuccess(false), 2000);
-            })
-            .catch((err) => console.error('Failed to copy text:', err));
-    };
+  const stopListening = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+    }
+  };
 
-    const downloadText = () => {
-        const element = document.createElement('a');
-        const file = new Blob([text], { type: 'text/plain' });
-        element.href = URL.createObjectURL(file);
-        element.download = 'speech-to-text.txt';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
-    };
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        setCopySuccess(true);
+        setTimeout(() => setCopySuccess(false), 2000);
+      })
+      .catch(err => console.error('Failed to copy text:', err));
+  };
 
-    const shareText = async () => {
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: 'Speech to Text Content',
-                    text: text,
-                });
-            } catch (err) {
-                console.error('Share failed:', err);
-            }
-        } else {
-            alert('Web Share API is not supported in your browser');
-        }
-    };
+  const downloadText = () => {
+    const element = document.createElement('a');
+    const file = new Blob([text], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = 'speech-to-text.txt';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
 
-    return (
-        <div className="min-h-screen bg-gray-100 p-4">
-            <div className="flex items-center gap-3 mb-4">
-                <Back />
-                <h4 className="text-xl font-bold">Speech To Text</h4>
+  const shareText = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Speech to Text Content',
+          text: text
+        });
+      } catch (err) {
+        console.error('Share failed:', err);
+      }
+    } else {
+      alert('Web Share API is not supported in your browser');
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-[30px] shadow-lg border-2 border-gray-100">
+          <Back />
+          <div className="p-6">
+            <h1 className="text-3xl font-bold text-gray-900 text-center mb-8">
+              Speech to Text Converter
+            </h1>
+
+            <div className="space-y-6">
+              {/* Language Selection */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Select Language
+                </label>
+                <select
+                  value={selectedLanguage}
+                  onChange={(e) => setSelectedLanguage(e.target.value)}
+                  disabled={isListening}
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-200 focus:border-teal-400 transition-colors"
+                >
+                  {Object.entries(languageCategories).map(([category, codes]) => (
+                    <optgroup key={category} label={category}>
+                      {codes.map(code => (
+                        <option key={code} value={code}>
+                          {languages[code]}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
+              </div>
+
+              {/* Microphone Button and Visualization */}
+              <div className="flex flex-col items-center space-y-4">
+                <div className="relative">
+                  <button
+                    onClick={isListening ? stopListening : startListening}
+                    className={`p-6 rounded-full transition-all duration-200 relative group ${
+                      isListening
+                        ? 'bg-red-500 hover:bg-red-600'
+                        : 'bg-teal-500 hover:bg-teal-600'
+                    }`}
+                  >
+                    <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                      {isListening ? 'Stop Recording' : 'Start Recording'}
+                    </span>
+                    <svg
+                      className="w-8 h-8 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                      />
+                    </svg>
+                  </button>
+                  {isListening && (
+                    <div className="absolute -top-2 -right-2 w-4 h-4">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
+                    </div>
+                  )}
+                </div>
+                {isListening && (
+                  <div className="flex space-x-1">
+                    {[...Array(8)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-1 bg-teal-500 rounded-full transition-all duration-200"
+                        style={{
+                          height: `${Math.max(12, audioLevel * 48)}px`,
+                          animationDelay: `${i * 0.1}s`
+                        }}
+                      ></div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Text Display */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Converted Text
+                </label>
+                <div className="relative">
+                  <textarea
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-200 focus:border-teal-400 transition-colors h-40"
+                    value={text}
+                    readOnly
+                    placeholder="Your speech will appear here..."
+                  />
+                </div>
+                
+                <div className="flex justify-end gap-4 mt-4">
+                  <div className="relative">
+                    <button
+                      onClick={copyToClipboard}
+                      disabled={!text}
+                      className="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors relative group"
+                    >
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                      </svg>
+                      Copy Text
+                    </button>
+                    {copySuccess && (
+                      <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+                        Copied!
+                      </div>
+                    )}
+                  </div>
+
+                  <button
+                    onClick={downloadText}
+                    disabled={!text}
+                    className="inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download
+                  </button>
+
+                  <button
+                    onClick={shareText}
+                    disabled={!text}
+                    className="inline-flex items-center px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
+                    Share
+                  </button>
+                </div>
+              </div>
             </div>
-
-            <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-                <div className="mb-4">
-                    <label className="block mb-2 font-semibold">Select Language:</label>
-                    <select
-                        className="block w-full border border-gray-300 rounded-lg p-2"
-                        value={selectedLanguage}
-                        onChange={(e) => setSelectedLanguage(e.target.value)}
-                        disabled={isListening}
-                    >
-                        {languages.map((lang) => (
-                            <option key={lang.code} value={lang.code}>
-                                {lang.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className="text-center mb-6">
-                    <button
-                        className={`px-6 py-3 text-white font-bold rounded-lg ${
-                            isListening ? 'bg-red-500' : 'bg-blue-500'
-                        }`}
-                        onClick={isListening ? stopListening : startListening}
-                    >
-                        {isListening ? 'Stop Recording' : 'Start Recording'}
-                    </button>
-                </div>
-
-                <div className="mb-4">
-                    <label className="block mb-2 font-semibold">Converted Text:</label>
-                    <textarea
-                        className="w-full border border-gray-300 rounded-lg p-2"
-                        rows="5"
-                        value={text}
-                        readOnly
-                        placeholder="Your speech will appear here..."
-                    ></textarea>
-                </div>
-
-                <div className="flex items-center gap-4">
-                    <button
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg"
-                        onClick={copyToClipboard}
-                        disabled={!text}
-                    >
-                        Copy
-                    </button>
-                    {copySuccess && <span className="text-green-500">Text copied!</span>}
-                    <button
-                        className="px-4 py-2 bg-green-500 text-white rounded-lg"
-                        onClick={downloadText}
-                        disabled={!text}
-                    >
-                        Download
-                    </button>
-                    <button
-                        className="px-4 py-2 bg-indigo-500 text-white rounded-lg"
-                        onClick={shareText}
-                        disabled={!text}
-                    >
-                        Share
-                    </button>
-                </div>
-            </div>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default SpeechToText;

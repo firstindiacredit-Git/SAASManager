@@ -7,12 +7,12 @@ const Bmi = () => {
   const [heightFeet, setHeightFeet] = useState('');
   const [heightInches, setHeightInches] = useState('');
   const [weight, setWeight] = useState('');
-  const [weightUnit, setWeightUnit] = useState('Pounds'); // New state for weight unit
+  const [weightUnit, setWeightUnit] = useState('Pounds');
   const [bmi, setBmi] = useState(null);
   const [category, setCategory] = useState('');
   const [healthRisk, setHealthRisk] = useState('');
   const [normalWeightRange, setNormalWeightRange] = useState('');
-  const [displayWeight, setDisplayWeight] = useState(''); // To show weight in the selected unit
+  const [displayWeight, setDisplayWeight] = useState('');
 
   const calculateBMI = (e) => {
     e.preventDefault();
@@ -68,121 +68,138 @@ const Bmi = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <form className="bg-white p-6 rounded-lg shadow-md" onSubmit={calculateBMI}>
-       <Back/>
-        <h1 className="text-2xl font-bold mb-4">BMI Calculator</h1>
-
-        {/* Gender */}
-        <div className="mb-4">
-          <label className="block text-gray-700">Gender:</label>
-          <select
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md"
-          >
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-        </div>
-
-        {/* Age */}
-        <div className="mb-4">
-          <label className="block text-gray-700">Age:</label>
-          <input
-            type="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md"
-            min="2"
-            max="120"
-          />
-        </div>
-
-        {/* Height */}
-        <div className="mb-4">
-          <label className="block text-gray-700">Height (Feet & Inches):</label>
-          <div className="flex space-x-4">
-            <input
-              type="number"
-              value={heightFeet}
-              onChange={(e) => setHeightFeet(e.target.value)}
-              placeholder="Feet"
-              className="w-1/2 px-4 py-2 border rounded-md"
-            />
-            <input
-              type="number"
-              value={heightInches}
-              onChange={(e) => setHeightInches(e.target.value)}
-              placeholder="Inches"
-              className="w-1/2 px-4 py-2 border rounded-md"
-            />
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-start justify-center pt-4">
+      <div className="max-w-2xl w-full px-2">
+        <div className="bg-white rounded-[30px] shadow-md overflow-hidden border-2 border-gray-100">
+          {/* Back Button */}
+          <div className="p-1">
+            <Back />
           </div>
-        </div>
 
-        {/* Weight */}
-        <div className="mb-4">
-          <label className="block text-gray-700">Weight:</label>
-          <div className="flex space-x-4">
-            <input
-              type="number"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-              placeholder={`Weight in ${weightUnit}`}
-              className="w-1/2 px-4 py-2 border rounded-md"
-            />
-            <select
-              value={weightUnit}
-              onChange={(e) => setWeightUnit(e.target.value)}
-              className="w-1/2 px-4 py-2 border rounded-md"
-            >
-              <option value="Pounds">Pounds</option>
-              <option value="Kilograms">Kilograms</option>
-            </select>
+          {/* Header */}
+          <div className="bg-gradient-to-r from-gray-50 to-white p-2 border-b border-gray-100">
+            <h1 className="text-2xl font-bold text-gray-800 text-center">
+              BMI Calculator
+            </h1>
           </div>
-        </div>
 
-        {/* Calculate Button */}
-        <button
-          type="submit"
-          className="w-full bg-green-500 text-white py-2 rounded-md"
-        >
-          Calculate BMI
-        </button>
-
-        {/* Display Results */}
-        {bmi && (
-          <div className="mt-6 p-4 bg-green-50 border-l-4 border-green-400 shadow-md rounded-lg">
-            <h2 className="text-2xl font-semibold text-green-700 mb-2">BMI Result</h2>
+          <form onSubmit={calculateBMI} className="p-4 space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-lg font-bold text-gray-700">BMI:</p>
-                <p className="text-lg">{bmi}</p>
+              {/* Gender */}
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-600 mb-1">Gender</label>
+                <select
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                >
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
               </div>
-              <div>
-                <p className="text-lg font-bold text-gray-700">Category:</p>
-                <p className="text-lg">{category}</p>
+
+              {/* Age */}
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-600 mb-1">Age</label>
+                <input
+                  type="number"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                  min="2"
+                  max="120"
+                />
               </div>
-              <div>
-                <p className="text-lg font-bold text-gray-700">Health Risk:</p>
-                <p className="text-lg">{healthRisk}</p>
-              </div>
-              <div>
-                <p className="text-lg font-bold text-gray-700">Normal BMI Range:</p>
-                <p className="text-lg">18.5 - 24.9</p>
-              </div>
+
+              {/* Height */}
               <div className="col-span-2">
-                <p className="text-lg font-bold text-gray-700">Your Weight:</p>
-                <p className="text-lg">{displayWeight}</p>
+                <label className="block text-sm font-medium text-gray-600 mb-1">Height (Feet & Inches)</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="number"
+                    value={heightFeet}
+                    onChange={(e) => setHeightFeet(e.target.value)}
+                    placeholder="Feet"
+                    className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                  />
+                  <input
+                    type="number"
+                    value={heightInches}
+                    onChange={(e) => setHeightInches(e.target.value)}
+                    placeholder="Inches"
+                    className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                  />
+                </div>
               </div>
+
+              {/* Weight */}
               <div className="col-span-2">
-                <p className="text-lg font-bold text-gray-700">Your Normal Weight Range:</p>
-                <p className="text-lg">{normalWeightRange}</p>
+                <label className="block text-sm font-medium text-gray-600 mb-1">Weight</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="number"
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                    placeholder={`Weight in ${weightUnit}`}
+                    className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                  />
+                  <select
+                    value={weightUnit}
+                    onChange={(e) => setWeightUnit(e.target.value)}
+                    className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                  >
+                    <option value="Pounds">Pounds</option>
+                    <option value="Kilograms">Kilograms</option>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </form>
+
+            {/* Calculate Button */}
+            <div className="flex justify-center pt-2">
+              <button
+                type="submit"
+                className="px-6 py-2 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-medium rounded-xl hover:from-indigo-600 hover:to-indigo-700 transition-all duration-200 transform hover:-translate-y-0.5"
+              >
+                Calculate BMI
+              </button>
+            </div>
+
+            {/* Results */}
+            {bmi && (
+              <div className="mt-4 bg-gray-50 rounded-2xl p-4 border border-gray-200">
+                <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">BMI Results</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-white p-3 rounded-xl border border-gray-200">
+                    <p className="text-sm font-medium text-gray-600">BMI</p>
+                    <p className="text-lg font-bold text-indigo-600">{bmi}</p>
+                  </div>
+                  <div className="bg-white p-3 rounded-xl border border-gray-200">
+                    <p className="text-sm font-medium text-gray-600">Category</p>
+                    <p className="text-lg font-bold text-indigo-600">{category}</p>
+                  </div>
+                  <div className="bg-white p-3 rounded-xl border border-gray-200">
+                    <p className="text-sm font-medium text-gray-600">Health Risk</p>
+                    <p className="text-lg font-bold text-indigo-600">{healthRisk}</p>
+                  </div>
+                  <div className="bg-white p-3 rounded-xl border border-gray-200">
+                    <p className="text-sm font-medium text-gray-600">Normal BMI Range</p>
+                    <p className="text-lg font-bold text-indigo-600">18.5 - 24.9</p>
+                  </div>
+                  <div className="col-span-2 bg-white p-3 rounded-xl border border-gray-200">
+                    <p className="text-sm font-medium text-gray-600">Your Weight</p>
+                    <p className="text-lg font-bold text-indigo-600">{displayWeight}</p>
+                  </div>
+                  <div className="col-span-2 bg-white p-3 rounded-xl border border-gray-200">
+                    <p className="text-sm font-medium text-gray-600">Your Normal Weight Range</p>
+                    <p className="text-lg font-bold text-indigo-600">{normalWeightRange}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

@@ -53,16 +53,16 @@ const PdfToImage = () => {
       const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
       const pages = [];
 
-      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-        const page = await pdf.getPage(pageNum);
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+          const page = await pdf.getPage(pageNum);
         const viewport = page.getViewport({ scale: imageQuality });
-        const canvas = document.createElement("canvas");
-        const context = canvas.getContext("2d");
+          const canvas = document.createElement("canvas");
+          const context = canvas.getContext("2d");
         
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
 
-        await page.render({ canvasContext: context, viewport }).promise;
+          await page.render({ canvasContext: context, viewport }).promise;
         
         const imageUrl = canvas.toDataURL(`image/${imageFormat}`);
         pages.push({
@@ -97,7 +97,7 @@ const PdfToImage = () => {
         <div className="bg-white border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
           rounded-xl transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)]">
           <div className="p-4 border-b border-gray-100">
-            <Back />
+      <Back />
           </div>
 
           <div className="p-6">
@@ -108,9 +108,9 @@ const PdfToImage = () => {
 
             {!pdfFile ? (
               <div className="relative border-2 border-dashed rounded-lg p-12 text-center border-gray-300 hover:border-gray-400">
-                <input
-                  type="file"
-                  accept="application/pdf"
+      <input
+        type="file"
+        accept="application/pdf"
                   onChange={handlePdfUpload}
                   className="hidden"
                   id="file-upload"

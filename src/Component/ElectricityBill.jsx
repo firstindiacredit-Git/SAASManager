@@ -1,101 +1,260 @@
 import React, { useState } from "react";
 import { Back } from "./back";
+import { Pie } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  Title,
+} from "chart.js";
+
+ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 const ElectricityBillCalculator = () => {
   const [units, setUnits] = useState("");
   const [ratePerUnit, setRatePerUnit] = useState("");
-  const [fixedCharges, setFixedCharges] = useState(0);
-  const [totalBill, setTotalBill] = useState(null);
+  const [fixedCharges, setFixedCharges] = useState("0");
+  const [result, setResult] = useState(null);
+
+  // Chart options
+  const chartOptions = {
+    plugins: {
+      legend: {
+        position: "bottom",
+      },
+      title: {
+        display: true,
+        text: "Bill Breakdown",
+        position: "bottom",
+      },
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+  };
+
+  // Predefined rates for different states
+  const stateRates = {
+    Maharashtra: { rate: 7.5, fixed: 100 },
+    Delhi: { rate: 6.5, fixed: 80 },
+    Karnataka: { rate: 7.0, fixed: 90 },
+    "Tamil Nadu": { rate: 6.8, fixed: 85 },
+    Gujarat: { rate: 7.2, fixed: 95 },
+  };
+
+  const handleStateChange = (state) => {
+    setRatePerUnit(stateRates[state].rate.toString());
+    setFixedCharges(stateRates[state].fixed.toString());
+  };
 
   // Calculate the electricity bill
   const calculateBill = (e) => {
     e.preventDefault();
     let unitsConsumed = parseFloat(units);
     let rate = parseFloat(ratePerUnit);
+    let fixed = parseFloat(fixedCharges);
 
     // Check if the values are valid
     if (isNaN(unitsConsumed) || unitsConsumed < 0 || isNaN(rate) || rate < 0) {
       alert("Please enter valid units and rate per unit.");
-      setTotalBill(null);
+      setResult(null);
       return;
     }
 
-    // Calculate the total bill based on units consumed and rate per unit
-    let billAmount = unitsConsumed * rate;
+    // Calculate the components
+    const energyCharges = unitsConsumed * rate;
+    const totalBill = energyCharges + fixed;
 
-    // Add fixed charges if any
-    billAmount += parseFloat(fixedCharges);
+    // Prepare chart data
+    const chartData = {
+      labels: ["Energy Charges", "Fixed Charges"],
+      datasets: [
+        {
+          data: [energyCharges, fixed],
+          backgroundColor: ["#818cf8", "#4ade80"],
+          borderColor: ["#6366f1", "#22c55e"],
+          borderWidth: 1,
+        },
+      ],
+    };
 
-    setTotalBill(billAmount);
+    setResult({
+      unitsConsumed,
+      ratePerUnit: rate,
+      energyCharges,
+      fixedCharges: fixed,
+      totalBill,
+      chartData,
+    });
+  };
+
+  const handleReset = () => {
+    setUnits("");
+    setRatePerUnit("");
+    setFixedCharges("0");
+    setResult(null);
+  };
+
+  const formatCurrency = (value) => {
+    return `₹${value.toFixed(2)}`;
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg border">
-        <Back/>
-      <h2 className="text-3xl font-bold text-center mb-6 text-blue-600">Electricity Bill Calculator</h2>
-      <form onSubmit={calculateBill} className="space-y-6">
-        {/* Units Consumed */}
-        <div>
-          <label htmlFor="units" className="block text-sm font-medium text-gray-700">
-            Units Consumed
-          </label>
-          <input
-            id="units"
-            type="number"
-            value={units}
-            onChange={(e) => setUnits(e.target.value)}
-            className="w-full mt-2 p-2 border rounded-md"
-            placeholder="Enter units consumed"
-          />
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-4">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-[30px] shadow-md border-2 border-gray-100">
+          <Back />
+          <h1 className="text-3xl font-bold text-gray-900 text-center mb-8">
+            Electricity Bill Calculator
+          </h1>
 
-        {/* Rate per Unit */}
-        <div>
-          <label htmlFor="ratePerUnit" className="block text-sm font-medium text-gray-700">
-            Rate per Unit
-          </label>
-          <input
-            id="ratePerUnit"
-            type="number"
-            value={ratePerUnit}
-            onChange={(e) => setRatePerUnit(e.target.value)}
-            className="w-full mt-2 p-2 border rounded-md"
-            placeholder="Enter rate per unit"
-          />
-        </div>
+          <div className="p-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Left Column - Input Form */}
+              <div className="space-y-6">
+                <form onSubmit={calculateBill} className="space-y-4">
+                  {/* Quick Rate Selection */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
+                      Quick Rate Selection
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {Object.entries(stateRates).map(([state, rates]) => (
+                        <button
+                          key={state}
+                          type="button"
+                          onClick={() => handleStateChange(state)}
+                          className="px-3 py-2 rounded-lg font-medium text-sm transition-colors duration-200 bg-white text-gray-700 border border-gray-200 hover:bg-gray-50"
+                        >
+                          {state}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-        {/* Fixed Charges */}
-        <div>
-          <label htmlFor="fixedCharges" className="block text-sm font-medium text-gray-700">
-            Fixed Charges (Optional)
-          </label>
-          <input
-            id="fixedCharges"
-            type="number"
-            value={fixedCharges}
-            onChange={(e) => setFixedCharges(e.target.value)}
-            className="w-full mt-2 p-2 border rounded-md"
-            placeholder="Enter fixed charges"
-          />
-        </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
+                      Units Consumed
+                    </label>
+                    <input
+                      type="text"
+                      value={units}
+                      onChange={(e) => setUnits(e.target.value)}
+                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                      placeholder="Enter units consumed"
+                      required
+                    />
+                  </div>
 
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
-        >
-          Calculate Bill
-        </button>
-      </form>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
+                      Rate per Unit (₹)
+                    </label>
+                    <input
+                      type="text"
+                      value={ratePerUnit}
+                      onChange={(e) => setRatePerUnit(e.target.value)}
+                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                      placeholder="Enter rate per unit"
+                      required
+                    />
+                  </div>
 
-      {/* Result Display */}
-      {totalBill !== null && (
-        <div className="mt-6 p-4 bg-green-100 text-green-800 rounded-md">
-          <p>
-            <strong>Total Bill:</strong> ₹{totalBill.toFixed(2)}
-          </p>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
+                      Fixed Charges (₹)
+                    </label>
+                    <input
+                      type="text"
+                      value={fixedCharges}
+                      onChange={(e) => setFixedCharges(e.target.value)}
+                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400 transition-colors"
+                      placeholder="Enter fixed charges"
+                    />
+                  </div>
+
+                  <div className="flex space-x-3 pt-2">
+                    <button
+                      type="submit"
+                      className="flex-1 bg-indigo-600 text-white px-4 py-3 rounded-xl hover:bg-indigo-700 transition-colors duration-200"
+                    >
+                      Calculate Bill
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="px-4 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors duration-200"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              {/* Right Column - Results */}
+              <div className="space-y-6">
+                {result ? (
+                  <>
+                    <div className="bg-white p-6 rounded-xl border border-gray-200">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="p-4 bg-indigo-50 rounded-lg h-32 flex flex-col justify-center">
+                          <p className="text-sm text-gray-600">Units Consumed</p>
+                          <p className="text-2xl font-bold text-indigo-600 mt-2">
+                            {result.unitsConsumed.toFixed(2)} kWh
+                          </p>
+                        </div>
+                        <div className="p-4 bg-green-50 rounded-lg h-32 flex flex-col justify-center">
+                          <p className="text-sm text-gray-600">Rate per Unit</p>
+                          <p className="text-2xl font-bold text-green-600 mt-2">
+                            {formatCurrency(result.ratePerUnit)}/kWh
+                          </p>
+                        </div>
+                        <div className="p-4 bg-orange-50 rounded-lg h-32 flex flex-col justify-center">
+                          <p className="text-sm text-gray-600">Energy Charges</p>
+                          <p className="text-2xl font-bold text-orange-600 mt-2">
+                            {formatCurrency(result.energyCharges)}
+                          </p>
+                        </div>
+                        <div className="p-4 bg-purple-50 rounded-lg h-32 flex flex-col justify-center">
+                          <p className="text-sm text-gray-600">Total Bill</p>
+                          <p className="text-2xl font-bold text-purple-600 mt-2">
+                            {formatCurrency(result.totalBill)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-white p-6 rounded-xl border border-gray-200">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                        Bill Distribution
+                      </h3>
+                      <div className="h-64">
+                        <Pie data={result.chartData} options={chartOptions} />
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="bg-white p-6 rounded-xl border border-gray-200 h-full flex flex-col items-center justify-center text-gray-500">
+                    <svg
+                      className="w-16 h-16 mb-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M13 10V3L4 14h7v7l9-11h-7z"
+                      />
+                    </svg>
+                    <p className="text-lg">Enter values and calculate to see your bill breakdown</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
