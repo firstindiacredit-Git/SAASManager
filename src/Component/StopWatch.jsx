@@ -6,19 +6,15 @@ const Stopwatch = () => {
   const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
   const [pausedTimes, setPausedTimes] = useState([]);
 
-  // Load cached paused times on component mount
   useEffect(() => {
-    const cachedPausedTimes =
-      JSON.parse(localStorage.getItem("pausedTimes")) || [];
+    const cachedPausedTimes = JSON.parse(localStorage.getItem("pausedTimes")) || [];
     setPausedTimes(cachedPausedTimes);
   }, []);
 
-  // Cache paused times when they change
   useEffect(() => {
     localStorage.setItem("pausedTimes", JSON.stringify(pausedTimes));
   }, [pausedTimes]);
 
-  // Stopwatch logic
   useEffect(() => {
     let stopwatchInterval = null;
     if (isStopwatchRunning) {
@@ -29,26 +25,19 @@ const Stopwatch = () => {
     return () => clearInterval(stopwatchInterval);
   }, [isStopwatchRunning]);
 
-  // Convert stopwatch seconds to hours, minutes, seconds
   const formatStopwatchTime = (timeInSeconds) => {
     const hrs = Math.floor(timeInSeconds / 3600);
     const mins = Math.floor((timeInSeconds % 3600) / 60);
     const secs = timeInSeconds % 60;
 
-    return `${String(hrs).padStart(2, "0")}:${String(mins).padStart(
-      2,
-      "0"
-    )}:${String(secs).padStart(2, "0")}`;
+    return `${String(hrs).padStart(2, "0")}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
   };
 
-  // Stopwatch button actions
   const startStopwatch = () => setIsStopwatchRunning(true);
-
   const pauseStopwatch = () => {
     setIsStopwatchRunning(false);
     setPausedTimes((prevTimes) => [...prevTimes, stopwatchSeconds]);
   };
-
   const resetStopwatch = () => {
     setIsStopwatchRunning(false);
     setStopwatchSeconds(0);
@@ -57,79 +46,89 @@ const Stopwatch = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-200 flex flex-col items-center p-6">
-        <Back/>
-      {/* Heading */}
-      <h1 className="text-4xl font-extrabold mb-8">Stopwatch</h1>
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 p-4 md:p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          {/* Header */}
+          <div className="relative p-6">
+            <div className="absolute top-6 left-6">
+              <Back />
+            </div>
+            <h1 className="text-4xl font-bold text-center text-black">
+              Stopwatch
+            </h1>
+          </div>
 
-      {/* Stopwatch Display */}
-      <div className="text-7xl font-extrabold tracking-tight mb-6">
-        {formatStopwatchTime(stopwatchSeconds)}
-      </div>
+          {/* Main Content */}
+          <div className="p-8">
+            {/* Stopwatch Display */}
+            <div className="bg-gradient-to-br from-blue-50 to-gray-100 rounded-2xl p-8 mb-8 shadow-sm border border-gray-100">
+              <div className="text-7xl font-bold tracking-wider text-center font-mono text-gray-800">
+                {formatStopwatchTime(stopwatchSeconds)}
+              </div>
+            </div>
 
-      {/* Play, Pause, Reset Buttons */}
-      <div className="flex space-x-4 mb-8">
-        <button
-          onClick={startStopwatch}
-          className={`px-6 py-3 rounded-lg text-lg font-medium transition ${
-            isStopwatchRunning
-              ? "bg-blue-400 text-blue-200 cursor-not-allowed opacity-50"
-              : "bg-blue-500 text-white hover:bg-blue-600"
-          }`}
-          disabled={isStopwatchRunning}
-        >
-          Start
-        </button>
-        <button
-          onClick={pauseStopwatch}
-          className="px-6 py-3 rounded-lg bg-red-500 text-white text-lg font-medium transition hover:bg-red-600"
-          disabled={!isStopwatchRunning}
-        >
-          Pause
-        </button>
-        <button
-          onClick={resetStopwatch}
-          className="px-6 py-3 rounded-lg bg-gray-500 text-white text-lg font-medium transition hover:bg-gray-600"
-        >
-          Reset
-        </button>
-      </div>
+            {/* Control Buttons */}
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              <button
+                onClick={startStopwatch}
+                disabled={isStopwatchRunning}
+                className={`px-8 py-3 rounded-xl text-lg font-medium transition-all duration-200 ${
+                  isStopwatchRunning
+                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-md"
+                }`}
+              >
+                Start
+              </button>
+              <button
+                onClick={pauseStopwatch}
+                disabled={!isStopwatchRunning}
+                className={`px-8 py-3 rounded-xl text-lg font-medium transition-all duration-200 ${
+                  !isStopwatchRunning
+                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : "bg-red-600 text-white hover:bg-red-700 hover:shadow-md"
+                }`}
+              >
+                Pause
+              </button>
+              <button
+                onClick={resetStopwatch}
+                className="px-8 py-3 rounded-xl bg-gray-600 text-white text-lg font-medium transition-all duration-200 hover:bg-gray-700 hover:shadow-md"
+              >
+                Reset
+              </button>
+            </div>
 
-      {/* Paused Times Table */}
-      <h2 className="text-2xl font-bold mb-4">Paused Times</h2>
-      {pausedTimes.length > 0 ? (
-        <div className="overflow-x-auto max-h-96 w-full max-w-2xl border border-gray-700 rounded-lg bg-gray-800">
-          <div className="relative overflow-y-auto max-h-80">
-            <table className="w-full text-gray-300">
-              <thead className="sticky top-0 bg-gray-700">
-                <tr>
-                  <th className="px-4 py-2 border-b border-gray-600">Pause #</th>
-                  <th className="px-4 py-2 border-b border-gray-600">Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pausedTimes.map((time, index) => (
-                  <tr
-                    key={index}
-                    className={`${
-                      index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"
-                    }`}
-                  >
-                    <td className="px-4 py-2 border-b border-gray-600 text-center">
-                      {index + 1}
-                    </td>
-                    <td className="px-4 py-2 border-b border-gray-600 text-center">
-                      {formatStopwatchTime(time)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            {/* Paused Times Section */}
+            {pausedTimes.length > 0 && (
+              <div className="bg-gradient-to-br from-blue-50 to-gray-100 rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="text-2xl font-bold mb-4 text-gray-800">Paused Times</h2>
+                <div className="overflow-x-auto max-h-96">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="py-2 px-4 text-left text-gray-600">#</th>
+                        <th className="py-2 px-4 text-left text-gray-600">Time</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {pausedTimes.map((time, index) => (
+                        <tr key={index} className="border-b border-gray-200">
+                          <td className="py-2 px-4 text-gray-800">{index + 1}</td>
+                          <td className="py-2 px-4 font-mono text-gray-800">
+                            {formatStopwatchTime(time)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      ) : (
-        <p className="text-gray-500">No paused times recorded.</p>
-      )}
+      </div>
     </div>
   );
 };

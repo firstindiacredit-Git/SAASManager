@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Back } from "./back";
 
-// Clock Component
 const Clock = () => {
   const [time, setTime] = useState(new Date());
 
@@ -9,18 +8,18 @@ const Clock = () => {
     const timer = setInterval(() => {
       setTime(new Date());
     }, 1000);
-
-    return () => clearInterval(timer); // Cleanup interval on component unmount
+    return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="text-center text-white text-6xl font-bold">
-      {time.toLocaleTimeString()}
+    <div className="bg-gradient-to-br from-blue-50 to-gray-100 rounded-2xl p-8 shadow-sm border border-gray-100">
+      <div className="text-6xl font-bold tracking-wider text-center font-mono text-gray-800">
+        {time.toLocaleTimeString()}
+      </div>
     </div>
   );
 };
 
-// AlarmForm Component
 const AlarmForm = ({ addAlarm }) => {
   const [hour, setHour] = useState(12);
   const [minute, setMinute] = useState(0);
@@ -33,82 +32,97 @@ const AlarmForm = ({ addAlarm }) => {
     addAlarm({ hour, minute, ampm, day, date });
   };
 
+  const InputField = ({ value, onChange, min, max, placeholder, width = "w-16 md:w-20" }) => (
+    <input
+      type="number"
+      value={value}
+      onChange={(e) => onChange(Math.max(min, Math.min(max, e.target.value)))}
+      className={`${width} p-2 md:p-3 text-center bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+      placeholder={placeholder}
+    />
+  );
+
+  const SelectField = ({ value, onChange, options, width = "w-auto" }) => (
+    <select
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className={`${width} p-2 md:p-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+    >
+      {options.map((opt) => (
+        <option key={opt} value={opt}>
+          {opt}
+        </option>
+      ))}
+    </select>
+  );
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 text-white">
-      <div className="flex space-x-2">
-        <input
-          type="number"
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="flex flex-wrap gap-2 md:gap-4 justify-center items-center">
+        <InputField
           value={hour}
-          onChange={(e) => setHour(Math.max(1, Math.min(12, e.target.value)))}
-          className="w-16 p-2 text-center bg-gray-500 text-white rounded"
+          onChange={setHour}
+          min={1}
+          max={12}
           placeholder="HH"
         />
-        <input
-          type="number"
+        <InputField
           value={minute}
-          onChange={(e) => setMinute(Math.max(0, Math.min(59, e.target.value)))}
-          className="w-16 p-2 text-center bg-gray-500 text-white rounded"
+          onChange={setMinute}
+          min={0}
+          max={59}
           placeholder="MM"
         />
-        <select
+        <SelectField
           value={ampm}
-          onChange={(e) => setAmpm(e.target.value)}
-          className="p-2 bg-gray-500 text-white rounded"
-        >
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
-        </select>
+          onChange={setAmpm}
+          options={["AM", "PM"]}
+          width="w-20"
+        />
       </div>
 
-      {/* Select Day and Date */}
-      <div className="flex space-x-2">
-        <select
+      <div className="flex flex-wrap gap-2 md:gap-4 justify-center items-center">
+        <SelectField
           value={day}
-          onChange={(e) => setDay(e.target.value)}
-          className="p-2 bg-gray-500 text-white rounded"
-        >
-          <option value="Sunday">Sunday</option>
-          <option value="Monday">Monday</option>
-          <option value="Tuesday">Tuesday</option>
-          <option value="Wednesday">Wednesday</option>
-          <option value="Thursday">Thursday</option>
-          <option value="Friday">Friday</option>
-          <option value="Saturday">Saturday</option>
-        </select>
-
+          onChange={setDay}
+          options={["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]}
+          width="w-32 md:w-auto"
+        />
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="p-2 bg-gray-500 text-white rounded"
+          className="w-32 md:w-auto p-2 md:p-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
         />
       </div>
 
-      <button
-        type="submit"
-        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-      >
-        Add Alarm
-      </button>
+      <div className="text-center">
+        <button
+          type="submit"
+          className="px-6 md:px-8 py-2 md:py-3 bg-blue-600 text-white rounded-xl text-lg font-medium transition-all duration-200 hover:bg-blue-700 hover:shadow-md"
+        >
+          Add Alarm
+        </button>
+      </div>
     </form>
   );
 };
 
-// AlarmList Component
 const AlarmList = ({ alarms, deleteAlarm }) => {
   return (
-    <div className="mt-6 space-y-2">
+    <div className="space-y-3">
       {alarms.map((alarm, index) => (
         <div
           key={index}
-          className="flex justify-between items-center p-4 bg-gray-800 rounded text-white"
+          className="flex flex-wrap md:flex-nowrap justify-between items-center p-3 md:p-4 bg-gradient-to-br from-blue-50 to-gray-100 rounded-xl border border-gray-100 shadow-sm gap-2"
         >
-          <div>
-            {alarm.hour}:{String(alarm.minute).padStart(2, "0")} {alarm.ampm} on {alarm.day}, {alarm.date}
+          <div className="font-medium text-gray-800 text-sm md:text-base w-full md:w-auto">
+            {alarm.hour}:{String(alarm.minute).padStart(2, "0")} {alarm.ampm} on{" "}
+            {alarm.day}, {alarm.date}
           </div>
           <button
             onClick={() => deleteAlarm(index)}
-            className="text-red-500 hover:underline"
+            className="w-full md:w-auto px-3 py-1 text-red-600 hover:text-red-700 transition-colors duration-200 text-sm md:text-base"
           >
             Delete
           </button>
@@ -118,43 +132,48 @@ const AlarmList = ({ alarms, deleteAlarm }) => {
   );
 };
 
-// Main App Component
 const App = () => {
   const [alarms, setAlarms] = useState([]);
   const [alarmPlaying, setAlarmPlaying] = useState(false);
-  const [alarmSound, setAlarmSound] = useState(new Audio("/notification.mp3")); // Alarm sound
+  const [alarmSound] = useState(new Audio("/notification.mp3"));
+  const [triggeredAlarms, setTriggeredAlarms] = useState(new Set());
 
-  // Add Alarm
   const addAlarm = (alarm) => {
-    setAlarms((prev) => [...prev, alarm]);
+    setAlarms((prev) => [...prev, { ...alarm, id: Date.now() }]);
   };
 
-  // Delete Alarm
   const deleteAlarm = (index) => {
+    const alarmToDelete = alarms[index];
+    if (alarmToDelete) {
+      setTriggeredAlarms(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(alarmToDelete.id);
+        return newSet;
+      });
+    }
     setAlarms((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Stop Alarm
   const stopAlarm = () => {
     alarmSound.pause();
     alarmSound.currentTime = 0;
     setAlarmPlaying(false);
   };
 
-  // Alarm Checking Logic
   useEffect(() => {
     const checkAlarms = setInterval(() => {
       const now = new Date();
       const currentDay = now.toLocaleString("en-us", { weekday: "long" });
-      const currentDate = now.toISOString().split("T")[0]; // Get the current date in YYYY-MM-DD format
+      const currentDate = now.toISOString().split("T")[0];
       const currentHour = now.getHours() % 12 || 12;
       const currentMinute = now.getMinutes();
       const ampm = now.getHours() >= 12 ? "PM" : "AM";
 
       alarms.forEach((alarm) => {
         if (
-          alarm.hour === currentHour &&
-          alarm.minute === currentMinute &&
+          !triggeredAlarms.has(alarm.id) &&
+          parseInt(alarm.hour) === currentHour &&
+          parseInt(alarm.minute) === currentMinute &&
           alarm.ampm === ampm &&
           alarm.day === currentDay &&
           alarm.date === currentDate
@@ -162,42 +181,60 @@ const App = () => {
           if (!alarmPlaying) {
             alarmSound.play();
             setAlarmPlaying(true);
+            setTriggeredAlarms(prev => new Set([...prev, alarm.id]));
           }
         }
       });
     }, 1000);
 
     return () => clearInterval(checkAlarms);
-  }, [alarms, alarmPlaying]);
+  }, [alarms, alarmPlaying, alarmSound, triggeredAlarms]);
 
   return (
-    <div className="h-screen flex justify-center items-center bg-gray-900">
-      <div className="w-full max-w-md p-6 bg-gray-800 rounded-lg shadow-lg">
-        <Back/>
-        <h1 className="text-4xl font-bold text-center text-white mb-8">
-          Alarm Clock
-        </h1>
-        <div className="space-y-6">
-          {/* Current Time Display */}
-          <Clock />
-
-          {/* Set Alarm Form */}
-          <AlarmForm addAlarm={addAlarm} />
-
-          {/* Alarm List */}
-          <AlarmList alarms={alarms} deleteAlarm={deleteAlarm} />
-
-          {/* Stop Alarm Button */}
-          {alarmPlaying && (
-            <div className="mt-6 text-center">
-              <button
-                onClick={stopAlarm}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-              >
-                Stop Alarm
-              </button>
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 p-4 md:p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          {/* Header */}
+          <div className="relative p-6">
+            <div className="absolute top-6 left-6">
+              <Back />
             </div>
-          )}
+            <h1 className="text-4xl font-bold text-center text-black">
+              Alarm Clock
+            </h1>
+          </div>
+
+          {/* Main Content */}
+          <div className="p-8 space-y-8">
+            {/* Current Time Display */}
+            <Clock />
+
+            {/* Set Alarm Form */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Set Alarm</h2>
+              <AlarmForm addAlarm={addAlarm} />
+            </div>
+
+            {/* Alarm List */}
+            {alarms.length > 0 && (
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Active Alarms</h2>
+                <AlarmList alarms={alarms} deleteAlarm={deleteAlarm} />
+              </div>
+            )}
+
+            {/* Stop Alarm Button */}
+            {alarmPlaying && (
+              <div className="text-center">
+                <button
+                  onClick={stopAlarm}
+                  className="px-8 py-3 bg-red-600 text-white rounded-xl text-lg font-medium transition-all duration-200 hover:bg-red-700 hover:shadow-md"
+                >
+                  Stop Alarm
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
