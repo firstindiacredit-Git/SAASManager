@@ -1,9 +1,4 @@
 {
-  "routes": [
-    { "src": "/[^.]+", "dest": "/", "status": 200 }
-  ],
-
-  
   "headers": [
     {
       "source": "/(.*)",
@@ -17,6 +12,13 @@
           "value": "frame-ancestors 'none'"
         }
       ]
+    }
+  ],
+  "routes": [
+    { 
+      "src": "/[^.]+", 
+      "dest": "/", 
+      "status": 200 
     }
   ]
 }
