@@ -111,18 +111,18 @@ const VATCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-4">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-[30px] shadow-md border-2 border-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-4 px-2 sm:px-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-[20px] sm:rounded-[30px] shadow-md border-2 border-gray-100 overflow-hidden">
           <Back />
-          <h1 className="text-3xl font-bold text-gray-900 text-center mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-4 sm:mb-8 px-4">
             VAT Calculator
           </h1>
 
-          <div className="p-6">
-            <div className="grid md:grid-cols-2 gap-6">
+          <div className="p-3 sm:p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {/* Left Column - Input Form */}
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <form onSubmit={calculateVAT} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-600 mb-2">
@@ -145,14 +145,14 @@ const VATCalculator = () => {
                     <label className="block text-sm font-medium text-gray-600 mb-2">
                       Calculation Type
                     </label>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <div className="relative">
                         <button
                           type="button"
                           onClick={() => setCalculationType("add")}
                           onMouseEnter={() => setShowTooltip({ ...showTooltip, add: true })}
                           onMouseLeave={() => setShowTooltip({ ...showTooltip, add: false })}
-                          className={`w-full px-4 py-2 rounded-lg font-medium transition-colors duration-200 ${
+                          className={`w-full px-4 py-3 rounded-lg font-medium transition-colors duration-200 ${
                             calculationType === "add"
                               ? "bg-indigo-600 text-white"
                               : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50"
@@ -173,7 +173,7 @@ const VATCalculator = () => {
                           onClick={() => setCalculationType("remove")}
                           onMouseEnter={() => setShowTooltip({ ...showTooltip, remove: true })}
                           onMouseLeave={() => setShowTooltip({ ...showTooltip, remove: false })}
-                          className={`w-full px-4 py-2 rounded-lg font-medium transition-colors duration-200 ${
+                          className={`w-full px-4 py-3 rounded-lg font-medium transition-colors duration-200 ${
                             calculationType === "remove"
                               ? "bg-indigo-600 text-white"
                               : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50"
@@ -219,17 +219,17 @@ const VATCalculator = () => {
                     />
                   </div>
 
-                  <div className="flex space-x-3 pt-2">
+                  <div className="flex flex-col sm:flex-row sm:space-x-3 space-y-2 sm:space-y-0 pt-2">
                     <button
                       type="submit"
-                      className="flex-1 bg-indigo-600 text-white px-4 py-3 rounded-xl hover:bg-indigo-700 transition-colors duration-200"
+                      className="w-full sm:flex-1 bg-indigo-600 text-white px-4 py-3 rounded-xl hover:bg-indigo-700 transition-colors duration-200"
                     >
-                      Calculate
+                      Calculate VAT
                     </button>
                     <button
                       type="button"
                       onClick={handleReset}
-                      className="px-4 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors duration-200"
+                      className="w-full sm:w-auto px-4 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors duration-200"
                     >
                       Reset
                     </button>
@@ -238,42 +238,36 @@ const VATCalculator = () => {
               </div>
 
               {/* Right Column - Results */}
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {result ? (
                   <>
-                    <div className="bg-white p-6 rounded-xl border border-gray-200">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 bg-indigo-50 rounded-lg h-32 flex flex-col justify-center">
+                    <div className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200">
+                      <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                        <div className="p-3 sm:p-4 bg-indigo-50 rounded-lg sm:h-32 flex flex-col justify-center">
                           <p className="text-sm text-gray-600">Base Amount</p>
-                          <p className="text-2xl font-bold text-indigo-600 mt-2">
+                          <p className="text-xl sm:text-2xl font-bold text-indigo-600 mt-2">
                             {formatCurrency(result.baseAmount)}
                           </p>
                         </div>
-                        <div className="p-4 bg-green-50 rounded-lg h-32 flex flex-col justify-center">
+                        <div className="p-3 sm:p-4 bg-green-50 rounded-lg sm:h-32 flex flex-col justify-center">
                           <p className="text-sm text-gray-600">VAT Amount</p>
-                          <p className="text-2xl font-bold text-green-600 mt-2">
+                          <p className="text-xl sm:text-2xl font-bold text-green-600 mt-2">
                             {formatCurrency(result.vatAmount)}
                           </p>
                         </div>
-                        <div className="p-4 bg-orange-50 rounded-lg h-32 flex flex-col justify-center">
-                          <p className="text-sm text-gray-600">Final Amount</p>
-                          <p className="text-2xl font-bold text-orange-600 mt-2">
-                            {formatCurrency(result.totalAmount)}
-                          </p>
-                        </div>
-                        <div className="p-4 bg-purple-50 rounded-lg h-32 flex flex-col justify-center">
-                          <p className="text-sm text-gray-600">VAT Rate</p>
-                          <p className="text-2xl font-bold text-purple-600 mt-2">
-                            {result.vatRate}%
-                          </p>
-                        </div>
+                      </div>
+                      <div className="mt-4 p-3 sm:p-4 bg-purple-50 rounded-lg text-center">
+                        <p className="text-sm text-gray-600 mb-1">Total Amount</p>
+                        <p className="text-2xl sm:text-3xl font-bold text-purple-600">
+                          {formatCurrency(result.totalAmount)}
+                        </p>
                       </div>
                     </div>
-                    <div className="bg-white p-6 rounded-xl border border-gray-200">
+                    <div className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200">
                       <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                        Distribution Chart
+                        Amount Distribution
                       </h3>
-                      <div className="h-64">
+                      <div className="h-48 sm:h-64">
                         <Pie data={result.chartData} options={chartOptions} />
                       </div>
                     </div>
@@ -281,7 +275,7 @@ const VATCalculator = () => {
                 ) : (
                   <div className="bg-white p-6 rounded-xl border border-gray-200 h-full flex flex-col items-center justify-center text-gray-500">
                     <svg
-                      className="w-16 h-16 mb-4"
+                      className="w-12 h-12 sm:w-16 sm:h-16 mb-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -290,10 +284,12 @@ const VATCalculator = () => {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={1.5}
-                        d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    <p className="text-lg">Enter values and calculate to see the results</p>
+                    <p className="text-base sm:text-lg text-center">
+                      Enter amount and VAT rate to calculate
+                    </p>
                   </div>
                 )}
               </div>
