@@ -1,34 +1,30 @@
 import { useState } from "react";
+import { Back } from "./back";
 
 const TrafficChecker = () => {
-  const [url, setUrl] = useState(""); // User input
-  const [trafficData, setTrafficData] = useState(null); // API response data
-  const [loading, setLoading] = useState(false); // Loading state
-  const [error, setError] = useState(""); // Error message
+  const [url, setUrl] = useState("");
+  const [trafficData, setTrafficData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  // Function to extract the domain from a URL
   const extractDomain = (inputUrl) => {
     try {
-      const { hostname } = new URL(inputUrl); // Extract hostname from URL
-      return hostname.replace(/^www\./, ""); // Remove 'www.' if present
+      const { hostname } = new URL(inputUrl);
+      return hostname.replace(/^www\./, "");
     } catch {
-      return inputUrl; // Return as-is if it's already a domain
+      return inputUrl;
     }
   };
 
-  // Handle form submission
   const handleUrlSubmit = async (e) => {
     e.preventDefault();
-
     if (!url) {
       setError("Please enter a valid URL");
       return;
     }
-
     setError("");
     setLoading(true);
-
-    const domain = extractDomain(url); // Sanitize the URL input
+    const domain = extractDomain(url);
 
     try {
       const response = await fetch(
@@ -37,15 +33,13 @@ const TrafficChecker = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "x-rapidapi-key": "4418627201msh7986898a90dc9b9p11b3a7jsn0fc2cf19b847", // Replace with your key
+            "x-rapidapi-key": "4418627201msh7986898a90dc9b9p11b3a7jsn0fc2cf19b847",
             "x-rapidapi-host": "similarweb-traffic.p.rapidapi.com",
           },
         }
       );
 
       const data = await response.json();
-
-      console.log("API Response:", data); // Log API response for debugging
 
       if (response.ok) {
         const trafficSources = data?.TrafficSources || {};
@@ -76,63 +70,85 @@ const TrafficChecker = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      {/* Header */}
-      <header className="bg-blue-500 text-white py-4 text-center">
-        <h1 className="text-xl font-bold">Website Traffic Checker</h1>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex justify-center pt-8">
+      <div className="w-full max-w-2xl mx-auto px-4">
+        <div className="bg-white rounded-[30px] shadow-lg overflow-hidden">
+          <div className="p-4 relative">
+            <div className="absolute top-6 left-4">
+              <Back />
+            </div>
+            
+            <h1 className="text-xl font-bold text-center text-gray-800 mb-4 pt-2">
+              Website Traffic Checker
+            </h1>
 
-      {/* Input Form */}
-      <div className="mt-6 text-center">
-        <form onSubmit={handleUrlSubmit} className="flex flex-col items-center gap-4">
-          <input
-            type="text"
-            placeholder="Enter Website URL (e.g., https://example.com)"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            className="w-3/4 p-2 border rounded-md"
-          />
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600"
-          >
-            Check Traffic
-          </button>
-        </form>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
-      </div>
+            <div className="grid gap-3 max-w-xl mx-auto">
+              {/* Input Section */}
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-3">
+                <label className="block text-gray-700 text-base font-semibold mb-1">
+                  Website URL
+                </label>
+                <form onSubmit={handleUrlSubmit} className="space-y-2">
+                  <input
+                    type="text"
+                    placeholder="Enter Website URL (e.g., https://example.com)"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    className="w-full px-3 py-2 bg-white border-2 border-gray-200 rounded-lg text-base focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-colors"
+                  />
+                  <div className="flex justify-center">
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                      disabled={loading}
+                    >
+                      {loading ? "Checking..." : "Check Traffic"}
+                    </button>
+                  </div>
+                </form>
+                {error && <p className="text-red-500 text-sm mt-2 text-center">{error}</p>}
+              </div>
 
-      {/* Traffic Data Display */}
-      <div className="mt-10">
-        {loading && <p className="text-center text-gray-500">Loading...</p>}
-        {trafficData && (
-          <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-            <h2 className="text-xl font-bold mb-4">
-              Traffic Data for {extractDomain(url)}
-            </h2>
-            <ul className="list-disc pl-6">
-              <li>Total Visits: {trafficData?.totalVisits || "N/A"}</li>
-              <li>
-                Top Countries:{" "}
-                {trafficData?.topCountries?.length > 0
-                  ? trafficData.topCountries.join(", ")
-                  : "N/A"}
-              </li>
-              <li>
-                Traffic Sources:
-                <ul className="pl-4 list-circle">
-                  {Object.entries(trafficData?.trafficSources || {}).map(
-                    ([source, value]) => (
-                      <li key={source}>
-                        {source}: {value.toFixed(2)}%
-                      </li>
-                    )
-                  )}
-                </ul>
-              </li>
-            </ul>
+              {/* Results Section */}
+              {trafficData && (
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-3">
+                  <h2 className="text-base font-semibold text-gray-700 mb-2">
+                    Traffic Data for {extractDomain(url)}
+                  </h2>
+                  <div className="space-y-2">
+                    <div className="bg-white rounded-lg p-2 border-2 border-gray-200">
+                      <p className="text-sm font-semibold text-gray-600">Total Visits</p>
+                      <p className="text-lg font-bold text-gray-800">{trafficData.totalVisits}</p>
+                    </div>
+                    
+                    <div className="bg-white rounded-lg p-2 border-2 border-gray-200">
+                      <p className="text-sm font-semibold text-gray-600">Top Countries</p>
+                      <p className="text-sm text-gray-800">
+                        {trafficData.topCountries.length > 0
+                          ? trafficData.topCountries.join(", ")
+                          : "N/A"}
+                      </p>
+                    </div>
+
+                    <div className="bg-white rounded-lg p-2 border-2 border-gray-200">
+                      <p className="text-sm font-semibold text-gray-600 mb-1">Traffic Sources</p>
+                      <div className="grid grid-cols-2 gap-2">
+                        {Object.entries(trafficData.trafficSources).map(([source, value]) => (
+                          <div key={source} className="text-sm">
+                            <span className="text-gray-600">{source}:</span>{" "}
+                            <span className="font-semibold text-gray-800">
+                              {value.toFixed(2)}%
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

@@ -1,72 +1,18 @@
-// ResumeBuild.jsx
-// import React, { useState } from 'react';
-// import ResumeForm from './resume/ResumeForm';
-// import ResumePreview from './resume/ResumePreview';
-// import html2canvas from 'html2canvas';
-// import jsPDF from 'jspdf';
-
-// const ResumeBuild = () => {
-//   const [resumeData, setResumeData] = useState(null);
-
-//   const handleDownload = () => {
-//     const resume = document.getElementById('resume-preview');
-//     html2canvas(resume).then((canvas) => {
-//       const imgData = canvas.toDataURL('image/png');
-//       const pdf = new jsPDF('p', 'mm','a4');
-//       const pdfWidth = pdf.internal.pageSize.getWidth();
-//       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-//       pdf.addImage(imgData, 'PNG', 0, 0,pdfWidth,pdfHeight);
-//       pdf.save('resume.pdf');
-//     });
-//   };
-
-//   return (
-//     <div className='flex flex-col items-center'>
-//     <div className="flex flex-row items-center">
-//       <ResumeForm onSubmit={setResumeData} />
-//       {resumeData && (
-//         <div id="resume-preview" className="mt-6">
-//           <ResumePreview data={resumeData} />
-//         </div>
-//       )}
-    
-      
-//     </div>
-//     <div>
-//     <button onClick={handleDownload} className="bg-green-600 text-white p-2 rounded hover:bg-green-700 mt-4">
-//         Download Resume
-//       </button>
-//     </div>
-//     </div>
-//   );
-// }
-
-// export default ResumeBuild;
-
 import React, { useState } from 'react';
 import ResumeForm from './resume/ResumeForm';
 import ResumePreview from './resume/ResumePreview';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { Back } from './back';
 
 const ResumeBuild = () => {
   const [resumeData, setResumeData] = useState(null);
-  const [themeColor, setThemeColor] = useState('#1F2937'); // Default dark color
-  const [selectedFormat, setSelectedFormat] = useState('format1'); // Default format
-
-  const handleColorChange = (e) => {
-    setThemeColor(e.target.value);
-  };
-
-  const handleFormatChange = (e) => {
-    setSelectedFormat(e.target.value);
-  };
-
+  const [themeColor, setThemeColor] = useState('#2563eb'); // Default blue theme
+  const [selectedFormat, setSelectedFormat] = useState('modern');
 
   const handleDownload = () => {
-    // Target only the resume content, not the color or format picker
-    const resumeContent = document.getElementById('resume-content');
-    html2canvas(resumeContent).then((canvas) => {
+    const resume = document.getElementById('resume-preview');
+    html2canvas(resume).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -77,38 +23,53 @@ const ResumeBuild = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-     <div>
-     <div className="mt-4">
-        <label className="mr-2 text-gray-600">Choose Format: </label>
-        <select value={selectedFormat} onChange={handleFormatChange}>
-          <option value="format1">Format 1</option>
-          <option value="format2">Format 2</option>
-          <option value="format3">Format 3</option>
-          <option value="format4">Format 4</option>
-        </select>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-8 px-4">
+      <div className="max-w-7xl mx-auto relative">
+        <div className="absolute top-0 left-4">
+          <Back />
+        </div>
+        
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8 pt-2">
+          Resume Builder
+        </h1>
 
-      <div className="mt-4">
-        <label className="mr-2 text-gray-600">Pick Theme Color: </label>
-        <input type="color" value={themeColor} onChange={handleColorChange} />
-      </div>
-     </div>
-      <div className="flex flex-row items-center">
-     
-
-        <ResumeForm onSubmit={setResumeData} />
-        {resumeData && (
-          <div id="resume-content" className="mt-6">
-            {/* Only this part will be included in the download */}
-            <ResumePreview data={resumeData} themeColor={themeColor} selectedFormat={selectedFormat}/>
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left Side - Form */}
+          <div className="lg:w-1/2">
+            <div className="bg-white rounded-[30px] shadow-lg p-6">
+              <ResumeForm 
+                onSubmit={setResumeData} 
+                themeColor={themeColor}
+                setThemeColor={setThemeColor}
+                selectedFormat={selectedFormat}
+                setSelectedFormat={setSelectedFormat}
+              />
+            </div>
           </div>
-        )}
-      </div>
-      <div>
-        <button onClick={handleDownload} className="bg-green-600 text-white p-2 rounded hover:bg-green-700 mt-4">
-          Download Resume
-        </button>
+
+          {/* Right Side - Preview */}
+          <div className="lg:w-1/2">
+            {resumeData && (
+              <div className="sticky top-8">
+                <div id="resume-preview" className="bg-white rounded-[30px] shadow-lg overflow-hidden">
+                  <ResumePreview 
+                    data={resumeData} 
+                    themeColor={themeColor}
+                    selectedFormat={selectedFormat}
+                  />
+                </div>
+                <div className="mt-4 flex justify-center">
+                  <button
+                    onClick={handleDownload}
+                    className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-semibold rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-200 shadow-md hover:shadow-lg"
+                  >
+                    Download Resume as PDF
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

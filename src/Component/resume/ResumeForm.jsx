@@ -1,723 +1,6 @@
-// ResumeForm.jsx
-// import React, { useState } from 'react';
-
-// const ResumeForm = ({ onSubmit }) => {
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     title: '',
-//     summary: '',
-//     contact: {
-//       email: '',
-//       phone: '',
-//       location: '',
-//       linkedin: '',
-//     },
-//     skills: '',
-//     certifications: '',
-//     education: '',
-//     experience: '',
-//     projects: '',
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     if (name in formData.contact) {
-//       setFormData({
-//         ...formData,
-//         contact: {
-//           ...formData.contact,
-//           [name]: value,
-//         },
-//       });
-//     } else {
-//       setFormData({ ...formData, [name]: value });
-//     }
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     onSubmit(formData);
-//   };
-
-//   return (
-//     <div className="p-8 bg-gray-100 min-h-screen">
-//       <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl mx-auto">
-//         <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Resume Builder</h2>
-
-//         {/* Form Fields */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Full Name</label>
-//           <input
-//             type="text"
-//             name="name"
-//             value={formData.name}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//             required
-//           />
-//         </div>
-//         <div>
-//           <label className="block font-semibold text-gray-700">Job Title</label>
-//           <input
-//             type="text"
-//             name="title"
-//             value={formData.title}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//             required
-//           />
-//         </div>
-
-//         {/* Summary */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Summary</label>
-//           <textarea
-//             name="summary"
-//             value={formData.summary}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Contact Information */}
-//         <div>
-//           <h3 className="font-semibold text-gray-700">Contact Information</h3>
-//           <div className="space-y-2">
-//             <input
-//               type="email"
-//               name="email"
-//               placeholder="Email"
-//               value={formData.contact.email}
-//               onChange={handleChange}
-//               className="w-full p-2 border border-gray-300 rounded"
-//               required
-//             />
-//             <input
-//               type="text"
-//               name="phone"
-//               placeholder="Phone Number"
-//               value={formData.contact.phone}
-//               onChange={handleChange}
-//               className="w-full p-2 border border-gray-300 rounded"
-//               required
-//             />
-//             <input
-//               type="text"
-//               name="location"
-//               placeholder="Location"
-//               value={formData.contact.location}
-//               onChange={handleChange}
-//               className="w-full p-2 border border-gray-300 rounded"
-//             />
-//             <input
-//               type="text"
-//               name="linkedin"
-//               placeholder="LinkedIn Profile URL"
-//               value={formData.contact.linkedin}
-//               onChange={handleChange}
-//               className="w-full p-2 border border-gray-300 rounded"
-//             />
-//           </div>
-//         </div>
-
-//         {/* Skills */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Skills (comma separated)</label>
-//           <input
-//             type="text"
-//             name="skills"
-//             value={formData.skills}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Certifications */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Certifications (comma separated)</label>
-//           <input
-//             type="text"
-//             name="certifications"
-//             value={formData.certifications}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Education */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Education</label>
-//           <textarea
-//             name="education"
-//             value={formData.education}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Experience */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Experience (separate each entry with a new line)</label>
-//           <textarea
-//             name="experience"
-//             value={formData.experience}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Projects */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Projects (separate each entry with a new line)</label>
-//           <textarea
-//             name="projects"
-//             value={formData.projects}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-        
-//         <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
-//           Generate Resume
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default ResumeForm;
-
-// import React, { useState } from 'react';
-
-// const ResumeForm = ({ onSubmit }) => {
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     title: '',
-//     summary: '',
-//     contact: {
-//       email: '',
-//       phone: '',
-//       location: '',
-//       linkedin: '',
-//     },
-//     skills: '',
-//     certifications: '',
-//     education: '',
-//     experience: '',
-//     projects: '',
-//     profileImage: null,
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     if (name in formData.contact) {
-//       setFormData({
-//         ...formData,
-//         contact: {
-//           ...formData.contact,
-//           [name]: value,
-//         },
-//       });
-//     } else {
-//       setFormData({ ...formData, [name]: value });
-//     }
-//   };
-
-//   const handleImageUpload = (e) => {
-//     const file = e.target.files[0];
-//     if (file) {
-//       const reader = new FileReader();
-//       reader.onloadend = () => {
-//         setFormData({ ...formData, profileImage: reader.result });
-//       };
-//       reader.readAsDataURL(file);
-//     }
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     onSubmit(formData);
-//   };
-
-//   return (
-//     <div className="p-8 bg-gray-100 min-h-screen">
-//       <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl mx-auto">
-//         <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Resume Builder</h2>
-
-//         {/* Profile Image */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Profile Image</label>
-//           <input type="file" onChange={handleImageUpload} className="w-full p-2" />
-//         </div>
-
-//         <div>
-//           <label className="block font-semibold text-gray-700">Name</label>
-//           <input
-//             type="text"
-//             name="name"
-//             value={formData.name}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//             required
-//           />
-//         </div>
-//         <div>
-//           <label className="block font-semibold text-gray-700">Title</label>
-//           <input
-//             type="text"
-//             name="title"
-//             value={formData.title}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Summary */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Summary</label>
-//           <textarea
-//             name="summary"
-//             value={formData.summary}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Contact Information */}
-//         <div>
-//           <h3 className="font-semibold text-gray-700">Contact Information</h3>
-//           <div className="space-y-2">
-//             <input
-//               type="email"
-//               name="email"
-//               placeholder="Email"
-//               value={formData.contact.email}
-//               onChange={handleChange}
-//               className="w-full p-2 border border-gray-300 rounded"
-//               required
-//             />
-//             <input
-//               type="text"
-//               name="phone"
-//               placeholder="Phone Number"
-//               value={formData.contact.phone}
-//               onChange={handleChange}
-//               className="w-full p-2 border border-gray-300 rounded"
-//               required
-//             />
-//             <input
-//               type="text"
-//               name="location"
-//               placeholder="Location"
-//               value={formData.contact.location}
-//               onChange={handleChange}
-//               className="w-full p-2 border border-gray-300 rounded"
-//             />
-//             <input
-//               type="text"
-//               name="linkedin"
-//               placeholder="LinkedIn Profile URL"
-//               value={formData.contact.linkedin}
-//               onChange={handleChange}
-//               className="w-full p-2 border border-gray-300 rounded"
-//             />
-//           </div>
-//         </div>
-
-//         {/* Skills */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Skills (comma separated)</label>
-//           <input
-//             type="text"
-//             name="skills"
-//             value={formData.skills}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Certifications */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Certifications (comma separated)</label>
-//           <input
-//             type="text"
-//             name="certifications"
-//             value={formData.certifications}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Education */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Education</label>
-//           <textarea
-//             name="education"
-//             value={formData.education}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Experience */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Experience (separate each entry with a new line)</label>
-//           <textarea
-//             name="experience"
-//             value={formData.experience}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Projects */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Projects (separate each entry with a new line)</label>
-//           <textarea
-//             name="projects"
-//             value={formData.projects}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-        
-//         <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
-//           Generate Resume
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default ResumeForm;
-
-// import React, { useState } from 'react';
-
-// const ResumeForm = ({ onSubmit }) => {
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     title: '',
-//     summary: '',
-//     contact: {
-//       email: '',
-//       phone: '',
-//       location: '',
-//       linkedin: '',
-//     },
-//     skills: '',
-//     certifications: [{ name: '', duration: '', company: '' }],
-//     experience: [{ title: '', duration: '', details: '' }],
-//     education: [{ course: '', college: '', duration: '', cgpa: '' }],
-//     projects: [{ name: '', duration: '', details: '' }],
-//     profileImage: null,
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     if (name in formData.contact) {
-//       setFormData({
-//         ...formData,
-//         contact: {
-//           ...formData.contact,
-//           [name]: value,
-//         },
-//       });
-//     } else {
-//       setFormData({ ...formData, [name]: value });
-//     }
-//   };
-
-//   const handleArrayChange = (section, index, field, value) => {
-//     const updatedArray = formData[section].map((item, i) =>
-//       i === index ? { ...item, [field]: value } : item
-//     );
-//     setFormData({ ...formData, [section]: updatedArray });
-//   };
-
-//   const handleAddField = (section, template) => {
-//     setFormData({ ...formData, [section]: [...formData[section], template] });
-//   };
-
-//   const handleImageUpload = (e) => {
-//     const file = e.target.files[0];
-//     if (file) {
-//       const reader = new FileReader();
-//       reader.onloadend = () => {
-//         setFormData({ ...formData, profileImage: reader.result });
-//       };
-//       reader.readAsDataURL(file);
-//     }
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     onSubmit(formData);
-//   };
-
-//   return (
-//     <div className="p-8 bg-gray-100 min-h-screen">
-//       <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl mx-auto">
-//         <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Resume Builder</h2>
-
-//         {/* Profile Image */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Profile Image</label>
-//           <input type="file" onChange={handleImageUpload} className="w-full p-2" />
-//         </div>
-
-//         {/* Name and Title */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Name</label>
-//           <input
-//             type="text"
-//             name="name"
-//             value={formData.name}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//             required
-//           />
-//         </div>
-//         <div>
-//           <label className="block font-semibold text-gray-700">Title</label>
-//           <input
-//             type="text"
-//             name="title"
-//             value={formData.title}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Summary */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Summary</label>
-//           <textarea
-//             name="summary"
-//             value={formData.summary}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//             rows='6'
-//           />
-//         </div>
-
-//         {/* Contact Information */}
-//         <div>
-//           <h3 className="font-semibold text-gray-700">Contact Information</h3>
-//           <input
-//             type="email"
-//             name="email"
-//             placeholder="Email"
-//             value={formData.contact.email}
-//             onChange={handleChange}
-//             className="w-full p-2 border mb-2 border-gray-300 rounded"
-//             required
-//           />
-//           <input
-//             type="text"
-//             name="phone"
-//             placeholder="Phone Number"
-//             value={formData.contact.phone}
-//             onChange={handleChange}
-//             className="w-full p-2 border mb-2 border-gray-300 rounded"
-//             required
-//           />
-//           <input
-//             type="text"
-//             name="location"
-//             placeholder="Location"
-//             value={formData.contact.location}
-//             onChange={handleChange}
-//             className="w-full p-2 border mb-2 border-gray-300 rounded"
-//           />
-//           <input
-//             type="text"
-//             name="linkedin"
-//             placeholder="LinkedIn Profile URL"
-//             value={formData.contact.linkedin}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Skills */}
-//         <div>
-//           <label className="block font-semibold text-gray-700">Skills (comma separated)</label>
-//           <input
-//             type="text"
-//             name="skills"
-//             value={formData.skills}
-//             onChange={handleChange}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-
-//         {/* Certifications */}
-//         <div>
-//           <h3 className="font-semibold text-gray-700">Certifications</h3>
-//           {formData.certifications.map((cert, index) => (
-//             <div key={index} className="space-y-2 mb-2">
-//               <input
-//                 type="text"
-//                 placeholder="Certification Name"
-//                 value={cert.name}
-//                 onChange={(e) => handleArrayChange('certifications', index, 'name', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//               <input
-//                 type="text"
-//                 placeholder="Duration"
-//                 value={cert.duration}
-//                 onChange={(e) => handleArrayChange('certifications', index, 'duration', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//               <input
-//                 type="text"
-//                 placeholder="Company"
-//                 value={cert.company}
-//                 onChange={(e) => handleArrayChange('certifications', index, 'company', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//             </div>
-//           ))}
-//           <button
-//             type="button"
-//             onClick={() => handleAddField('certifications', { name: '', duration: '', company: '' })}
-//             className="text-blue-600"
-//           >
-//             Add Certification
-//           </button>
-//         </div>
-
-//         {/* Experience */}
-//         <div>
-//           <h3 className="font-semibold text-gray-700">Experience</h3>
-//           {formData.experience.map((exp, index) => (
-//             <div key={index} className="space-y-2 mb-2">
-//               <input
-//                 type="text"
-//                 placeholder="Job Title"
-//                 value={exp.title}
-//                 onChange={(e) => handleArrayChange('experience', index, 'title', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//               <input
-//                 type="text"
-//                 placeholder="Duration"
-//                 value={exp.duration}
-//                 onChange={(e) => handleArrayChange('experience', index, 'duration', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//               <textarea
-//                 placeholder="Details"
-//                 value={exp.details}
-//                 onChange={(e) => handleArrayChange('experience', index, 'details', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//             </div>
-//           ))}
-//           <button
-//             type="button"
-//             onClick={() => handleAddField('experience', { title: '', duration: '', details: '' })}
-//             className="text-blue-600"
-//           >
-//             Add Experience
-//           </button>
-//         </div>
-
-//         {/* Education */}
-//         <div>
-//           <h3 className="font-semibold text-gray-700">Education</h3>
-//           {formData.education.map((edu, index) => (
-//             <div key={index} className="space-y-2 mb-2">
-//               <input
-//                 type="text"
-//                 placeholder="Course"
-//                 value={edu.course}
-//                 onChange={(e) => handleArrayChange('education', index, 'course', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//               <input
-//                 type="text"
-//                 placeholder="College"
-//                 value={edu.college}
-//                 onChange={(e) => handleArrayChange('education', index, 'college', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//               <input
-//                 type="text"
-//                 placeholder="Duration"
-//                 value={edu.duration}
-//                 onChange={(e) => handleArrayChange('education', index, 'duration', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//               <input
-//                 type="text"
-//                 placeholder="CGPA"
-//                 value={edu.cgpa}
-//                 onChange={(e) => handleArrayChange('education', index, 'cgpa', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//             </div>
-//           ))}
-//           <button
-//             type="button"
-//             onClick={() => handleAddField('education', { course: '', college: '', duration: '', cgpa: '' })}
-//             className="text-blue-600"
-//           >
-//             Add Education
-//           </button>
-//         </div>
-
-//         {/* Projects */}
-//         <div>
-//           <h3 className="font-semibold text-gray-700">Projects</h3>
-//           {formData.projects.map((proj, index) => (
-//             <div key={index} className="space-y-2 mb-2">
-//               <input
-//                 type="text"
-//                 placeholder="Project Name"
-//                 value={proj.name}
-//                 onChange={(e) => handleArrayChange('projects', index, 'name', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//               <input
-//                 type="text"
-//                 placeholder="Duration"
-//                 value={proj.duration}
-//                 onChange={(e) => handleArrayChange('projects', index, 'duration', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//               <textarea
-//                 placeholder="Details"
-//                 value={proj.details}
-//                 onChange={(e) => handleArrayChange('projects', index, 'details', e.target.value)}
-//                 className="w-full p-2 border border-gray-300 rounded"
-//               />
-//             </div>
-//           ))}
-//           <button
-//             type="button"
-//             onClick={() => handleAddField('projects', { name: '', duration: '', details: '' })}
-//             className="text-blue-600"
-//           >
-//             Add Project
-//           </button>
-//         </div>
-
-//         <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded mt-4">
-//           Generate Resume
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default ResumeForm;
-
 import React, { useState } from 'react';
-import { Back } from '../back';
 
-const ResumeForm = ({ onSubmit }) => {
+const ResumeForm = ({ onSubmit, themeColor, setThemeColor, selectedFormat, setSelectedFormat }) => {
   const [formData, setFormData] = useState({
     name: '',
     title: '',
@@ -729,50 +12,47 @@ const ResumeForm = ({ onSubmit }) => {
       linkedin: '',
     },
     skills: '',
-    certifications: [{ name: '', duration: '', company: '' }],
-    experience: [{ title: '', duration: '', details: '' }],
-    internships: [{ title: '', duration: '', details: '' }],
-    education: [{ course: '', college: '', duration: '', cgpa: '' }],
-    projects: [{ name: '', duration: '', details: '' }],
-    profileImage: null,
-    experienceType: 'fresher', // New state for toggling between experience and internship
+    certifications: '',
+    education: [{ institution: '', degree: '', duration: '', details: '' }],
+    experience: [{ title: '', company: '', duration: '', details: '' }],
+    projects: [{ name: '', description: '', technologies: '' }],
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name in formData.contact) {
-      setFormData({
-        ...formData,
-        contact: {
-          ...formData.contact,
-          [name]: value,
-        },
-      });
+  const handleChange = (e, section, index, field) => {
+    if (section) {
+      if (Array.isArray(formData[section])) {
+        const newData = [...formData[section]];
+        newData[index] = { ...newData[index], [field]: e.target.value };
+        setFormData({ ...formData, [section]: newData });
+      } else if (section === 'contact') {
+        setFormData({
+          ...formData,
+          contact: { ...formData.contact, [field]: e.target.value },
+        });
+      }
     } else {
-      setFormData({ ...formData, [name]: value });
+      setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
 
-  const handleArrayChange = (section, index, field, value) => {
-    const updatedArray = formData[section].map((item, i) =>
-      i === index ? { ...item, [field]: value } : item
-    );
-    setFormData({ ...formData, [section]: updatedArray });
+  const addItem = (section) => {
+    const newItem = {
+      education: { institution: '', degree: '', duration: '', details: '' },
+      experience: { title: '', company: '', duration: '', details: '' },
+      projects: { name: '', description: '', technologies: '' },
+    }[section];
+
+    setFormData({
+      ...formData,
+      [section]: [...formData[section], newItem],
+    });
   };
 
-  const handleAddField = (section, template) => {
-    setFormData({ ...formData, [section]: [...formData[section], template] });
-  };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({ ...formData, profileImage: reader.result });
-      };
-      reader.readAsDataURL(file);
-    }
+  const removeItem = (section, index) => {
+    setFormData({
+      ...formData,
+      [section]: formData[section].filter((_, i) => i !== index),
+    });
   };
 
   const handleSubmit = (e) => {
@@ -781,338 +61,321 @@ const ResumeForm = ({ onSubmit }) => {
   };
 
   return (
-    <div className="p-8 bg-gray-100 min-h-screen">
-    <Back/>
-      <div className="max-w-2xl mx-auto h-screen">
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-4 h-full overflow-y-auto p-4 border border-gray-300 rounded bg-white"
-        >
-          <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Resume Builder</h2>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Theme and Format Selection */}
+      <div className="grid grid-cols-2 gap-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Theme Color</label>
+          <input
+            type="color"
+            value={themeColor}
+            onChange={(e) => setThemeColor(e.target.value)}
+            className="h-10 w-full rounded border-gray-200 cursor-pointer"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Resume Format</label>
+          <select
+            value={selectedFormat}
+            onChange={(e) => setSelectedFormat(e.target.value)}
+            className="w-full rounded-lg border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500"
+          >
+            <option value="modern">Modern</option>
+            <option value="classic">Classic</option>
+            <option value="minimal">Minimal</option>
+          </select>
+        </div>
+      </div>
 
-          {/* Profile Image */}
+      {/* Personal Information */}
+      <div className="space-y-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl">
+        <h3 className="text-lg font-semibold text-gray-800">Personal Information</h3>
+        <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block font-semibold text-gray-700">Profile Image</label>
-            <input type="file" onChange={handleImageUpload} className="w-full p-2" />
-          </div>
-
-          {/* Name and Title */}
-          <div>
-            <label className="block font-semibold text-gray-700">Name</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-              required
+              className="w-full rounded-lg border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500"
+              placeholder="John Doe"
             />
           </div>
           <div>
-            <label className="block font-semibold text-gray-700">Title</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Professional Title</label>
             <input
               type="text"
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full rounded-lg border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500"
+              placeholder="Software Engineer"
             />
           </div>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Professional Summary</label>
+          <textarea
+            name="summary"
+            value={formData.summary}
+            onChange={handleChange}
+            rows="3"
+            className="w-full rounded-lg border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500"
+            placeholder="Brief overview of your professional background and goals"
+          />
+        </div>
+      </div>
 
-          {/* Summary */}
+      {/* Contact Information */}
+      <div className="space-y-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
+        <h3 className="text-lg font-semibold text-gray-800">Contact Information</h3>
+        <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block font-semibold text-gray-700">Summary</label>
-            <textarea
-              name="summary"
-              value={formData.summary}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-              rows="6"
-            />
-          </div>
-
-          {/* Contact Information */}
-          <div>
-            <h3 className="font-semibold text-gray-700">Contact Information</h3>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input
               type="email"
-              name="email"
-              placeholder="Email"
               value={formData.contact.email}
-              onChange={handleChange}
-              className="w-full p-2 border mb-2 border-gray-300 rounded"
-              required
+              onChange={(e) => handleChange(e, 'contact', null, 'email')}
+              className="w-full rounded-lg border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500"
+              placeholder="john@example.com"
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
             <input
-              type="text"
-              name="phone"
-              placeholder="Phone Number"
+              type="tel"
               value={formData.contact.phone}
-              onChange={handleChange}
-              className="w-full p-2 border mb-2 border-gray-300 rounded"
-              required
+              onChange={(e) => handleChange(e, 'contact', null, 'phone')}
+              className="w-full rounded-lg border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500"
+              placeholder="+1 234 567 8900"
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
             <input
               type="text"
-              name="location"
-              placeholder="Location"
               value={formData.contact.location}
-              onChange={handleChange}
-              className="w-full p-2 border mb-2 border-gray-300 rounded"
+              onChange={(e) => handleChange(e, 'contact', null, 'location')}
+              className="w-full rounded-lg border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500"
+              placeholder="City, Country"
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">LinkedIn</label>
             <input
               type="text"
-              name="linkedin"
-              placeholder="LinkedIn Profile URL"
               value={formData.contact.linkedin}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              onChange={(e) => handleChange(e, 'contact', null, 'linkedin')}
+              className="w-full rounded-lg border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500"
+              placeholder="linkedin.com/in/johndoe"
             />
           </div>
-
-          {/* Skills */}
-          <div>
-            <label className="block font-semibold text-gray-700">Skills (comma separated)</label>
-            <input
-              type="text"
-              name="skills"
-              value={formData.skills}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-
-          {/* Certifications */}
-          <div>
-            <h3 className="font-semibold text-gray-700">Certifications</h3>
-            {formData.certifications.map((cert, index) => (
-              <div key={index} className="space-y-2 mb-2">
-                <input
-                  type="text"
-                  placeholder="Certification Name"
-                  value={cert.name}
-                  onChange={(e) => handleArrayChange('certifications', index, 'name', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-                <input
-                  type="text"
-                  placeholder="Duration"
-                  value={cert.duration}
-                  onChange={(e) => handleArrayChange('certifications', index, 'duration', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-                <input
-                  type="text"
-                  placeholder="Company"
-                  value={cert.company}
-                  onChange={(e) => handleArrayChange('certifications', index, 'company', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={() => handleAddField('certifications', { name: '', duration: '', company: '' })}
-              className="text-blue-600"
-            >
-              Add Certification
-            </button>
-          </div>
-
-          {/* Experience Type (Experienced or Fresher) */}
-          <div>
-            <label className="block font-semibold text-gray-700">Are you experienced or a fresher?</label>
-            <div className="flex space-x-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="experienceType"
-                  value="experienced"
-                  checked={formData.experienceType === 'experienced'}
-                  onChange={handleChange}
-                  className="mr-2"
-                />
-                Experienced
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="experienceType"
-                  value="fresher"
-                  checked={formData.experienceType === 'fresher'}
-                  onChange={handleChange}
-                  className="mr-2"
-                />
-                Fresher
-              </label>
-            </div>
-          </div>
-
-          {/* Experience or Internship */}
-          {formData.experienceType === 'experienced' ? (
-            <div>
-              <h3 className="font-semibold text-gray-700">Experience</h3>
-              {formData.experience.map((exp, index) => (
-                <div key={index} className="space-y-2 mb-2">
-                  <input
-                    type="text"
-                    placeholder="Job Title"
-                    value={exp.title}
-                    onChange={(e) => handleArrayChange('experience', index, 'title', e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Duration"
-                    value={exp.duration}
-                    onChange={(e) => handleArrayChange('experience', index, 'duration', e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded"
-                  />
-                  <textarea
-                    placeholder="Details"
-                    value={exp.details}
-                    onChange={(e) => handleArrayChange('experience', index, 'details', e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded"
-                  />
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={() => handleAddField('experience', { title: '', duration: '', details: '' })}
-                className="text-blue-600"
-              >
-                Add Experience
-              </button>
-            </div>
-          ) : (
-            <div>
-              <h3 className="font-semibold text-gray-700">Internships</h3>
-              {formData.internships.map((intern, index) => (
-                <div key={index} className="space-y-2 mb-2">
-                  <input
-                    type="text"
-                    placeholder="Internship Title"
-                    value={intern.title}
-                    onChange={(e) => handleArrayChange('internships', index, 'title', e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Duration"
-                    value={intern.duration}
-                    onChange={(e) => handleArrayChange('internships', index, 'duration', e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded"
-                  />
-                  <textarea
-                    placeholder="Details"
-                    value={intern.details}
-                    onChange={(e) => handleArrayChange('internships', index, 'details', e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded"
-                  />
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={() => handleAddField('internships', { title: '', duration: '', details: '' })}
-                className="text-blue-600"
-              >
-                Add Internship
-              </button>
-            </div>
-          )}
-
-          {/* Education */}
-          <div>
-            <h3 className="font-semibold text-gray-700">Education</h3>
-            {formData.education.map((edu, index) => (
-              <div key={index} className="space-y-2 mb-2">
-                <input
-                  type="text"
-                  placeholder="Course"
-                  value={edu.course}
-                  onChange={(e) => handleArrayChange('education', index, 'course', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-                <input
-                  type="text"
-                  placeholder="College"
-                  value={edu.college}
-                  onChange={(e) => handleArrayChange('education', index, 'college', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-                <input
-                  type="text"
-                  placeholder="Duration"
-                  value={edu.duration}
-                  onChange={(e) => handleArrayChange('education', index, 'duration', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-                <input
-                  type="text"
-                  placeholder="CGPA"
-                  value={edu.cgpa}
-                  onChange={(e) => handleArrayChange('education', index, 'cgpa', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={() => handleAddField('education', { course: '', college: '', duration: '', cgpa: '' })}
-              className="text-blue-600"
-            >
-              Add Education
-            </button>
-          </div>
-
-          {/* Projects */}
-          <div>
-            <h3 className="font-semibold text-gray-700">Projects</h3>
-            {formData.projects.map((proj, index) => (
-              <div key={index} className="space-y-2 mb-2">
-                <input
-                  type="text"
-                  placeholder="Project Name"
-                  value={proj.name}
-                  onChange={(e) => handleArrayChange('projects', index, 'name', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-                <input
-                  type="text"
-                  placeholder="Duration"
-                  value={proj.duration}
-                  onChange={(e) => handleArrayChange('projects', index, 'duration', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-                <textarea
-                  placeholder="Details"
-                  value={proj.details}
-                  onChange={(e) => handleArrayChange('projects', index, 'details', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={() => handleAddField('projects', { name: '', duration: '', details: '' })}
-              className="text-blue-600"
-            >
-              Add Project
-            </button>
-          </div>
-
-          {/* Submit Button */}
-          <div className="text-center">
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500"
-            >
-              Generate Resume
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
-    </div>
+
+      {/* Skills & Certifications */}
+      <div className="space-y-4 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
+        <h3 className="text-lg font-semibold text-gray-800">Skills & Certifications</h3>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Skills (comma-separated)</label>
+          <textarea
+            name="skills"
+            value={formData.skills}
+            onChange={handleChange}
+            className="w-full rounded-lg border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500"
+            placeholder="JavaScript, React, Node.js, etc."
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Certifications (comma-separated)</label>
+          <textarea
+            name="certifications"
+            value={formData.certifications}
+            onChange={handleChange}
+            className="w-full rounded-lg border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500"
+            placeholder="AWS Certified Developer, Google Cloud Professional, etc."
+          />
+        </div>
+      </div>
+
+      {/* Education */}
+      <div className="space-y-4 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold text-gray-800">Education</h3>
+          <button
+            type="button"
+            onClick={() => addItem('education')}
+            className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg text-sm hover:bg-yellow-200 transition-colors"
+          >
+            Add Education
+          </button>
+        </div>
+        {formData.education.map((edu, index) => (
+          <div key={index} className="space-y-3 p-3 bg-white rounded-lg border border-gray-200">
+            <div className="flex justify-between items-start">
+              <h4 className="text-sm font-medium text-gray-700">Education #{index + 1}</h4>
+              <button
+                type="button"
+                onClick={() => removeItem('education', index)}
+                className="text-red-500 hover:text-red-700 text-sm"
+              >
+                Remove
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                type="text"
+                value={edu.institution}
+                onChange={(e) => handleChange(e, 'education', index, 'institution')}
+                className="w-full rounded-lg border-gray-200 text-sm"
+                placeholder="Institution"
+              />
+              <input
+                type="text"
+                value={edu.degree}
+                onChange={(e) => handleChange(e, 'education', index, 'degree')}
+                className="w-full rounded-lg border-gray-200 text-sm"
+                placeholder="Degree"
+              />
+              <input
+                type="text"
+                value={edu.duration}
+                onChange={(e) => handleChange(e, 'education', index, 'duration')}
+                className="w-full rounded-lg border-gray-200 text-sm"
+                placeholder="Duration"
+              />
+              <textarea
+                value={edu.details}
+                onChange={(e) => handleChange(e, 'education', index, 'details')}
+                className="w-full rounded-lg border-gray-200 text-sm"
+                placeholder="Additional details"
+                rows="2"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Experience */}
+      <div className="space-y-4 p-4 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold text-gray-800">Experience</h3>
+          <button
+            type="button"
+            onClick={() => addItem('experience')}
+            className="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-sm hover:bg-blue-200 transition-colors"
+          >
+            Add Experience
+          </button>
+        </div>
+        {formData.experience.map((exp, index) => (
+          <div key={index} className="space-y-3 p-3 bg-white rounded-lg border border-gray-200">
+            <div className="flex justify-between items-start">
+              <h4 className="text-sm font-medium text-gray-700">Experience #{index + 1}</h4>
+              <button
+                type="button"
+                onClick={() => removeItem('experience', index)}
+                className="text-red-500 hover:text-red-700 text-sm"
+              >
+                Remove
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                type="text"
+                value={exp.title}
+                onChange={(e) => handleChange(e, 'experience', index, 'title')}
+                className="w-full rounded-lg border-gray-200 text-sm"
+                placeholder="Job Title"
+              />
+              <input
+                type="text"
+                value={exp.company}
+                onChange={(e) => handleChange(e, 'experience', index, 'company')}
+                className="w-full rounded-lg border-gray-200 text-sm"
+                placeholder="Company"
+              />
+              <input
+                type="text"
+                value={exp.duration}
+                onChange={(e) => handleChange(e, 'experience', index, 'duration')}
+                className="w-full rounded-lg border-gray-200 text-sm"
+                placeholder="Duration"
+              />
+              <textarea
+                value={exp.details}
+                onChange={(e) => handleChange(e, 'experience', index, 'details')}
+                className="w-full rounded-lg border-gray-200 text-sm"
+                placeholder="Job responsibilities and achievements"
+                rows="2"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Projects */}
+      <div className="space-y-4 p-4 bg-gradient-to-r from-rose-50 to-red-50 rounded-xl">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold text-gray-800">Projects</h3>
+          <button
+            type="button"
+            onClick={() => addItem('projects')}
+            className="px-3 py-1 bg-rose-100 text-rose-700 rounded-lg text-sm hover:bg-rose-200 transition-colors"
+          >
+            Add Project
+          </button>
+        </div>
+        {formData.projects.map((project, index) => (
+          <div key={index} className="space-y-3 p-3 bg-white rounded-lg border border-gray-200">
+            <div className="flex justify-between items-start">
+              <h4 className="text-sm font-medium text-gray-700">Project #{index + 1}</h4>
+              <button
+                type="button"
+                onClick={() => removeItem('projects', index)}
+                className="text-red-500 hover:text-red-700 text-sm"
+              >
+                Remove
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                type="text"
+                value={project.name}
+                onChange={(e) => handleChange(e, 'projects', index, 'name')}
+                className="w-full rounded-lg border-gray-200 text-sm"
+                placeholder="Project Name"
+              />
+              <input
+                type="text"
+                value={project.technologies}
+                onChange={(e) => handleChange(e, 'projects', index, 'technologies')}
+                className="w-full rounded-lg border-gray-200 text-sm"
+                placeholder="Technologies Used"
+              />
+              <textarea
+                value={project.description}
+                onChange={(e) => handleChange(e, 'projects', index, 'description')}
+                className="w-full col-span-2 rounded-lg border-gray-200 text-sm"
+                placeholder="Project description and your role"
+                rows="2"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Submit Button */}
+      <div className="flex justify-center">
+        <button
+          type="submit"
+          className="px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg"
+        >
+          Generate Resume
+        </button>
+      </div>
+    </form>
   );
 };
 

@@ -12,8 +12,8 @@ const Clock = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-gray-100 rounded-2xl p-8 shadow-sm border border-gray-100">
-      <div className="text-6xl font-bold tracking-wider text-center font-mono text-gray-800">
+    <div className="bg-gradient-to-br from-blue-50 to-gray-100 rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
+      <div className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-wider text-center font-mono text-gray-800">
         {time.toLocaleTimeString()}
       </div>
     </div>
@@ -32,12 +32,12 @@ const AlarmForm = ({ addAlarm }) => {
     addAlarm({ hour, minute, ampm, day, date });
   };
 
-  const InputField = ({ value, onChange, min, max, placeholder, width = "w-16 md:w-20" }) => (
+  const InputField = ({ value, onChange, min, max, placeholder, width = "w-14 sm:w-16 md:w-20" }) => (
     <input
       type="number"
       value={value}
       onChange={(e) => onChange(Math.max(min, Math.min(max, e.target.value)))}
-      className={`${width} p-2 md:p-3 text-center bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+      className={`${width} p-2 sm:p-3 text-center bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm sm:text-base`}
       placeholder={placeholder}
     />
   );
@@ -46,7 +46,7 @@ const AlarmForm = ({ addAlarm }) => {
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={`${width} p-2 md:p-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200`}
+      className={`${width} p-2 sm:p-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm sm:text-base`}
     >
       {options.map((opt) => (
         <option key={opt} value={opt}>
@@ -57,8 +57,8 @@ const AlarmForm = ({ addAlarm }) => {
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="flex flex-wrap gap-2 md:gap-4 justify-center items-center">
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+      <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center items-center">
         <InputField
           value={hour}
           onChange={setHour}
@@ -77,29 +77,29 @@ const AlarmForm = ({ addAlarm }) => {
           value={ampm}
           onChange={setAmpm}
           options={["AM", "PM"]}
-          width="w-20"
+          width="w-16 sm:w-20"
         />
       </div>
 
-      <div className="flex flex-wrap gap-2 md:gap-4 justify-center items-center">
+      <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center items-center">
         <SelectField
           value={day}
           onChange={setDay}
           options={["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]}
-          width="w-32 md:w-auto"
+          width="w-32 sm:w-36 md:w-auto"
         />
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="w-32 md:w-auto p-2 md:p-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+          className="w-32 sm:w-36 md:w-auto p-2 sm:p-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm sm:text-base"
         />
       </div>
 
       <div className="text-center">
         <button
           type="submit"
-          className="px-6 md:px-8 py-2 md:py-3 bg-blue-600 text-white rounded-xl text-lg font-medium transition-all duration-200 hover:bg-blue-700 hover:shadow-md"
+          className="px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-blue-600 text-white rounded-xl text-sm sm:text-base md:text-lg font-medium transition-all duration-200 hover:bg-blue-700 hover:shadow-md"
         >
           Add Alarm
         </button>
@@ -110,19 +110,19 @@ const AlarmForm = ({ addAlarm }) => {
 
 const AlarmList = ({ alarms, deleteAlarm }) => {
   return (
-    <div className="space-y-3">
+    <div className="space-y-2 sm:space-y-3">
       {alarms.map((alarm, index) => (
         <div
           key={index}
-          className="flex flex-wrap md:flex-nowrap justify-between items-center p-3 md:p-4 bg-gradient-to-br from-blue-50 to-gray-100 rounded-xl border border-gray-100 shadow-sm gap-2"
+          className="flex flex-wrap md:flex-nowrap justify-between items-center p-3 sm:p-4 bg-gradient-to-br from-blue-50 to-gray-100 rounded-xl border border-gray-100 shadow-sm gap-2"
         >
-          <div className="font-medium text-gray-800 text-sm md:text-base w-full md:w-auto">
+          <div className="font-medium text-gray-800 text-sm sm:text-base w-full md:w-auto">
             {alarm.hour}:{String(alarm.minute).padStart(2, "0")} {alarm.ampm} on{" "}
             {alarm.day}, {alarm.date}
           </div>
           <button
             onClick={() => deleteAlarm(index)}
-            className="w-full md:w-auto px-3 py-1 text-red-600 hover:text-red-700 transition-colors duration-200 text-sm md:text-base"
+            className="w-full md:w-auto px-3 py-1 text-red-600 hover:text-red-700 transition-colors duration-200 text-sm sm:text-base"
           >
             Delete
           </button>
@@ -191,34 +191,34 @@ const App = () => {
   }, [alarms, alarmPlaying, alarmSound, triggeredAlarms]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 p-2 sm:p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
           {/* Header */}
-          <div className="relative p-6">
-            <div className="absolute top-6 left-6">
+          <div className="relative p-4 sm:p-6">
+            <div className="absolute top-4 sm:top-6 left-4 sm:left-6">
               <Back />
             </div>
-            <h1 className="text-4xl font-bold text-center text-black">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-black">
               Alarm Clock
             </h1>
           </div>
 
           {/* Main Content */}
-          <div className="p-8 space-y-8">
+          <div className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8">
             {/* Current Time Display */}
             <Clock />
 
             {/* Set Alarm Form */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-              <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Set Alarm</h2>
+            <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center text-gray-800">Set Alarm</h2>
               <AlarmForm addAlarm={addAlarm} />
             </div>
 
             {/* Alarm List */}
             {alarms.length > 0 && (
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Active Alarms</h2>
+              <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center text-gray-800">Active Alarms</h2>
                 <AlarmList alarms={alarms} deleteAlarm={deleteAlarm} />
               </div>
             )}
@@ -228,7 +228,7 @@ const App = () => {
               <div className="text-center">
                 <button
                   onClick={stopAlarm}
-                  className="px-8 py-3 bg-red-600 text-white rounded-xl text-lg font-medium transition-all duration-200 hover:bg-red-700 hover:shadow-md"
+                  className="px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-red-600 text-white rounded-xl text-sm sm:text-base md:text-lg font-medium transition-all duration-200 hover:bg-red-700 hover:shadow-md"
                 >
                   Stop Alarm
                 </button>

@@ -112,7 +112,7 @@ const Compress = () => {
                   <FaFilePdf className="mx-auto h-12 w-12 text-gray-400" />
                   <div className="mt-4">
                     <span className="mt-2 block text-sm font-medium text-gray-900">
-                      Drop your PDF here or
+   Drop your PDF here or
                       <span className="text-blue-500 hover:text-blue-600 ml-1">
                         browse
                       </span>

@@ -38,106 +38,121 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 relative flex items-center justify-center">
-    
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-      <Back />
-        <h1 className="text-2xl font-bold text-center mb-6">PayPal Link Generator</h1>
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center py-8">
+      <div className="w-full max-w-2xl mx-auto px-4">
+        <div className="bg-white rounded-[30px] shadow-lg overflow-hidden">
+          <div className="p-5 relative">
+            <div className="absolute top-8 left-5">
+              <Back />
+            </div>
+            
+            <h1 className="text-xl font-bold text-center text-gray-800 mb-6 pt-3">
+              PayPal Link Generator
+            </h1>
 
-        {/* Input for PayPal email */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">PayPal Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="Enter PayPal email"
-          />
-        </div>
+            <div className="grid gap-4 max-w-xl mx-auto">
+              {/* Input Fields Section */}
+              <div className="space-y-4">
+                {/* Email Input */}
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4">
+                  <label className="block text-gray-700 text-base font-semibold mb-2">PayPal Email</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-3 py-2 bg-white border-2 border-gray-200 rounded-lg text-base focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-colors"
+                    placeholder="Enter PayPal email"
+                  />
+                </div>
 
-        {/* Input for description */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Description:</label>
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="Enter item description"
-          />
-        </div>
+                {/* Description Input */}
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4">
+                  <label className="block text-gray-700 text-base font-semibold mb-2">Description</label>
+                  <input
+                    type="text"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="w-full px-3 py-2 bg-white border-2 border-gray-200 rounded-lg text-base focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-colors"
+                    placeholder="Enter item description"
+                  />
+                </div>
 
-        {/* Input for amount */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Amount:</label>
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="Enter amount"
-          />
-        </div>
+                {/* Amount Input */}
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4">
+                  <label className="block text-gray-700 text-base font-semibold mb-2">Amount</label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      className="w-full px-3 py-2 bg-white border-2 border-gray-200 rounded-lg text-base focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-colors"
+                      placeholder="Enter amount"
+                    />
+                  </div>
+                </div>
 
-        {/* Dropdown for currency */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Currency:</label>
-          <select
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            <option value="USD">U.S. Dollar ($)</option>
-            <option value="NZD">New Zealand Dollar ($)</option>
-            <option value="EUR">Euro (€)</option>
-            <option value="GBP">British Pound (£)</option>
-            <option value="INR">Indian Rupee (₹)</option>
-          </select>
-        </div>
+                {/* Currency Selection */}
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4">
+                  <label className="block text-gray-700 text-base font-semibold mb-2">Currency</label>
+                  <select
+                    value={currency}
+                    onChange={(e) => setCurrency(e.target.value)}
+                    className="w-full px-3 py-2 bg-white border-2 border-gray-200 rounded-lg text-base focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-colors"
+                  >
+                    <option value="USD">U.S. Dollar ($)</option>
+                    <option value="NZD">New Zealand Dollar ($)</option>
+                    <option value="EUR">Euro (€)</option>
+                    <option value="GBP">British Pound (£)</option>
+                    <option value="INR">Indian Rupee (₹)</option>
+                  </select>
+                </div>
+              </div>
 
-        {/* Buttons */}
-        <div className="flex justify-between mt-6">
-          <button
-            onClick={generateLink}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-          >
-            Generate
-          </button>
-          <button
-            onClick={clearInputs}
-            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-          >
-            Clear
-          </button>
-        </div>
+              {/* Action Buttons */}
+              <div className="flex justify-center gap-3 mt-2">
+                <button
+                  onClick={generateLink}
+                  className="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  Generate Link
+                </button>
+                <button
+                  onClick={clearInputs}
+                  className="px-4 py-2 bg-gray-600 text-white text-sm font-semibold rounded-lg hover:bg-gray-700 transition-colors duration-200"
+                >
+                  Clear
+                </button>
+              </div>
 
-        {/* Generated link and buttons */}
-        {generatedLink && (
-          <div className="mt-6">
-            <p className="font-bold text-gray-700">Generated PayPal Link:</p>
-            <textarea
-              readOnly
-              value={generatedLink}
-              className="w-full p-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              rows="3"
-            />
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={copyToClipboard}
-                className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600"
-              >
-                Copy Link
-              </button>
-              <button
-                onClick={openLink}
-                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-              >
-                Open Link
-              </button>
+              {/* Generated Link Section */}
+              {generatedLink && (
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 mt-2">
+                  <h2 className="text-base font-semibold text-gray-700 mb-2">Generated PayPal Link</h2>
+                  <textarea
+                    readOnly
+                    value={generatedLink}
+                    className="w-full p-2 bg-white border-2 border-gray-200 rounded-lg text-sm mb-3 focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+                    rows="2"
+                  />
+                  <div className="flex justify-center gap-3">
+                    <button
+                      onClick={copyToClipboard}
+                      className="px-4 py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 transition-colors duration-200"
+                    >
+                      Copy Link
+                    </button>
+                    <button
+                      onClick={openLink}
+                      className="px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition-colors duration-200"
+                    >
+                      Open Link
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

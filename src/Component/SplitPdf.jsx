@@ -178,26 +178,23 @@ const SplitPdf = () => {
   const zoomOut = () => setZoomLevel((prev) => prev / 1.2);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 p-2 sm:p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
-          rounded-xl transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)]"
-        >
-          <div className="p-4 border-b border-gray-100">
-            <Back/>
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          {/* Header */}
+          <div className="relative p-4 sm:p-6">
+            <div className="mb-8 sm:mb-0 sm:absolute sm:top-6 sm:left-6">
+              <Back />
+            </div>
+            <h1 className="text-xl sm:text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
+              Split PDF
+            </h1>
+            <p className="mt-2 text-sm text-center text-gray-600">Split, merge and organize your PDF pages</p>
           </div>
 
-          <div className="p-6">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-900">Split PDF</h1>
-              <p className="mt-2 text-sm text-gray-600">Split, merge and organize your PDF pages</p>
-            </div>
-
+          <div className="p-4 sm:p-6 md:p-8">
             {!file ? (
-              <div
-                className="relative border-2 border-dashed rounded-lg p-12 text-center 
-                  border-gray-300 hover:border-gray-400"
-              >
+              <div className="relative border-2 border-dashed rounded-xl p-6 sm:p-12 text-center border-gray-300 hover:border-gray-400 transition-colors">
                 <input
                   type="file"
                   accept="application/pdf"
@@ -207,19 +204,18 @@ const SplitPdf = () => {
                 />
                 <label 
                   htmlFor="fileInput" 
-                  className="cursor-pointer"
+                  className="cursor-pointer block"
                 >
-                  <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-blue-50 rounded-2xl flex items-center justify-center">
+                    <svg className="w-8 h-8 sm:w-10 sm:h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                  </div>
                   <div className="mt-4">
-                    <span className="mt-2 block text-sm font-medium text-gray-900">
-                      Choose PDF file or
-                      <span className="text-blue-500 hover:text-blue-600 ml-1">
-                        browse
-                      </span>
+                    <span className="text-sm sm:text-base font-medium text-gray-900">
+                      Choose PDF file or <span className="text-blue-500 hover:text-blue-600">browse</span>
                     </span>
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-1 text-xs sm:text-sm text-gray-500">
                       PDF files only
                     </p>
                   </div>
@@ -227,42 +223,45 @@ const SplitPdf = () => {
               </div>
             ) : (
               <div className="space-y-6">
-                <div className="flex justify-between items-center mb-6 border-b pb-4">
+                {/* File Header */}
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-4">
                   <div className="flex items-center">
-                    <span className="text-lg font-semibold text-gray-700">{file.name}</span>
+                    <span className="text-base sm:text-lg font-semibold text-gray-700 break-all">{file.name}</span>
                     <button 
                       onClick={() => {
                         setFile(null);
                         setSplitPages([]);
                         setPdfInstances([]);
                       }}
-                      className="ml-4 text-red-500 hover:text-red-600"
+                      className="ml-4 text-red-500 hover:text-red-600 transition-colors"
                     >
                       Remove
                     </button>
                   </div>
-                  <div className="flex gap-3">
+                  <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
                     <button
                       onClick={() => rotateAllPages('left')}
-                      className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition"
+                      className="flex-1 sm:flex-none px-3 sm:px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors text-sm sm:text-base"
                     >
                       Rotate Left
                     </button>
                     <button
                       onClick={() => rotateAllPages('right')}
-                      className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition"
+                      className="flex-1 sm:flex-none px-3 sm:px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors text-sm sm:text-base"
                     >
                       Rotate Right
                     </button>
                   </div>
                 </div>
 
-                <div className="flex gap-6 mb-6">
+                {/* Controls Section */}
+                <div className="flex flex-col lg:flex-row gap-6">
+                  {/* Page Selection */}
                   <div className="flex-1">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Page Selection (Total: {totalPages} pages)
                     </label>
-                    <div className="flex flex-col gap-2">
+                    <div className="space-y-3">
                       <div className="flex items-center gap-4">
                         <div className="flex-1">
                           <label className="block text-xs text-gray-500 mb-1">Start Page</label>
@@ -279,7 +278,7 @@ const SplitPdf = () => {
                             placeholder="1"
                             min="1"
                             max={totalPages}
-                            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                           />
                         </div>
                         <span className="text-gray-500 mt-6">to</span>
@@ -298,11 +297,11 @@ const SplitPdf = () => {
                             placeholder={totalPages.toString()}
                             min="1"
                             max={totalPages}
-                            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                           />
                         </div>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex flex-wrap gap-2">
                         <button
                           onClick={() => setPageNumbers(`1,${totalPages}`)}
                           className="text-blue-500 hover:text-blue-600 text-sm"
@@ -328,48 +327,48 @@ const SplitPdf = () => {
                           Odd Pages
                         </button>
                       </div>
-                      {validatePageNumbers(pageNumbers).length > 0 && (
-                        <p className="text-sm text-gray-500">
-                          Selected pages: {pageNumbers.split(',')[0]} to {pageNumbers.split(',')[1]}
-                        </p>
-                      )}
                     </div>
                   </div>
-                  <div className="flex-1 mt-5">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Output Filename</label>
+
+                  {/* Filename Input */}
+                  <div className="flex-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Output Filename
+                    </label>
                     <input
                       type="text"
                       placeholder="Enter file name"
                       value={fileName}
                       onChange={(e) => setFileName(e.target.value)}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                     />
                   </div>
-                  <div className="flex-1 mt-12">
-                  <button
-                    onClick={mergeAndDownload}
-                    className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-                  >
-                    <span className="flex items-center gap-2">
+
+                  {/* Download Button */}
+                  <div className="flex-1 flex items-end">
+                    <button
+                      onClick={mergeAndDownload}
+                      className="w-full px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-sm hover:shadow transition-all duration-200 flex items-center justify-center gap-2"
+                    >
                       <FaDownload size={16} />
-                      Download PDF
-                    </span>
-                  </button>
-                </div>
+                      <span>Download PDF</span>
+                    </button>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                {/* PDF Pages Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                   {splitPages.map((pageUrl, index) =>
                     pageUrl && (
                       <div
                         key={index}
-                        className="relative bg-gray-50 rounded-lg p-2 hover:shadow-lg transition-all duration-300 group"
+                        className="relative bg-gray-50 rounded-xl p-3 hover:shadow-lg transition-all duration-300 group"
                       >
-                        <div className="aspect-[2/3] relative overflow-hidden">
+                        <div className="aspect-[2/3] relative overflow-hidden rounded-lg">
                           <iframe
                             src={pageUrl}
                             title={`Page ${index + 1}`}
-                            className="w-full h-full rounded-md"
+                            className="w-full h-full"
                             style={{
                               transform: `rotate(${rotations[index] || 0}deg)`,
                               transformOrigin: 'center',
@@ -380,14 +379,11 @@ const SplitPdf = () => {
                             scrolling="no"
                           />
                           {rotations[index] !== 0 && (
-                            <div className="absolute inset-0 -z-10 bg-gray-100 rounded-md" />
+                            <div className="absolute inset-0 -z-10 bg-gray-100 rounded-lg" />
                           )}
                           
-                          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent 
-                            transition-all duration-300 rounded-md opacity-0 group-hover:opacity-100">
-                            <div className="absolute top-2 left-1/2 transform -translate-x-1/2
-                              flex gap-2 bg-white/90 rounded-lg shadow-lg p-1.5 transition-all duration-300
-                              scale-90 group-hover:scale-100 opacity-0 group-hover:opacity-100">
+                          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent transition-all duration-300 opacity-0 group-hover:opacity-100">
+                            <div className="absolute top-2 left-1/2 transform -translate-x-1/2 flex gap-2 bg-white/90 rounded-lg shadow-lg p-1.5 transition-all duration-300 scale-90 group-hover:scale-100 opacity-0 group-hover:opacity-100">
                               <button 
                                 onClick={() => openZoomPopup(index)} 
                                 className="p-1.5 hover:bg-blue-50 rounded-md transition-colors"
@@ -427,8 +423,6 @@ const SplitPdf = () => {
                     )
                   )}
                 </div>
-
-                
               </div>
             )}
           </div>
@@ -437,8 +431,8 @@ const SplitPdf = () => {
 
       {/* Zoom Popup */}
       {showPopup && currentPage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-xl max-w-4xl mx-auto my-8 w-full">
             <div className="p-4 border-b border-gray-200 flex justify-between items-center">
               <h3 className="text-lg font-semibold text-gray-900">Page Preview</h3>
               <div className="flex items-center gap-4">
@@ -448,8 +442,8 @@ const SplitPdf = () => {
                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                     title="Zoom Out"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clipRule="evenodd" />
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H4" />
                     </svg>
                   </button>
                   <span className="text-sm text-gray-600">{Math.round(zoomLevel * 100)}%</span>
@@ -458,8 +452,8 @@ const SplitPdf = () => {
                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                     title="Zoom In"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
                     </svg>
                   </button>
                 </div>
@@ -468,25 +462,21 @@ const SplitPdf = () => {
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                   title="Close"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
             </div>
-            <div className="flex-1 p-4">
-              <div className="w-full h-full flex items-center justify-center">
+            <div className="relative p-4 overflow-auto max-h-[calc(90vh-8rem)]">
+              <div className="w-full flex items-center justify-center">
                 <div 
                   className="relative transition-transform duration-200 ease-in-out"
                   style={{ transform: `scale(${zoomLevel})` }}
                 >
                   <iframe
                     src={currentPage}
-                    className="w-full h-full border-0 rounded-lg shadow-lg"
-                    style={{ 
-                      width: '600px',
-                      height: '800px',
-                    }}
+                    className="w-[600px] h-[800px] border-0 rounded-xl shadow-lg"
                     title="PDF Preview"
                   />
                 </div>
@@ -499,4 +489,4 @@ const SplitPdf = () => {
   );
 };
 
-export default SplitPdf; 
+export default SplitPdf;
