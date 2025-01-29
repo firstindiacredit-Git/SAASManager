@@ -5,11 +5,11 @@
       "headers": [
         {
           "key": "X-Frame-Options",
-          "value": "ALLOW-FROM https://browsey.vercel.app https://crm.pizeonfly.com http://localhost:* https://localhost:*"
+          "value": "ALLOW-FROM https://browsey.vercel.app https://crm.pizeonfly.com http://localhost:* https://localhost:* https://india-educates-crm.vercel.app"
         },
         {
           "key": "Content-Security-Policy",
-          "value": "frame-ancestors 'self' https://browsey.vercel.app https://crm.pizeonfly.com http://localhost:* https://localhost:*"
+          "value": "frame-ancestors 'self' https://browsey.vercel.app https://crm.pizeonfly.com http://localhost:* https://localhost:* https://india-educates-crm.vercel.app"
         }
       ]
     }
